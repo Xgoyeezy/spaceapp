@@ -58,9 +58,13 @@ jobs:
           echo "PODMAN_COMPOSE_PROVIDER=$provider" >> "$GITHUB_ENV"
       - name: Install, check readiness, back up and purge the rootless stack
         run: |
-          podman --remote=false info --format json
+          # The runner's system crun 1.14.1 cannot read current OCI bundles.
+          # Select the runtime installed with Podman rather than /usr/bin/crun.
+          runtime=/home/linuxbrew/.linuxbrew/bin/crun
+          test -x "$runtime"
+          podman --remote=false --runtime "$runtime" info --format json
           mkdir -p "$RUNNER_TEMP/podman-api"
-          podman system service --time=0 "unix://$RUNNER_TEMP/podman-api/api.sock" > "$RUNNER_TEMP/podman-api/service.log" 2>&1 &
+          podman --runtime "$runtime" system service --time=0 "unix://$RUNNER_TEMP/podman-api/api.sock" > "$RUNNER_TEMP/podman-api/service.log" 2>&1 &
           api_pid=$!
           trap 'code=$?; if [ "$code" -ne 0 ]; then tail -n 80 "$RUNNER_TEMP/podman-api/service.log"; fi; kill "$api_pid" 2>/dev/null || true; exit "$code"' EXIT
           export CONTAINER_HOST="unix://$RUNNER_TEMP/podman-api/api.sock"

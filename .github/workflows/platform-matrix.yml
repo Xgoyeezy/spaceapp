@@ -21,13 +21,19 @@ concurrency:
 
 jobs:
   podman:
-    name: Rootless Podman / small profile
+    name: Rootless Podman / ${{ matrix.profile }} profile
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [small, medium]
     env:
       # Explicit public runtime fixture: main is 1.1.6, whose images are not
       # published yet. The acceptance receipt identifies the tested release.
-      SPACEAPP_ACCEPTANCE_RUNTIME_VERSION: "1.1.5"
+      SPACEAPP_ACCEPTANCE_RUNTIME_VERSION: "1.1.4"
+      SPACEAPP_ACCEPTANCE_UPGRADE_VERSION: "1.1.5"
+      SPACEAPP_ACCEPTANCE_PROFILE: ${{ matrix.profile }}
       SPACEAPP_ACCEPTANCE_EXTENDED: "1"
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

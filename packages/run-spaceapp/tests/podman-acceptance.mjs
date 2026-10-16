@@ -11,12 +11,16 @@ const root = await mkdtemp(join(process.env.RUNNER_TEMP ?? checkout, ".podman-ac
 const project = composeProjectName(root);
 const launcher = resolve(checkout, "packages/run-spaceapp/bin/spaceapp.mjs");
 const env = { ...process.env, SPACEAPP_HOME: root, SPACEAPP_TELEMETRY: "0" };
-const answers = JSON.stringify({ confirm: true, profile: "small", access: "isolated", companions: false, telemetry: false, open: false });
+const profile = process.env.SPACEAPP_ACCEPTANCE_PROFILE ?? "small";
+assert.ok(["small", "medium", "large"].includes(profile));
+const answers = JSON.stringify({ confirm: true, profile, access: "isolated", companions: false, telemetry: false, open: false });
 // Main can advance before matching images are published. An explicit proof
 // override exercises this launcher against a named public release, never an
 // implicit fallback to different images. Include that version in the receipt.
 const runtimeVersion = process.env.SPACEAPP_ACCEPTANCE_RUNTIME_VERSION;
 if (runtimeVersion) assert.match(runtimeVersion, /^\d+\.\d+\.\d+$/);
+const upgradeVersion = process.env.SPACEAPP_ACCEPTANCE_UPGRADE_VERSION;
+if (upgradeVersion) { assert.match(upgradeVersion, /^\d+\.\d+\.\d+$/); assert.ok(runtimeVersion && upgradeVersion !== runtimeVersion); }
 function command(file, args, { quiet = false, tolerate = false } = {}) {
   return new Promise((accept, reject) => {
     const child = spawn(file, args, { env, stdio: ["ignore", "pipe", "pipe"] });
@@ -35,10 +39,35 @@ function command(file, args, { quiet = false, tolerate = false } = {}) {
 const cli = (...args) => command(process.execPath, runtimeVersion
   ? ["--input-type=module", "--eval", `import {run} from ${JSON.stringify(pathToFileURL(resolve(checkout, "packages/run-spaceapp/src/cli.mjs")).href)}; process.exitCode=await run(process.argv.slice(1),{runtimeVersion:${JSON.stringify(runtimeVersion)}});`, "--", ...args]
   : [launcher, ...args]);
+async function ready() {
+  for (let attempt = 0; attempt < 180; attempt++) {
+    try {
+      const response = await fetch("http://127.0.0.1:4911/readyz", { signal: AbortSignal.timeout(5000) });
+      if (response.ok && (await response.json()).ok === true) return;
+    } catch { /* Services can restart during a real version transition. */ }
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  }
+  throw new Error("SpaceApp readiness timed out");
+}
 try {
-  await cli("install", "--engine", "podman", "--profile", "small", "--no-open", "--non-interactive", "--answers", answers);
-  const response = await fetch("http://127.0.0.1:4911/readyz", { signal: AbortSignal.timeout(5000) });
-  assert.equal(response.status, 200); assert.equal((await response.json()).ok, true);
+  await cli("install", "--engine", "podman", "--profile", profile, "--no-open", "--non-interactive", "--answers", answers);
+  await ready();
+  if (upgradeVersion) {
+    await cli("update", upgradeVersion, "--non-interactive", "--answers", '{"confirm":true}');
+    await ready();
+    let installed = JSON.parse(await readFile(join(root, "config.json"), "utf8"));
+    assert.equal(installed.version, upgradeVersion); assert.equal(installed.previousVersion, runtimeVersion);
+    const checkpoints = (await readdir(join(root, "checkpoints"))).filter(name => name.startsWith("spaceapp-checkpoint-"));
+    assert.ok(checkpoints.length > 0);
+    for (const name of checkpoints) await readFile(join(root, "checkpoints", name, "verified.json"));
+    await cli("rollback", "--non-interactive", "--answers", '{"confirm":true}');
+    await ready();
+    installed = JSON.parse(await readFile(join(root, "config.json"), "utf8"));
+    assert.equal(installed.version, runtimeVersion);
+    await cli("update", upgradeVersion, "--non-interactive", "--answers", '{"confirm":true}');
+    await ready();
+    console.log(JSON.stringify({ update: true, verifiedCheckpoint: true, rollback: true, from: runtimeVersion, to: upgradeVersion }));
+  }
   await cli("doctor"); await cli("status"); await cli("backup");
   assert.ok((await readdir(join(root, "backups"))).some(name => name.startsWith("spaceapp-backup-")));
   if (process.env.SPACEAPP_ACCEPTANCE_EXTENDED === "1") {
@@ -66,7 +95,7 @@ try {
     console.log(JSON.stringify({ workspaceOwnership: true, readonlyMount: true, providerInstall: true, repair: true, restart: true, restore: true, uninstallRetainsData: true, supportBundle: true }));
   }
   await cli("uninstall", "--purge-data", "--non-interactive", "--answers", '{"confirm":true,"purge":"DELETE"}');
-  console.log(JSON.stringify({ platform: process.platform, profile: "small", engine: "podman", runtimeVersion: runtimeVersion ?? "launcher-default", ready: true, backup: true, purge: true }));
+  console.log(JSON.stringify({ platform: process.platform, profile, engine: "podman", runtimeVersion: upgradeVersion ?? runtimeVersion ?? "launcher-default", ready: true, backup: true, purge: true }));
 } finally {
   // The install may have failed before committing config. Remove only resources
   // labelled with this fresh acceptance project's deterministic identity.

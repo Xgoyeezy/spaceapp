@@ -177,6 +177,7 @@ try {
     config.opencode = pinnedOpenCode(await readFile(join(root, "Dockerfile"), "utf8"));
     await writeFile(marker, JSON.stringify(config, null, 2) + "\n", { mode: 0o600 });
     const images = pinnedDevImages(await readFile(join(root, "packages/run-spaceapp/templates/compose.yml"), "utf8"));
+    await writeFile(join(state, "secrets/temporal.env"), `POSTGRES_PWD=${secrets.database}\n`, { mode: 0o600 });
     await writeFile(join(state, "compose.json"), JSON.stringify(devCompose(config, images), null, 2), { mode: 0o600 });
     const env = devEnvironment(config, secrets, process.env);
     await writeFile(join(state, "secrets/database-url"), env.SPACE_DATABASE_URL + "\n", { mode: 0o600 });
@@ -200,7 +201,11 @@ try {
     for (const port of Object.values(config.ports)) await checkPort(port);
     await command("docker", ["compose", "version"], { quiet: true });
     await command("docker", ["info", "--format", "{{.ServerVersion}}"], { quiet: true });
-    await compose(["up", "-d", "--wait", "--wait-timeout", "240"]);
+    try { await compose(["up", "-d", "--wait", "--wait-timeout", "240"]); }
+    catch (error) {
+      await compose(["logs", "--no-color", "--tail", "40"], { tolerate: true });
+      throw error;
+    }
     const namespaceArgs = ["exec", "-T", "temporal", "temporal", "operator", "namespace"];
     if (await compose([...namespaceArgs, "describe", "--namespace", config.namespace, "--address", "temporal:7233"], { quiet: true, tolerate: true })) {
       await compose([...namespaceArgs, "create", "--namespace", config.namespace, "--address", "temporal:7233"]);

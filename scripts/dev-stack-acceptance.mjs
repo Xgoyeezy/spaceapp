@@ -58,7 +58,7 @@ try {
     if (attempt === 599) throw new Error("Dev-stack readiness timed out.");
     await delay(1000);
   }
-  for (const name of ["postgres-password", "session-secret", "setup-token", "control-token", "database-url"]) {
+  for (const name of ["postgres-password", "session-secret", "setup-token", "control-token", "database-url", "temporal.env"]) {
     assert.equal((await lstat(join(config.state, "secrets", name))).mode & 0o777, 0o600);
   }
   const status = await request("/api/setup/status"); assert.equal(status.setupRequired, true);

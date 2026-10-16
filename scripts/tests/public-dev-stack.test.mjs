@@ -10,6 +10,9 @@ test("dev-stack ports are distinct, loopback-only and separate from installed po
   assert.deepEqual(compose.services.postgres.ports, ["127.0.0.1:55432:5432"]);
   assert.deepEqual(compose.services.temporal.ports, ["127.0.0.1:57233:7233"]);
   assert.equal(compose.services.postgres.environment.POSTGRES_PASSWORD_FILE, "/run/secrets/postgres-password");
+  assert.deepEqual(compose.services.temporal.env_file, [config.state + "/secrets/temporal.env"]);
+  assert.equal(compose.services.temporal.secrets, undefined);
+  assert.equal(compose.services.temporal.entrypoint, undefined);
   assert.ok(!JSON.stringify(compose).includes("POSTGRES_PASSWORD\""));
   for (const value of ["4910", "4911", "80", "65536", "0.0.0.0:5000", "1e4", "5000; echo wrong"]) {
     assert.throws(() => devStackConfig(config.root, { SPACE_DEV_API_PORT: value }));

@@ -19,6 +19,8 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci
+      - run: npm run check
+      - run: npm test
       - name: Start from source, claim the owner, open OpenCode, and clean up
         run: node scripts/dev-stack-acceptance.mjs
       - name: Remove this checkout's development resources after any failure

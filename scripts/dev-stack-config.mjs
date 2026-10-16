@@ -61,9 +61,10 @@ export function devCompose(config, images) {
       temporal: {
         image: images.temporal,
         environment: { DB: "postgres12", DB_PORT: "5432", POSTGRES_USER: "spaceapp", POSTGRES_SEEDS: "postgres", DYNAMIC_CONFIG_FILE_PATH: "config/dynamicconfig/docker.yaml" },
-        entrypoint: ["/bin/sh", "-ec"],
-        command: ["export POSTGRES_PWD=\"$$(cat /run/secrets/postgres-password)\"; exec /etc/temporal/entrypoint.sh autosetup"],
-        ports: [`127.0.0.1:${config.ports.temporal}:7233`], secrets: ["postgres-password"],
+        // Compose reads this private host file as the developer. The image's
+        // non-root Temporal user cannot read a Linux bind mount owned by them.
+        env_file: [join(config.state, "secrets", "temporal.env")],
+        ports: [`127.0.0.1:${config.ports.temporal}:7233`],
         depends_on: { postgres: { condition: "service_healthy" } },
         healthcheck: { test: ["CMD-SHELL", "temporal operator cluster health --address temporal:7233 >/dev/null && temporal operator namespace describe --namespace default --address temporal:7233 >/dev/null"], interval: "3s", timeout: "10s", retries: 60 }
       }

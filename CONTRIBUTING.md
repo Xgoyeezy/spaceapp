@@ -53,6 +53,8 @@ Temporal **57233**, all on `127.0.0.1`. Before the first start, change them with
 `SPACE_DEV_TEMPORAL_PORT`. Each must be distinct and cannot be an installed
 application's 4910/4911 port. A busy port causes a clear failure. Saved ports
 remain attached to that state directory; reset the stack to choose new ones.
+Each state directory also sets its own `SPACE_DEV_SESSION_COOKIE_NAMESPACE`,
+so signing into another checkout on a different port preserves the first login.
 
 From another terminal in this checkout:
 
@@ -68,6 +70,9 @@ and provider state. It refuses an unrecognized directory. Neither command
 uses an installed SpaceApp's process IDs, compose project, sockets or volumes.
 Ctrl-C also stops the foreground stack. Unexpected service exit is printed
 with its service name and stops the stack.
+After a hard kill or reboot, `down` checks the recorded process start identity
+before treating a live PID as this supervisor. Reused PIDs do not block cleanup
+and are never signalled. Legacy records without that identity remain conservative.
 
 The API uses Node watch mode, and Vite reloads web changes. After editing an
 internal package, run `npm run dev:stack -- rebuild`; imported build output is

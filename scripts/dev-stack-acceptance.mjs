@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { randomBytes } from "node:crypto";
-import { lstat, readFile, utimes } from "node:fs/promises";
+import { lstat, readFile, utimes, writeFile } from "node:fs/promises";
 import net from "node:net";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -65,6 +65,7 @@ try {
   const token = (await readFile(join(config.state, "secrets/setup-token"), "utf8")).trim();
   const owner = await request("/api/setup/claim", { token, email: "dev-owner@example.invalid", password: randomBytes(24).toString("hex") });
   assert.equal(owner.isAuthenticated, true);
+  assert.ok(cookie.startsWith(`space_session_dev_${config.id}=`), "Each checkout has a distinct host-wide session cookie");
   assert.equal((await request("/api/auth/me")).isAuthenticated, true);
   csrf = await request("/api/auth/csrf");
   const panes = await request(`/api/panes?roomId=${encodeURIComponent(owner.starterRoomId)}`);
@@ -110,7 +111,13 @@ try {
   process.kill(workerPid, "SIGTERM");
   for (let attempt = 0; attempt < 60 && !exited; attempt++) await delay(500);
   assert.ok(exited && log.includes("worker stopped unexpectedly"), "Service failure is reported and stops the supervisor");
-  console.log(JSON.stringify({ mode: "SOURCE_STACK", platform: process.platform, ownerSetup: true, workflowsReady: true, openCodeTerminal: true, webSocketProxy: true, apiHotReload: true, serviceFailureDetected: true, providerTaskExecuted: false, project: config.project }));
+  // Simulate a stale record whose PID now belongs to this still-running test.
+  // Cleanup must distinguish its birth identity and never signal that process.
+  const runningFile = join(config.state, "running.json");
+  await writeFile(runningFile, JSON.stringify({ pid: process.pid, identity: "previous supervisor process", project: config.project }), { flag: "wx", mode: 0o600 });
+  await run([process.execPath, "scripts/dev-stack.mjs", "down"]);
+  await assert.rejects(lstat(runningFile), { code: "ENOENT" });
+  console.log(JSON.stringify({ mode: "SOURCE_STACK", platform: process.platform, ownerSetup: true, workflowsReady: true, openCodeTerminal: true, webSocketProxy: true, apiHotReload: true, serviceFailureDetected: true, stalePidRecovered: true, providerTaskExecuted: false, project: config.project }));
 } catch (error) { failure = error; }
 finally {
   terminal?.terminate();

@@ -7,6 +7,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
 import { devCompose, devEnvironment, devStackConfig, pinnedDevImages, pinnedOpenCode } from "./dev-stack-config.mjs";
+import { devProcessIdentity, devSupervisorIsAlive } from "./dev-stack-process.mjs";
 
 const root = await realpath(fileURLToPath(new URL("../", import.meta.url)));
 const action = process.argv[2] ?? "up";
@@ -64,10 +65,6 @@ async function secret(name, create = true) {
   await chmod(path, 0o600);
   return (await readFile(path, "utf8")).trim();
 }
-function processAlive(pid) {
-  if (!Number.isSafeInteger(pid) || pid <= 1) return false;
-  try { process.kill(pid, 0); return true; } catch (error) { if (error.code === "ESRCH") return false; throw error; }
-}
 async function loadState() {
   try {
     const info = await lstat(state);
@@ -107,7 +104,7 @@ async function requestStop() {
       socket.on("error", reject); socket.on("end", () => result.includes('"ok":true') ? resolve() : reject(new Error("Dev-stack control refused shutdown.")));
     });
   } catch (error) {
-    if (processAlive(running.pid)) throw new Error("The recorded dev-stack supervisor is alive but cannot be reached. Stop its terminal process; no unrelated PID was signalled.");
+    if (await devSupervisorIsAlive(running)) throw new Error("The recorded dev-stack supervisor is alive but cannot be reached. Stop its terminal process; no unrelated PID was signalled.");
     // Forked service wrappers stop their own groups on IPC disconnect.
     await delay(5500);
     await rm(runningFile, { force: true });
@@ -181,7 +178,9 @@ try {
     await writeFile(join(state, "compose.json"), JSON.stringify(devCompose(config, images), null, 2), { mode: 0o600 });
     const env = devEnvironment(config, secrets, process.env);
     await writeFile(join(state, "secrets/database-url"), env.SPACE_DATABASE_URL + "\n", { mode: 0o600 });
-    await writeFile(runningFile, JSON.stringify({ pid: process.pid, project: config.project }), { flag: "wx", mode: 0o600 });
+    const identity = await devProcessIdentity(process.pid);
+    if (!identity) throw new Error("Cannot record this dev-stack supervisor's process identity.");
+    await writeFile(runningFile, JSON.stringify({ pid: process.pid, identity, project: config.project }), { flag: "wx", mode: 0o600 });
     await rm(controlPath, { force: true });
     control = net.createServer(socket => {
       let body = ""; socket.setTimeout(3000, () => socket.destroy());

@@ -82,6 +82,7 @@ export function devEnvironment(config, secrets, inherited = {}) {
     TERM: inherited.TERM || "xterm-256color", HOME: stateHome, USER: inherited.USER || "spaceapp-dev", LOGNAME: inherited.LOGNAME || inherited.USER || "spaceapp-dev",
     TMPDIR: join(state, "tmp"), NODE_ENV: "development", ELECTRON_SKIP_BINARY_DOWNLOAD: "1",
     SPACE_INSTANCE: "dev", SPACE_INSTANCE_ENABLED_JOBS: "", SPACE_INSTALL_ROOT: config.root,
+    SPACE_DEV_SESSION_COOKIE_NAMESPACE: config.id,
     SPACE_PUBLIC_DISTRIBUTION: "true", SPACE_AGENT_TOOLS_WRITER: "disabled", SPACE_TELEMETRY_ENABLED: "false", SPACE_DEV_LOGIN: "false", SPACE_OPTIONAL_MODULES: "none",
     SPACE_T3CODE_ENABLED: "false", SPACE_BROWSER_EVIDENCE_ENABLED: "false",
     SPACE_RUNTIME_STORE: "postgres", SPACE_DATABASE_URL: `postgresql://spaceapp:${secrets.database}@127.0.0.1:${config.ports.postgres}/spaceapp_dev`,

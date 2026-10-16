@@ -131,6 +131,7 @@ const publicScripts = new Set([
   "scripts/contributor-smoke.mjs",
   "scripts/dev-stack.mjs",
   "scripts/dev-stack-config.mjs",
+  "scripts/dev-stack-process.mjs",
   "scripts/dev-stack-service.mjs",
   "scripts/dev-stack-opencode.mjs",
   "scripts/dev-stack-acceptance.mjs",

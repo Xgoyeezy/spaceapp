@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { devCompose, devEnvironment, devStackConfig, pinnedDevImages, pinnedOpenCode } from "../dev-stack-config.mjs";
+import { devProcessIdentity, devSupervisorIsAlive } from "../dev-stack-process.mjs";
 
 const config = devStackConfig("/tmp/spaceapp-contributor");
 test("dev-stack ports are distinct, loopback-only and separate from installed ports", () => {
@@ -49,10 +50,22 @@ test("child processes cannot inherit installed services or provider credentials"
   assert.equal(env.NODE_OPTIONS, undefined);
   assert.equal(env.SPACE_DEV_LOGIN, "false");
   assert.equal(env.SPACE_INSTANCE, "dev");
+  assert.equal(env.SPACE_DEV_SESSION_COOKIE_NAMESPACE, config.id);
+  assert.notEqual(devEnvironment(devStackConfig("/tmp/second-checkout"), { database: "fixture", session: "fixture" }).SPACE_DEV_SESSION_COOKIE_NAMESPACE, env.SPACE_DEV_SESSION_COOKIE_NAMESPACE);
   assert.equal(env.SPACE_INSTANCE_ENABLED_JOBS, "");
   assert.equal(env.SPACEAPP_WORKFLOWS_ENABLED, "true");
   assert.equal(env.SPACE_API_HOST, "127.0.0.1");
   assert.equal(env.SPACE_WEB_HOST, "127.0.0.1");
   assert.ok(env.HOME.startsWith(config.state + "/"));
   assert.ok(!Object.values(env).some(value => value.includes("installed") || value.includes("do-not-inherit")));
+});
+
+test("stale supervisor records do not confuse a reused live PID with the owned process", async () => {
+  const identity = await devProcessIdentity(process.pid);
+  assert.ok(identity);
+  assert.equal(await devSupervisorIsAlive({ pid: process.pid, identity }), true);
+  assert.equal(await devSupervisorIsAlive({ pid: process.pid, identity: "a previous process start" }), false);
+  assert.equal(await devSupervisorIsAlive({ pid: -1, identity }), false);
+  assert.equal(await devSupervisorIsAlive({ pid: process.pid }), true);
+  await assert.rejects(devSupervisorIsAlive({ pid: process.pid, identity }, async () => { throw new Error("process identity unavailable"); }), /unavailable/);
 });

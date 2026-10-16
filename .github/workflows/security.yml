@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-      - bounty/64-container-closures
   schedule:
     - cron: "23 4 * * 1"
   workflow_dispatch:
@@ -48,6 +47,7 @@ jobs:
             ':(exclude)packages/run-spaceapp/**' \
             deploy/docker \
             starter-memory \
+            scripts/container-runtime-closure.mjs \
             Dockerfile \
             package-lock.json; then
             echo "required=false" >> "$GITHUB_OUTPUT"

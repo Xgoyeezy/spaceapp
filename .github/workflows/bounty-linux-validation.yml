@@ -12,10 +12,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - bounty: 61
-            revision: 10b501cf970a2be0ba8ea261b2a9d9bbeed88847
-            typecheck: telemetry:check
-            focused: tests/worker-telemetry.test.ts tests/activity-observability.test.ts
+          - bounty: 63
+            revision: 00056d47f4b2222d2068c4f379613f11fdf39b3d
+          - bounty: 64
+            revision: 2ed3fc08e12672f041aa6fc7bac5810cfb11fdd2
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -34,11 +34,6 @@ jobs:
         working-directory: ${{ runner.temp }}/spaceapp-candidate
       - run: npm run check
         working-directory: ${{ runner.temp }}/spaceapp-candidate
-      - run: npm run ${{ matrix.typecheck }} -w @space/worker
-        working-directory: ${{ runner.temp }}/spaceapp-candidate
-      - name: Focused real-server suite within three minutes
-        working-directory: ${{ runner.temp }}/spaceapp-candidate
-        run: timeout 180s npm test -w @space/worker -- ${{ matrix.focused }}
       - name: All public tests
         id: tests
         continue-on-error: true

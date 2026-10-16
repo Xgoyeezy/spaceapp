@@ -43,6 +43,7 @@ try {
   const envFile = join(directory, "environment");
   await writeFile(envFile, [
     "SPACE_PUBLIC_DISTRIBUTION=true", "SPACE_RUNTIME_STORE=postgres", "SPACE_INSTANCE=dev", "SPACE_INSTANCE_ENABLED_JOBS=",
+    "SPACE_TEMPORAL_NAMESPACE=spaceapp-smoke", "SPACE_TEMPORAL_TASK_QUEUE=spaceapp-smoke-turns", "SPACE_INSTALL_ROOT=/app",
     "SPACE_OPTIONAL_MODULES=none", "SPACE_DEV_LOGIN=false", `SPACE_SESSION_SECRET=${sessionSecret}`,
     "SPACEAPP_WORKFLOWS_ENABLED=false", "SPACE_CLI_ENABLED=false", "SPACE_CLI_ROOT_ENABLED=false",
     "SPACE_CLI_HOST_SOCKET=/run/spaceapp-cli/smoke.sock", "SPACE_CLI_ADMIN_HOST_SOCKET=/run/spaceapp-cli/admin.sock",

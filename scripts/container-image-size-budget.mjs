@@ -4,12 +4,14 @@ import { pathToFileURL } from "node:url";
 
 const mebibyte = 1024 * 1024;
 
-// Per-service runtime closures target 850 / 1350 / 1000 MiB.
-// Both Linux architectures are measured and enforced by the container matrix.
+// 2026-10-16, container matrix 38977939871, revision 8723576:
+// core: amd64 731.0 MiB / arm64 760.9 MiB; browser: 1070.2 / 1099.5;
+// cli: 749.3 / 614.6. Ceilings leave 39-51 MiB above the larger architecture
+// and remain below the bounty's 850 / 1350 / 1000 MiB maximums.
 export const containerImageSizeBudgets = Object.freeze({
-  core: 850 * mebibyte,
-  browser: 1350 * mebibyte,
-  cli: 1000 * mebibyte
+  core: 800 * mebibyte,
+  browser: 1150 * mebibyte,
+  cli: 800 * mebibyte
 });
 
 export function evaluateContainerImageSize({ target, sizeBytes }) {

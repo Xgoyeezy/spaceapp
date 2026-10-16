@@ -57,7 +57,9 @@ try {
     assert.match(postgresImage ?? "", /@sha256:[0-9a-f]{64}$/);
     containers.push(`${id}-pg`);
     await docker(["run", "-d", "--name", `${id}-pg`, "--network", network, "--network-alias", "postgres", "--env-file", join(directory, "postgres-env"), postgresImage]);
-    await waitFor(() => docker(["exec", `${id}-pg`, "pg_isready", "-U", "spaceapp", "-d", "spaceapp"]), "PostgreSQL");
+    // initdb briefly starts a Unix-socket-only server before creating the
+    // requested database. A real TCP query waits for the final server too.
+    await waitFor(() => docker(["exec", `${id}-pg`, "sh", "-c", 'PGPASSWORD="$POSTGRES_PASSWORD" psql -h 127.0.0.1 -U spaceapp -d spaceapp -Atc "SELECT 1"']), "PostgreSQL database readiness");
     for (const [name, value] of [["database-url", `postgresql://spaceapp:${password}@postgres:5432/spaceapp`], ["session-secret", sessionSecret], ["setup-token", setupToken]]) await writeFile(join(directory, name), value + "\n", { mode: 0o644 });
     if (target === "browser") {
       const migrations = (await readdir("packages/db/migrations")).filter(name => name.endsWith(".sql")).sort();

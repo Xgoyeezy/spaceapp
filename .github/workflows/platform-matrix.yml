@@ -42,6 +42,17 @@ jobs:
           # disposable runner, without changing the user's launcher prerequisites.
           HOMEBREW_NO_AUTO_UPDATE=1 /home/linuxbrew/.linuxbrew/bin/brew install podman
           echo /home/linuxbrew/.linuxbrew/bin >> "$GITHUB_PATH"
+          # Ubuntu's user-namespace exception covers /usr/bin/podman. Apply
+          # the same per-program permission to the bottle on this disposable
+          # runner; keep the global unprivileged-userns restriction enabled.
+          sudo tee /etc/apparmor.d/spaceapp-ci-podman > /dev/null <<'PROFILE'
+          abi <abi/4.0>,
+          include <tunables/global>
+          profile spaceapp-ci-podman /home/linuxbrew/.linuxbrew/Cellar/podman/*/bin/podman flags=(unconfined) {
+            userns,
+          }
+          PROFILE
+          sudo apparmor_parser -r /etc/apparmor.d/spaceapp-ci-podman
           provider=$(docker info --format '{{range .ClientInfo.Plugins}}{{if eq .Name "compose"}}{{.Path}}{{end}}{{end}}')
           test -x "$provider"
           echo "PODMAN_COMPOSE_PROVIDER=$provider" >> "$GITHUB_ENV"

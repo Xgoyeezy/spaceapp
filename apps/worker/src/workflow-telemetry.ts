@@ -1,6 +1,6 @@
 import { formatTraceparent, parseTraceparent } from "@space/contracts";
 import {
-  isCancellation, proxySinks, workflowInfo,
+  ContinueAsNew, isCancellation, proxySinks, workflowInfo,
   type Sinks, type WorkflowInterceptorsFactory
 } from "@temporalio/workflow";
 import {
@@ -39,7 +39,7 @@ export const interceptors: WorkflowInterceptorsFactory = () => {
         const startTimeMs = Date.now();
         try { return await next(input); }
         catch (error) {
-          if (outcome !== "CONTINUED_AS_NEW") outcome = isCancellation(error) ? "CANCELLED" : "FAILED";
+          outcome = error instanceof ContinueAsNew ? "CONTINUED_AS_NEW" : isCancellation(error) ? "CANCELLED" : "FAILED";
           throw error;
         } finally {
           // The host sink is registered with callDuringReplay:false. This call
@@ -69,7 +69,6 @@ export const interceptors: WorkflowInterceptorsFactory = () => {
         return next({ ...input, headers: traceHeaders(input.headers, { traceparent: parent() }) });
       },
       continueAsNew(input, next) {
-        outcome = "CONTINUED_AS_NEW";
         return next({ ...input, headers: traceHeaders(input.headers, {
           traceparent: formatTraceparent(context.traceId, context.parentSpanId ?? context.spanId, "01"),
           links: [{ traceId: context.traceId, spanId: context.spanId }]

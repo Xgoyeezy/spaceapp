@@ -254,6 +254,15 @@ it("links a real dot continue-as-new run to its previous run", async () => {
   expect(spans().filter(span => span.name === "activity.dotGoalStep")).toHaveLength(301);
 }, 30_000);
 
+it.each(["COMPLETED", "FAILED", "CANCELLED"])("records %s when a workflow catches its continue-as-new attempt", async outcome => {
+  const handle = await start("caughtContinuationWorkflow", outcome);
+  if (outcome === "COMPLETED") expect(await handle.result()).toBe("recovered");
+  else await expect(handle.result()).rejects.toThrow();
+  await flush();
+  const workflow = spans().find(span => span.name === "workflow.caughtContinuationWorkflow")!;
+  expect(attrs(workflow)["space.outcome"]).toBe(outcome);
+}, 15_000);
+
 it("links a background continuation to its supervising run and keeps its originating request trace", async () => {
   const childTrace = "1234567890abcdef1234567890abcdef";
   const item = roomAgentSupervisorQueueItemSchema.parse({ missionId: "mission:synthetic", turn: {

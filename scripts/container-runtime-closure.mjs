@@ -43,6 +43,19 @@ export async function createRuntimeClosure({ root, target, destination }) {
     else if (runtimePathAllowed(path)) files.add(path);
   }
   for (const path of assets[target]) await include(path);
+  // node-pty's runtime loader chooses its native file through a computed
+  // require path. Include the host build/prebuild explicitly after tracing.
+  if (files.has("node_modules/node-pty/package.json")) {
+    let nativeFiles = 0;
+    for (const directory of ["build/Release", `prebuilds/${process.platform}-${process.arch}`]) {
+      for (const name of ["pty.node", "spawn-helper"]) {
+        const path = `node_modules/node-pty/${directory}/${name}`;
+        try { await lstat(join(root, path)); await include(path); if (name === "pty.node") nativeFiles++; }
+        catch (error) { if (error.code !== "ENOENT") throw error; }
+      }
+    }
+    if (!nativeFiles) throw new Error("node-pty is traced but its native runtime is missing.");
+  }
   // The Temporal worker compiles workflows at startup. Its compiler resolves
   // modules dynamically; keep its complete installed production dependency
   // closure instead of assuming a trace sees every webpack plug-in.

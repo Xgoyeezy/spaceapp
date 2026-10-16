@@ -47,7 +47,7 @@ try {
     "SPACEAPP_WORKFLOWS_ENABLED=false", "SPACE_CLI_ENABLED=false", "SPACE_CLI_ROOT_ENABLED=false",
     "SPACE_CLI_HOST_SOCKET=/run/spaceapp-cli/smoke.sock", "SPACE_CLI_ADMIN_HOST_SOCKET=/run/spaceapp-cli/admin.sock",
     `SPACE_BROWSER_SESSIONS_ENABLED=${target === "browser"}`, "SPACE_BROWSER_HOST_TRANSPORT=unix", "SPACE_BROWSER_HOST_SOCKET=/run/spaceapp-browser/smoke.sock",
-    "SPACE_API_HOST=127.0.0.1", "SPACE_API_PORT=4910", "SPACE_WEB_HOST=0.0.0.0", "SPACE_WEB_PORT=4911", "SPACE_TELEMETRY_ENABLED=false"
+    "SPACE_API_HOST=127.0.0.1", "SPACE_API_PORT=54910", "SPACE_API_ORIGIN=http://127.0.0.1:54910", "SPACE_WEB_HOST=0.0.0.0", "SPACE_WEB_PORT=54911", "SPACE_TELEMETRY_ENABLED=false"
   ].join("\n") + "\n", { mode: 0o600 });
   if (target !== "cli") {
     await writeFile(join(directory, "postgres-env"), `POSTGRES_USER=spaceapp\nPOSTGRES_DB=spaceapp\nPOSTGRES_PASSWORD=${password}\n`, { mode: 0o600 });
@@ -60,7 +60,7 @@ try {
     for (const [name, value] of [["database-url", `postgresql://spaceapp:${password}@postgres:5432/spaceapp`], ["session-secret", sessionSecret], ["setup-token", setupToken]]) await writeFile(join(directory, name), value + "\n", { mode: 0o644 });
     if (target === "browser") {
       const migrations = (await readdir("packages/db/migrations")).filter(name => name.endsWith(".sql")).sort();
-      const sql = (await Promise.all(migrations.map(name => readFile(join("packages/db/migrations", name), "utf8")))).join("\n");
+      const sql = (await Promise.all(migrations.map(async name => `BEGIN;\n${await readFile(join("packages/db/migrations", name), "utf8")}\nCOMMIT;`))).join("\n");
       await docker(["exec", "-i", `${id}-pg`, "psql", "-U", "spaceapp", "-d", "spaceapp", "-v", "ON_ERROR_STOP=1"], { input: sql });
     }
   }
@@ -68,7 +68,7 @@ try {
   await docker(["run", "-d", "--name", id, "--init", "--network", network, "--env-file", envFile,
     "--mount", `type=bind,src=${directory},dst=/run/secrets,readonly`, image]);
   if (target === "core") {
-    await waitFor(() => docker(["exec", "--user", "10001:10001", id, "node", "-e", "fetch('http://127.0.0.1:4911/readyz').then(async r=>{if(!r.ok||(await r.json()).ok!==true)process.exit(1);console.log('readyz ok')}).catch(()=>process.exit(1))"]), "Core readiness after migrations");
+    await waitFor(() => docker(["exec", "--user", "10001:10001", id, "node", "-e", "fetch('http://127.0.0.1:54911/readyz').then(async r=>{if(!r.ok||(await r.json()).ok!==true)process.exit(1);console.log('readyz ok')}).catch(()=>process.exit(1))"]), "Core readiness after migrations");
     await docker(["exec", "--user", "10001:10001", id, "node", "--input-type=module", "-e", "import {bundleWorkflowCode} from '@temporalio/worker'; await bundleWorkflowCode({workflowsPath:'/app/apps/worker/dist/workflows.js'}); console.log('workflow compiler ok')"]);
   } else {
     const pkg = target === "cli" ? "cli-host" : "browser-host", client = target === "cli" ? "CliHostClient" : "BrowserHostClient";

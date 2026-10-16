@@ -156,7 +156,7 @@ export class TemporalHarness {
     };
     stripStackTraces(history);
     await mkdir(historyDirectory, { recursive: true });
-    await writeFile(`${historyDirectory}/${name}.json`, JSON.stringify({ workflowId: handle.workflowId, history }, null, 2) + "\n");
+    await writeFile(`${historyDirectory}/${name}.json`, JSON.stringify({ workflowId: handle.workflowId, history }, null, 2) + "\n", { flag: "wx" });
   }
 
   async cleanup() {

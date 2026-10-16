@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import { constants } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { mkdtemp, mkdir, readdir, copyFile, rm } from "node:fs/promises";
@@ -16,8 +17,17 @@ try {
   if (result.status === 0) {
     const destination = fileURLToPath(new URL("../fixtures/workflow-histories/", import.meta.url));
     await mkdir(destination, { recursive: true });
-    for (const name of await readdir(temporary)) await copyFile(join(temporary, name), join(destination, name));
-    console.log("Recorded synthetic histories. Review fixture changes; never overwrite history to hide an incompatible workflow change.");
+    let added = 0;
+    for (const name of await readdir(temporary)) {
+      try {
+        await copyFile(join(temporary, name), join(destination, name), constants.COPYFILE_EXCL);
+        added++;
+      } catch (error) {
+        if (error.code !== "EEXIST") throw error;
+        console.log(`Preserved existing history: ${name}`);
+      }
+    }
+    console.log(`Added ${added} synthetic histories. Existing fixtures were preserved; new workflow branches need distinct fixture names.`);
   }
 } finally {
   await rm(temporary, { recursive: true, force: true });

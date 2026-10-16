@@ -79,16 +79,28 @@ it("dummy turn retries a failed activity and records a real complete history", a
 }, 15_000);
 
 it.each([
-  ["codex", "runCodexAppServerTurn"], ["opencode", "runOpenCodeAgentTurn"], ["cli:claude", "runCliAgentTurn"]
-] as const)("executes the real %s turn and its production retry policy", async (providerId, activity) => {
+  ["codex", "codex", "runCodexAppServerTurn", false],
+  ["opencode", "opencode", "runOpenCodeAgentTurn", false],
+  ["cli", "cli:claude", "runCliAgentTurn", false],
+  ["native-chat", "codex", "runCodexAppServerTurn", true]
+] as const)("executes the real %s turn and its production retry policy", async (name, providerId, activity, nativeChat) => {
+  const retry = name === "codex";
   h.reset({ [activity]: () => {
-    if (providerId === "codex" && Context.current().info.attempt === 1) throw syntheticFailure();
+    if (retry && Context.current().info.attempt === 1) throw syntheticFailure();
     return completed;
   } });
-  const handle = await h.startWorkflow("codexAppServerTurnWorkflow", { ...item(providerId).turn, providerId });
+  const handle = await h.startWorkflow("codexAppServerTurnWorkflow", {
+    ...item(name).turn, providerId,
+    ...(nativeChat ? { agentSessionId: "agent_session:synthetic", agentAssistantMessageId: "message:synthetic" } : {})
+  });
   expect(await handle.result()).toEqual(completed);
-  expect(h.calls.map(c => c.name)).toEqual(providerId === "codex" ? [activity, activity] : [activity]);
-  if (providerId === "codex") await h.record("codex-turn", handle);
+  expect(h.calls.map(c => c.name)).toEqual(retry ? [activity, activity] : [activity]);
+  const scheduled = eventAttributes(await handle.fetchHistory(), "activityTaskScheduledEventAttributes")[0];
+  expect(scheduled.activityType?.name).toBe(activity);
+  // The test server may cap the native 100-year timeout to its workflow
+  // execution limit; it must still exceed the room-agent 24-hour timeout.
+  expect(Number(scheduled.startToCloseTimeout?.seconds) > 86_400).toBe(nativeChat);
+  await h.record(`${name}-turn`, handle);
 }, 15_000);
 
 it.each(["wake", "timeout"])("dot goal resumes after %s with a real condition timer", async mode => {

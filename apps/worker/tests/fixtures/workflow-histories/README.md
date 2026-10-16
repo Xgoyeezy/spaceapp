@@ -30,7 +30,7 @@ Workers, activities, connections, and test servers are shut down after each test
 | Workflow | Recorded scenarios |
 | --- | --- |
 | `dummyTurnWorkflow` | Activity retry and successful completion |
-| `codexAppServerTurnWorkflow` | Activity retry and completion; live tests also exercise OpenCode and CLI routing |
+| `codexAppServerTurnWorkflow` | Room-agent Codex retry and completion, OpenCode, CLI, and native Chat activity options |
 | `dotGoalWorkflow` | Wake signal, timeout, and a real 300-iteration continue-as-new |
 | `roomAgentSupervisorWorkflow` | Current and pre-patch 50-item and 250-poll boundaries; prepared continuation; bounded carry queue |
 | `roomAgentActionWorkflow` | Exhausted activity retries and the patched failure handler |
@@ -66,7 +66,10 @@ npm run temporal:record-histories -w @space/worker
 ```
 
 The recorder runs the live tests into a temporary directory and copies their
-histories only after every live assertion passes. Normal test runs never write
+new histories only after every live assertion passes. Exclusive creation preserves
+every existing fixture, including old patch branches. The recorder reports skipped
+names; use a distinct name in the test when adding a new branch. Direct recording
+also refuses to overwrite a file. Normal test runs never write
 fixtures. The replay and deliberately incompatible-workflow tests are skipped
 only during recording, then must pass in a separate normal test run.
 

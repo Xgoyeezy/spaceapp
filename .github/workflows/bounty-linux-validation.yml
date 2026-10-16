@@ -13,16 +13,13 @@ jobs:
       matrix:
         include:
           - bounty: 60
-            revision: e8c51a04d00b7776371827dcff9b15e068c0ea4f
+            revision: d83e31e00f01fcce9e30b5ebf6cafbd2fb7011df
             typecheck: temporal:check
             focused: tests/temporal-workflows.test.ts
           - bounty: 61
-            revision: d8cc0981dcfee51b197c1af043f81b18c393f5a0
+            revision: 6ee1f29a582522e5abe8b8d556b18fd8469ab7cc
             typecheck: telemetry:check
             focused: tests/worker-telemetry.test.ts tests/activity-observability.test.ts
-    defaults:
-      run:
-        working-directory: ${{ runner.temp }}/spaceapp-candidate
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -36,20 +33,28 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: node scripts/public-export.mjs --output "$RUNNER_TEMP/spaceapp-candidate"
       - run: ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci
+        working-directory: ${{ runner.temp }}/spaceapp-candidate
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq ripgrep
+        working-directory: ${{ runner.temp }}/spaceapp-candidate
       - run: npm run check
+        working-directory: ${{ runner.temp }}/spaceapp-candidate
       - run: npm run ${{ matrix.typecheck }} -w @space/worker
+        working-directory: ${{ runner.temp }}/spaceapp-candidate
       - name: Focused real-server suite within three minutes
+        working-directory: ${{ runner.temp }}/spaceapp-candidate
         run: timeout 180s npm test -w @space/worker -- ${{ matrix.focused }}
       - name: All public tests
         id: tests
         continue-on-error: true
+        working-directory: ${{ runner.temp }}/spaceapp-candidate
         run: npm test
       - name: Production build
         id: build
         continue-on-error: true
+        working-directory: ${{ runner.temp }}/spaceapp-candidate
         run: npm run build
       - name: Summarize
+        working-directory: ${{ runner.temp }}/spaceapp-candidate
         run: |
           test '${{ steps.tests.outcome }}' = success
           test '${{ steps.build.outcome }}' = success

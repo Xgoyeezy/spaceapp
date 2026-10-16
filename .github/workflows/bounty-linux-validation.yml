@@ -12,10 +12,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - bounty: 63
-            revision: 00056d47f4b2222d2068c4f379613f11fdf39b3d
-          - bounty: 64
-            revision: 2ed3fc08e12672f041aa6fc7bac5810cfb11fdd2
+          - bounty: 61
+            revision: 7d2f0a43abb05cd9539c5b2685856c8a87e746ed
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:

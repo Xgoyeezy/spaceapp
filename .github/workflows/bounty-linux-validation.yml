@@ -12,12 +12,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - bounty: 60
-            revision: 55621f43fac383091a3bdd379fa0ced36dfd9319
-            typecheck: temporal:check
-            focused: tests/temporal-workflows.test.ts
           - bounty: 61
-            revision: e72a084eb8984cd064ed44322304002a7c8e2679
+            revision: 10b501cf970a2be0ba8ea261b2a9d9bbeed88847
             typecheck: telemetry:check
             focused: tests/worker-telemetry.test.ts tests/activity-observability.test.ts
     steps:

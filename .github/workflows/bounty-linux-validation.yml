@@ -13,11 +13,11 @@ jobs:
       matrix:
         include:
           - bounty: 60
-            revision: d83e31e00f01fcce9e30b5ebf6cafbd2fb7011df
+            revision: 55621f43fac383091a3bdd379fa0ced36dfd9319
             typecheck: temporal:check
             focused: tests/temporal-workflows.test.ts
           - bounty: 61
-            revision: 6ee1f29a582522e5abe8b8d556b18fd8469ab7cc
+            revision: e72a084eb8984cd064ed44322304002a7c8e2679
             typecheck: telemetry:check
             focused: tests/worker-telemetry.test.ts tests/activity-observability.test.ts
     steps:

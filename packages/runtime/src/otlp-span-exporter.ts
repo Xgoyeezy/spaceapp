@@ -124,6 +124,9 @@ export function createOtlpSpanExporter(options: OtlpSpanExporterOptions): SpanEx
     }
   };
   const flush = (): Promise<void> => {
+    // An empty async IIFE can finish its finally block before its promise is
+    // assigned, leaving inFlight permanently set after an idle timer tick.
+    if (!inFlight && queue.length === 0) return Promise.resolve();
     if (!inFlight) {
       inFlight = (async () => {
         try {

@@ -29,6 +29,7 @@ export type ActivityOutcome = "COMPLETED" | "FAILED_RESULT" | "FAILED" | "CANCEL
 
 interface ActivityObservation {
   reasonCode: string | null;
+  traceparent?: string;
 }
 
 const observations = new AsyncLocalStorage<ActivityObservation>();
@@ -54,8 +55,10 @@ export function failureReasonScope<T>(execute: () => Promise<T>): { promise: Pro
   return { promise: observations.run(observation, execute), reasonCode: () => observation.reasonCode };
 }
 
-/** traceparent for an outbound call: same W3C trace, new span id; null if none. */
+/** Parent an outbound HTTP call to the observed activity span when available. */
 export function childTraceparent(traceparent: string | null | undefined): string | null {
+  const current = observations.getStore()?.traceparent;
+  if (current && parseTraceparent(current)) return current;
   const parsed = parseTraceparent(traceparent);
   if (!parsed) return null;
   let spanId = randomBytes(8).toString("hex");
@@ -134,6 +137,11 @@ export interface ObserveActivityDependencies {
   metrics?: WorkerMetrics;
   now?: () => number;
   cancelled?: () => boolean;
+  traceparent?: string;
+  onFinish?: (observation: {
+    outcome: ActivityOutcome; reasonCode: string | null; category: FailureCategory | null;
+    startTimeMs: number; endTimeMs: number; durationMs: number;
+  }) => void;
 }
 
 export async function observeActivityExecution<T>(
@@ -163,7 +171,7 @@ export async function observeActivityExecution<T>(
   if (queueMs !== null) metrics.activityScheduleToStart.observe(labels, queueMs / 1000);
   metrics.activitiesInFlight.inc(labels);
   workerLog("info", "activity.started", { ...base, queueMs });
-  const observation: ActivityObservation = { reasonCode: null };
+  const observation: ActivityObservation = { reasonCode: null, traceparent: dependencies.traceparent };
 
   const finish = (outcome: ActivityOutcome, reasonCode: string | null, errorName: string | null) => {
     const durationMs = Math.max(0, now() - startedAt);
@@ -185,6 +193,10 @@ export async function observeActivityExecution<T>(
       queueMs,
       rssBytes: process.memoryUsage().rss
     });
+    // Telemetry is best effort; an observer must never change activity results
+    // or create a retry (and must not return a promise to await).
+    try { dependencies.onFinish?.({ outcome, reasonCode, category, startTimeMs: startedAt, endTimeMs: startedAt + durationMs, durationMs }); }
+    catch { /* Keep activity execution independent from instrumentation. */ }
   };
 
   try {

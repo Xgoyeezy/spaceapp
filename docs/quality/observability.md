@@ -212,42 +212,86 @@ Without the endpoint, every activity still writes `activity.started` and
 
 ## Traces (W3C trace context)
 
-The trace context is local by default. An optional OTLP/HTTP (JSON) exporter sends one
-SERVER span per API request when `SPACE_OTEL_EXPORTER_OTLP_ENDPOINT` is set (no
-OpenTelemetry dependency; `apps/api/src/otlp-span-exporter.ts`).
-- **API:** a valid inbound `traceparent` is continued (same trace ID, new span).
-  An invalid or missing header gets a new trace ID. Every API log line carries
-  `w3cTraceId` (Fastify `childLoggerFactory`).
-- **Propagation into turns:** API turn starters and the Room Agent coordinator add
-  the request's `traceparent` to the turn input (an optional contract field) and
-  to the Temporal memo. A bounded in-memory map from request ID to trace context
-  (`apps/api/src/trace-context.ts`) does this without passing the request object
-  through every service.
-- **Worker:** worker logs read the trace ID from the activity input. Internal
-  room-action calls from the worker send a child `traceparent`, so the internal
-  API request joins the same trace.
-- **Workflow code is unchanged.** Correlation is done in the API starter
-  (input/memo) and in an activity interceptor. The workflow bundle only gains the
-  optional contract field.
+The trace context is local by default. Set `SPACE_OTEL_EXPORTER_OTLP_ENDPOINT`
+to a collector base URL in the API and each worker process to export OTLP/HTTP
+JSON to `<base>/v1/traces`. The API, main worker, memory-maintenance worker, and
+memory-mutation worker share `@space/telemetry`; no OpenTelemetry SDK is needed.
+An unset or invalid endpoint disables export. The URL must be HTTP(S), without
+credentials, query parameters, or a fragment. Export is optional and does not
+require an account with a tracing service.
+
+- The API emits one SERVER span per request. A valid inbound `traceparent`
+  continues that trace; otherwise the API generates a trace ID.
+- Turn, supervisor, action, Dot goal, and memory starters propagate the actual
+  API span ID through input or memo. The bounded request-context registry only
+  retains identifiers. A scheduled workflow without a request starts a trace
+  from its Temporal run ID.
+- Each workflow run emits an INTERNAL span when it completes, fails, is
+  cancelled, or continues as new. Its stable span ID is derived from the run
+  UUID without consuming the workflow's random-number sequence. An active,
+  long-lived supervisor's span is available when that run finishes; its activity
+  spans can arrive first. Server-side termination cannot run the workflow's
+  completion interceptor and therefore cannot emit its final span.
+- Every activity attempt has its own INTERNAL span under the workflow span,
+  including retries, failed-result returns, and cancellations. It reuses the
+  existing outcome, stable reason code, category, and duration observation.
+  Child workflows nest below the parent workflow, including memory consolidation
+  and work on the separate mutation queue.
+- Continue-as-new preserves the original request parent and links to the prior
+  run. Background continuations retain their originating W3C trace and link to
+  both its request span and the supervising run. Space's `trace:bg-<uuid>`
+  remains an application correlation ID, distinct from the W3C trace ID.
+
+Outbound internal HTTP calls made inside an observed activity propagate that
+activity span as their parent, so a nested API request does not reference an
+unexported intermediate span.
+
+Each process has a bounded queue (4,096 waiting spans, batches of 256), a
+3-second timeout per HTTP POST, and a 5-second flush interval. `record()` only
+queues; workflow and activity execution never await collector I/O. Full queues
+increment `dropped`; failed batches increment `failed` and are not retried.
+`createWorkerTelemetry().stats()` exposes exported, dropped, and failed counts.
+Shutdown drains the bounded queue; a failing collector cannot fail work.
 
 ### Replay compatibility
 
-No file under `apps/worker/src` that the workflow bundle imports was changed
-(`workflows.ts`, `room-supervisor-state.ts`, `turn-runtime-policy.ts`,
-`dot-goal-loop.ts`). The `agent-turns` workflow bundle was built for the base
-commit and for this change and compared after normalizing paths and webpack
-module numbers. The only differences are in `@space/contracts`:
-- the new `observability` module;
-- the optional `traceparent` turn-input field;
-- the optional file search and readiness fields.
+Workflow tracing uses sandbox-safe interceptors for context propagation and a
+sink registered with `callDuringReplay: false`. HTTP export, timers for flushing,
+process environment reads, and random activity span IDs live in the worker
+process. Production workflow functions, retry policies, and patch decisions do
+not change. No network call occurs in the workflow sandbox.
 
-A history without `traceparent` parses exactly as before. Activity inputs are
-not part of Temporal's determinism check.
+`apps/worker/tests/worker-telemetry.test.ts` connects real HTTP request
+instrumentation and the production turn starter to a time-skipping Temporal
+server and local HTTP collector. It checks the complete parent tree, retries,
+redaction, child workflows on separate workers, continuation links, and zero
+spans when the same history is replayed. The existing API exporter tests also
+run unchanged. These are synthetic tests without a database or AI provider.
+The SDK downloads its test server on first use; subsequent runs use its cache.
 
-The read-only live replay (`node scripts/temporal-replay-check.mjs --limit 30`)
-could not be run from the agent sandbox that made this change. Its network
-namespace has no route to the Temporal container (`172.18.0.5:7233`), and
-`127.0.0.1:7233` refuses connections. Run it before deploying this change.
+### Local Jaeger proof
+
+Start a disposable collector using the official Jaeger all-in-one image:
+
+```sh
+docker run --rm --name spaceapp-trace-proof -e COLLECTOR_OTLP_ENABLED=true \
+  -p 127.0.0.1:16686:16686 -p 127.0.0.1:4318:4318 jaegertracing/all-in-one:1.76.0
+```
+
+In the checkout, after building dependencies, run:
+
+```sh
+SPACE_TELEMETRY_PROOF_ENDPOINT=http://127.0.0.1:4318 \
+  npm test -w @space/worker -- tests/worker-telemetry.test.ts -t 'connects the real API'
+```
+
+Open `http://127.0.0.1:16686`, choose `space-api`, and find the trace. It contains
+an HTTP SERVER span, the production turn workflow, and two real activity attempts
+with injected failures. The activities are synthetic: this proof does not call
+an AI provider. The opt-in helper forwards only the trace already checked by the
+redaction assertions, accepts loopback HTTP only, and uses wall-clock workflow
+execution for the UI proof. Normal tests do not contact Jaeger. Stop the disposable
+collector when finished; its in-memory trace data is discarded.
 
 ## Redaction policy
 
@@ -295,9 +339,10 @@ No credential or transcript export was added.
   have no `trace_id` or error-code column, and the store ignores the `traceId`
   argument of those methods. Adding them needs a migration. Today the link is
   `TURN_FAILED` (with the run ID) plus the workflow ID suffix.
-- **Background continuations start a new trace.** They create
-  `trace:bg-<uuid>`, linked only through `roomAgentContinuation.sourceRunId`.
-  Chat-pane sends from room actions use `<actionId>:chat`.
+- **Application IDs remain distinct.** Background continuations use
+  `trace:bg-<uuid>` and chat-pane sends use `<actionId>:chat`. OTLP continuation
+  links preserve their W3C trace relationship; mission/task database rows still
+  do not have trace columns.
 - **CLI terminal task IDs are not linked.** `cliTaskId` and `revisionId` are not
   tied to request IDs.
 - **Hosts are observed from the API, not instrumented.** Since 2026-10-12 the
@@ -309,14 +354,14 @@ No credential or transcript export was added.
   The CLI hosts are checked every 30 s by the terminal manager; the Browser Host
   at each `/readyz`. Memory and CPU come from `/proc` only when the PID's command
   line is that host. The hosts themselves still have no metrics endpoint or
-  spans (a normal deploy never restarts them), and the memory-maintenance and
-  memory-mutation workers have no activity interceptor or metrics.
+  spans (a normal deploy never restarts them). Memory workers now use the shared
+  activity observation interceptor but do not expose their own metrics endpoint.
 - **Some workflow-level faults are not in the trace lookup.** Workflow-task
   failures and nondeterminism appear only in Temporal history. The lookup returns
   events, audit entries and workflow rows, not `space_agent_runs` rows.
-- **Span export covers API requests only.** The optional OTLP exporter sends API
-  SERVER spans (method, route template, status, request id); workers and hosts emit
-  no spans, so worker and host work joins traces through log lines only.
+- **CLI and Browser Host span export remains open.** API and all three Temporal
+  workers export spans. CLI/Browser Host operations still join traces through
+  correlation in logs rather than their own spans.
 - **Recovery counters are partial.** Recovery counters exist for plan model
   retries, CLI terminal reconnects and worker activity retries only.
 - **Worker endpoints are not scraped yet.** Since 2026-10-14 stable's

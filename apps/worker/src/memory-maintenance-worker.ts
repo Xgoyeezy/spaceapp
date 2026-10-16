@@ -1,4 +1,5 @@
 import { fileURLToPath } from "node:url";
+import { createWorkerTelemetry } from "./worker-telemetry.js";
 import { NativeConnection, Worker } from "@temporalio/worker";
 import * as activities from "./memory-maintenance-activities.js";
 import {
@@ -17,15 +18,18 @@ if (!memoryMaintenanceEnabled(process.env)) {
   const namespace = process.env.SPACE_TEMPORAL_NAMESPACE ?? DEFAULT_TEMPORAL_NAMESPACE;
   const workflowsPath = fileURLToPath(new URL("./memory-maintenance-workflows.js", import.meta.url));
 
+  const telemetry = createWorkerTelemetry({ serviceName: service });
+  let connection: NativeConnection | undefined;
   try {
-    const connection = await NativeConnection.connect({ address });
+    connection = await NativeConnection.connect({ address });
     const worker = await Worker.create({
       connection,
       namespace,
       taskQueue: MEMORY_MAINTENANCE_TASK_QUEUE,
       workflowsPath,
       activities,
-      ...memoryMaintenanceWorkerOptions
+      ...memoryMaintenanceWorkerOptions,
+      ...telemetry.workerOptions
     });
     console.log(JSON.stringify({
       service,
@@ -43,5 +47,8 @@ if (!memoryMaintenanceEnabled(process.env)) {
       error: error instanceof Error ? error.message : "Unknown maintenance worker failure."
     }));
     process.exitCode = 1;
+  } finally {
+    await telemetry.close();
+    await connection?.close();
   }
 }

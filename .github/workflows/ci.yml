@@ -19,6 +19,9 @@ jobs:
     name: Temporal sandbox and replay compatibility
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: ${{ runner.temp }}/spaceapp-temporal-export
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -27,6 +30,9 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+      - name: Create sanitized Temporal candidate
+        working-directory: ${{ github.workspace }}
+        run: node scripts/public-export.mjs --output "$RUNNER_TEMP/spaceapp-temporal-export"
       - name: Install dependencies
         run: ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci
       - name: Build dependencies and typecheck

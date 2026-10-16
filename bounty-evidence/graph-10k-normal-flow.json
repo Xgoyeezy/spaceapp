@@ -1,0 +1,20 @@
+{
+  "machine": "Apple M2 / Mac14,2 / 8 CPU / 16 GiB / macOS 27.0.1",
+  "flow": "Compiled preview, normal workspace then Memory, 600 rotating/zooming frames",
+  "nodes": 10000,
+  "edges": 30000,
+  "frames": 600,
+  "frameP50Ms": 16.7,
+  "frameP95Ms": 17.7,
+  "cpuP95Ms": 2.1,
+  "pickP95Ms": 0.2,
+  "pickMaxMs": 1.3,
+  "maxLoadOrLayoutTaskMs": 117,
+  "maxPageTaskMs": 182,
+  "width": 898.5078125,
+  "height": 460,
+  "dpr": 2,
+  "renderer": "ANGLE Metal Apple M2",
+  "browser": "Chrome 155.0.0.0",
+  "status": "Supplemental 10k measurement; 117 ms load/layout task reported without claiming the 100 ms bound."
+}

@@ -1,0 +1,28 @@
+{
+  "machine": "Apple M2 / Mac14,2 / 8 CPU / 16 GiB / macOS 27.0.1",
+  "flow": "Compiled preview, normal workspace then Memory, 600 rotating/zooming frames",
+  "nodes": 2000,
+  "edges": 6000,
+  "frames": 600,
+  "frameP50Ms": 16.7,
+  "frameP95Ms": 17.6,
+  "cpuP95Ms": 2.8,
+  "pickP95Ms": 0.2,
+  "pickMaxMs": 8.4,
+  "pickWorstFrame": 33,
+  "maxLoadOrLayoutTaskMs": 62,
+  "maxPageTaskMs": 172,
+  "width": 898.5078125,
+  "height": 460,
+  "dpr": 2,
+  "renderer": "ANGLE Metal Apple M2",
+  "browser": "Chrome 155.0.0.0",
+  "separateSchedulerBaseline": {
+    "frames": 600,
+    "frameP50Ms": 16.7,
+    "frameP95Ms": 17.6,
+    "cpuP95Ms": 0,
+    "maxLaterPageTaskMs": 216
+  },
+  "status": "Strict 2k frame target and one pick outlier failed; scheduler baseline has the same frame-time p95. No pass claimed."
+}

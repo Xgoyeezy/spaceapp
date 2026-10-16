@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-16",
+  "hardware": "Apple M2 (Mac14,2), 8 CPU cores, 16 GiB RAM, macOS 27.0.1",
+  "flow": "Load normal demo workspace, open Workspace > Memory, wait for deterministic 180-step worker layout, measure 600 rotating/zooming frames",
+  "mode": "render",
+  "nodes": 50000,
+  "edges": 150000,
+  "frames": 600,
+  "frameP50Ms": 16.7,
+  "frameP95Ms": 17.5,
+  "cpuP95Ms": 1.6,
+  "pickP95Ms": 0.2,
+  "pickMaxMs": 1.2,
+  "maxLoadOrLayoutTaskMs": 60,
+  "maxPageTaskMs": 162,
+  "width": 898.5078125,
+  "height": 460,
+  "dpr": 2,
+  "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+  "browser": "Chrome/155.0.0.0",
+  "notes": [
+    "Displayed sub-millisecond metrics rounded to one decimal place.",
+    "Page startup maximum includes work before Memory opened.",
+    "Other user applications remained running; no CPU or refresh-rate override.",
+    "No provider or external data was used."
+  ]
+}

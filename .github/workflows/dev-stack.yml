@@ -9,7 +9,7 @@ permissions:
 jobs:
   source-stack:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -19,6 +19,8 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci
+      - name: Install the file-search runtime prerequisite
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ripgrep
       - run: npm run check
       - run: npm test
       - name: Start from source, claim the owner, open OpenCode, and clean up

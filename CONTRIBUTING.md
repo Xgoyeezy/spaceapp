@@ -11,6 +11,8 @@ The monorepo requires Node **>=22.12 <23**, as declared in the root
 `package.json`, and npm. Linux is the reference development environment;
 Windows contributors can use WSL. Building `node-pty` may require Python 3,
 Make and a C++ compiler if a compatible prebuilt binary is unavailable.
+Install `ripgrep` (`rg`) for the source API's file search and its integration
+tests (`sudo apt-get install ripgrep` on Ubuntu or `brew install ripgrep` on macOS).
 
 The `run-spaceapp` installer is a separate package with its own host Node
 requirement. Installing the application and developing this monorepo have

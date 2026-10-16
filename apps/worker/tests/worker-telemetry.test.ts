@@ -8,7 +8,7 @@ import { ApplicationFailure } from "@temporalio/common";
 import { Client } from "@temporalio/client";
 import { TestWorkflowEnvironment } from "@temporalio/testing";
 import { bundleWorkflowCode, DefaultLogger, Runtime, Worker } from "@temporalio/worker";
-import { createOtlpSpanExporter } from "@space/telemetry";
+import { createOtlpSpanExporter } from "@space/runtime";
 import { roomAgentSupervisorInputSchema, roomAgentSupervisorQueueItemSchema } from "@space/contracts";
 import { createWorkerTelemetry } from "../src/worker-telemetry.js";
 import { childTraceparent, noteActivityFailureReason } from "../src/activity-observability.js";

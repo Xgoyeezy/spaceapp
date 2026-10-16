@@ -83,7 +83,6 @@ test("public test command uses a portable one-file suite that imports every publ
     .filter((name) => name.startsWith("@space/"))
     .sort();
   const publicBuildOrder = [
-    "@space/telemetry",
     "@space/contracts",
     "@space/streaming",
     "@space/opencode-control",

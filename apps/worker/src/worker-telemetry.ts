@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import type { WorkerOptions } from "@temporalio/worker";
-import { otlpSpanExporterFromEnv, type SpanExporter } from "@space/telemetry";
+import { otlpSpanExporterFromEnv, type SpanExporter } from "@space/runtime";
 import { formatTraceparent, parseTraceparent } from "@space/contracts";
 import { activityCorrelation, createActivityObservabilityInterceptors, observeActivityExecution } from "./activity-observability.js";
 import {

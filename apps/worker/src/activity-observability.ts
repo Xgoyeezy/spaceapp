@@ -10,6 +10,7 @@ import {
   traceIdFromTraceparent,
   type FailureCategory
 } from "@space/contracts";
+import type { SpanExporter } from "@space/runtime";
 import { logIdentifier, workerLog, type WorkerLogValue } from "./worker-log.js";
 import { workerMetrics, type WorkerMetrics } from "./worker-metrics.js";
 
@@ -142,6 +143,14 @@ export interface ObserveActivityDependencies {
     outcome: ActivityOutcome; reasonCode: string | null; category: FailureCategory | null;
     startTimeMs: number; endTimeMs: number; durationMs: number;
   }) => void;
+  /** OTLP export (SPACE_OTEL_EXPORTER_OTLP_ENDPOINT): one span per activity whose input carries a traceparent. */
+  spans?: SpanExporter | null;
+}
+
+function activityTraceparent(args: readonly unknown[]) {
+  const found: Partial<Record<CorrelationKey, string>> = {};
+  for (const arg of args) readCorrelation(arg, found, 2);
+  return parseTraceparent(found.traceparent);
 }
 
 export async function observeActivityExecution<T>(
@@ -197,6 +206,20 @@ export async function observeActivityExecution<T>(
     // or create a retry (and must not return a promise to await).
     try { dependencies.onFinish?.({ outcome, reasonCode, category, startTimeMs: startedAt, endTimeMs: startedAt + durationMs, durationMs }); }
     catch { /* Keep activity execution independent from instrumentation. */ }
+    const parent = !dependencies.onFinish && dependencies.spans ? activityTraceparent(args) : null;
+    if (parent) {
+      dependencies.spans!.record({
+        traceId: parent.traceId,
+        spanId: randomBytes(8).toString("hex"),
+        parentSpanId: parent.parentId,
+        name: `activity ${activityType}`,
+        startTimeUnixNano: BigInt(startedAt) * 1_000_000n,
+        endTimeUnixNano: BigInt(startedAt + durationMs) * 1_000_000n,
+        attributes: { "space.activity_type": activityType, "space.outcome": outcome, "space.attempt": info.attempt },
+        error: outcome === "FAILED" || outcome === "FAILED_RESULT",
+        kind: 1
+      });
+    }
   };
 
   try {

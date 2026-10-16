@@ -10,9 +10,12 @@ on:
       - "starter-memory/**"
       - "Dockerfile"
       - "package-lock.json"
+      - "scripts/container-*.mjs"
+      - ".github/workflows/containers.yml"
   push:
     branches:
       - main
+      - bounty/64-container-closures
     paths:
       - "apps/**"
       - "packages/**"
@@ -21,6 +24,8 @@ on:
       - "starter-memory/**"
       - "Dockerfile"
       - "package-lock.json"
+      - "scripts/container-*.mjs"
+      - ".github/workflows/containers.yml"
   workflow_dispatch:
 
 permissions:

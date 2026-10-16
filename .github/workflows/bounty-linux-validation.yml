@@ -8,21 +8,39 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - bounty: 60
+            revision: e8c51a04d00b7776371827dcff9b15e068c0ea4f
+            typecheck: temporal:check
+            focused: tests/temporal-workflows.test.ts
+          - bounty: 61
+            revision: d8cc0981dcfee51b197c1af043f81b18c393f5a0
+            typecheck: telemetry:check
+            focused: tests/worker-telemetry.test.ts tests/activity-observability.test.ts
+    defaults:
+      run:
+        working-directory: ${{ runner.temp }}/spaceapp-candidate
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 1ecc2c9be9cc2de9cf67a2fa8b3e4ed8296dfdb7
+          ref: ${{ matrix.revision }}
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version-file: .nvmrc
           cache: npm
+      - name: Export the sanitized public candidate
+        working-directory: ${{ github.workspace }}
+        run: node scripts/public-export.mjs --output "$RUNNER_TEMP/spaceapp-candidate"
       - run: ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq ripgrep
       - run: npm run check
-      - run: npm run temporal:check -w @space/worker
-      - name: Temporal suite within three minutes
-        run: timeout 180s npm test -w @space/worker -- tests/temporal-workflows.test.ts
+      - run: npm run ${{ matrix.typecheck }} -w @space/worker
+      - name: Focused real-server suite within three minutes
+        run: timeout 180s npm test -w @space/worker -- ${{ matrix.focused }}
       - name: All public tests
         id: tests
         continue-on-error: true

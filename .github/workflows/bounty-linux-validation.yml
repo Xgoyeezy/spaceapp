@@ -1,0 +1,35 @@
+name: Bounty Linux validation
+on:
+  push:
+    branches: [validation/60-linux]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 1ecc2c9
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ripgrep
+      - run: npm run check
+      - run: npm run temporal:check -w @space/worker
+      - name: All public tests
+        id: tests
+        continue-on-error: true
+        run: npm test
+      - name: Production build
+        id: build
+        continue-on-error: true
+        run: npm run build
+      - name: Summarize
+        run: |
+          test '${{ steps.tests.outcome }}' = success
+          test '${{ steps.build.outcome }}' = success

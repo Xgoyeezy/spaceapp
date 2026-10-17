@@ -8,6 +8,12 @@ or synchronously reading the GPU. Labels examine at most 384 candidates and draw
 at most 64 labels, preserving core/source priority, collision avoidance and the
 Titles switch.
 
+Label candidates are recalculated only when focus changes or zoom crosses the
+label-detail threshold. Text widths are measured lazily and cached for at most
+385 titles, including focused nodes outside the candidate pool. Replacing the
+graph resets the cache; rotation does not remeasure unchanged text. Label counts,
+font, collision rules and rendering resolution are unchanged.
+
 Large live responses are parsed in a worker. Graph input and atlas styles cross
 worker boundaries in bounded batches; edges are referenced by transferred indices
 instead of cloning the complete graph back onto the main thread. Position textures,

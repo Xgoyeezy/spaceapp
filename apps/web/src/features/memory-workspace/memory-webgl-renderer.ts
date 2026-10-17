@@ -1,7 +1,8 @@
 import type { MemoryCoordinates } from "./memory-coordinates.js";
 import type { MemoryGraphNode } from "@space/contracts";
 import { projectMemoryPoint, type MemoryCamera3D, type MemoryPoint3D } from "./memory-3d.js";
-import { memoryLabelsAtZoom, MEMORY_LABEL_LIMIT, type prepareMemoryGpuData } from "./memory-webgl-data.js";
+import { MEMORY_LABEL_LIMIT, type prepareMemoryGpuData } from "./memory-webgl-data.js";
+import { MemoryLabelCache } from "./memory-label-cache.js";
 
 import { pickMemoryNode, type MemoryPickIndex } from "./memory-picking.js";
 
@@ -103,6 +104,7 @@ export class MemoryWebGLRenderer {
   private readonly uniforms = new Map<WebGLProgram, Map<string, WebGLUniformLocation | null>>();
   private data: GraphData | null = null;
   private nodes: MemoryGraphNode[] = [];
+  private labelCache = new MemoryLabelCache([], []);
   private coordinates: MemoryCoordinates = new Map<string, MemoryPoint3D>();
   private picking: MemoryPickIndex | null = null;
   private pickIds: string[] = [];
@@ -142,6 +144,7 @@ export class MemoryWebGLRenderer {
 
   setGraph(nodes: MemoryGraphNode[], data: GraphData) {
     this.nodes = nodes; this.data = data; this.focus = -1;
+    this.labelCache = new MemoryLabelCache(nodes, data.labels);
     const gl = this.gl;
     this.textureRows = Math.max(1, Math.ceil(nodes.length / 256));
     this.textureData = new Float32Array(256 * this.textureRows * 4);
@@ -236,12 +239,12 @@ export class MemoryWebGLRenderer {
     const boxes: Array<{ x: number; y: number; width: number }> = [];
     context.font = "11px system-ui, sans-serif";
     const scale = Math.min(this.width, this.height) * 0.4 / this.extent;
-    for (const index of memoryLabelsAtZoom(this.nodes, this.data.labels, camera.zoom, this.focus)) {
+    const measureText = (text: string) => context.measureText(text).width;
+    for (const index of this.labelCache.atZoom(camera.zoom, this.focus)) {
       const node = this.nodes[index]!, point = this.coordinates.get(node.id); if (!point) continue;
       const p = projectMemoryPoint(point, camera, scale, this.width, this.height), x = p.x + 9, y = p.y;
       if (x < 0 || x > this.width - 25 || y < 14 || y > this.height - 5) continue;
-      const label = node.label.length > 48 ? `${node.label.slice(0, 45)}…` : node.label;
-      const width = context.measureText(label).width;
+      const { text: label, width } = this.labelCache.measure(index, measureText);
       if (x + width > this.width || boxes.some(box => Math.abs(box.y - y) < 16 && x < box.x + box.width + 5 && x + width + 5 > box.x)) continue;
       boxes.push({ x, y, width });
       context.fillStyle = "#09111bea"; context.fillRect(x - 3, y - 11, width + 6, 16);

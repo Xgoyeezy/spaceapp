@@ -8,3 +8,5 @@ results*.json
 *-local.json
 *.log
 artifact/
+artifact-precomputed/
+picking-imports.wasm

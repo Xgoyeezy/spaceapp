@@ -1,0 +1,185 @@
+{
+  "source": "f0a2078918870b0abb0ed6cf7c02d6dea8b07e7f",
+  "compilerCommit": "3eb801e73102c652b81ccae4b07db820c05f6c3a",
+  "compileRun": "https://github.com/Xgoyeezy/spaceapp/actions/runs/39005189063",
+  "equivalenceComparisons": 86404,
+  "equivalenceMismatches": 0,
+  "foregroundRuns": [
+    {
+      "count": 2000,
+      "first": "js",
+      "valid": true,
+      "focusAtStart": true,
+      "focusAtEnd": true,
+      "blurEvents": 0,
+      "mismatches": 0,
+      "startedAt": "2026-10-17T05:12:13.788Z",
+      "setup": {
+        "instantiateMs": 3.5,
+        "copyAndMemoryMs": 0.09999999403953552,
+        "copiedBytes": 49180,
+        "memoryBytes": 131072
+      },
+      "individual": {
+        "js": {
+          "p50Ms": 0,
+          "p95Ms": 0.10000002384185791,
+          "maxMs": 0.30000001192092896,
+          "meanMs": 0.037333333591620124
+        },
+        "wasm": {
+          "p50Ms": 0,
+          "p95Ms": 0.10000002384185791,
+          "maxMs": 0.20000001788139343,
+          "meanMs": 0.02850000063578288
+        }
+      },
+      "batchPerQuery": {
+        "js": {
+          "p50Ms": 0.005,
+          "p95Ms": 0.014500000029802323,
+          "maxMs": 0.01799999997019768,
+          "meanMs": 0.007104166659216084
+        },
+        "wasm": {
+          "p50Ms": 0.005999999940395355,
+          "p95Ms": 0.020499999970197677,
+          "maxMs": 0.04399999991059303,
+          "meanMs": 0.009124999996274709
+        }
+      }
+    },
+    {
+      "count": 2000,
+      "first": "wasm",
+      "valid": true,
+      "focusAtStart": true,
+      "focusAtEnd": true,
+      "blurEvents": 0,
+      "mismatches": 0,
+      "startedAt": "2026-10-17T05:11:33.533Z",
+      "setup": {
+        "instantiateMs": 2.4000000059604645,
+        "copyAndMemoryMs": 0.20000001788139343,
+        "copiedBytes": 49180,
+        "memoryBytes": 131072
+      },
+      "individual": {
+        "js": {
+          "p50Ms": 0,
+          "p95Ms": 0.10000002384185791,
+          "maxMs": 1,
+          "meanMs": 0.047499999850988385
+        },
+        "wasm": {
+          "p50Ms": 0,
+          "p95Ms": 0.10000002384185791,
+          "maxMs": 2,
+          "meanMs": 0.0494999997317791
+        }
+      },
+      "batchPerQuery": {
+        "js": {
+          "p50Ms": 0.009500000029802322,
+          "p95Ms": 0.015999999940395356,
+          "maxMs": 0.01799999997019768,
+          "meanMs": 0.00827083334326744
+        },
+        "wasm": {
+          "p50Ms": 0.0075,
+          "p95Ms": 0.014500000029802323,
+          "maxMs": 0.015,
+          "meanMs": 0.007812499993791182
+        }
+      }
+    },
+    {
+      "count": 50000,
+      "first": "js",
+      "valid": true,
+      "focusAtStart": true,
+      "focusAtEnd": true,
+      "blurEvents": 0,
+      "mismatches": 0,
+      "startedAt": "2026-10-17T05:12:41.927Z",
+      "setup": {
+        "instantiateMs": 0.5999999940395355,
+        "copyAndMemoryMs": 2.5,
+        "copiedBytes": 1208476,
+        "memoryBytes": 1310720
+      },
+      "individual": {
+        "js": {
+          "p50Ms": 0,
+          "p95Ms": 0.19999998807907104,
+          "maxMs": 0.5999999940395355,
+          "meanMs": 0.05299999997019768
+        },
+        "wasm": {
+          "p50Ms": 0,
+          "p95Ms": 0.10000002384185791,
+          "maxMs": 1.0999999940395355,
+          "meanMs": 0.05633333434661229
+        }
+      },
+      "batchPerQuery": {
+        "js": {
+          "p50Ms": 0.00949999988079071,
+          "p95Ms": 0.01600000008940697,
+          "maxMs": 0.0175,
+          "meanMs": 0.009520833312223354
+        },
+        "wasm": {
+          "p50Ms": 0.014000000059604644,
+          "p95Ms": 0.020499999970197677,
+          "maxMs": 0.023500000089406968,
+          "meanMs": 0.011895833332091571
+        }
+      }
+    },
+    {
+      "count": 50000,
+      "first": "wasm",
+      "valid": true,
+      "focusAtStart": true,
+      "focusAtEnd": true,
+      "blurEvents": 0,
+      "mismatches": 0,
+      "startedAt": "2026-10-17T05:13:24.343Z",
+      "setup": {
+        "instantiateMs": 3,
+        "copyAndMemoryMs": 1.5999999940395355,
+        "copiedBytes": 1208476,
+        "memoryBytes": 1310720
+      },
+      "individual": {
+        "js": {
+          "p50Ms": 0,
+          "p95Ms": 0.19999998807907104,
+          "maxMs": 2.0999999940395355,
+          "meanMs": 0.05166666651765506
+        },
+        "wasm": {
+          "p50Ms": 0,
+          "p95Ms": 0.10000002384185791,
+          "maxMs": 4.5,
+          "meanMs": 0.06966666713356971
+        }
+      },
+      "batchPerQuery": {
+        "js": {
+          "p50Ms": 0.007999999970197678,
+          "p95Ms": 0.012999999970197677,
+          "maxMs": 0.016500000059604645,
+          "meanMs": 0.0077499999913076545
+        },
+        "wasm": {
+          "p50Ms": 0.008500000089406967,
+          "p95Ms": 0.016500000059604645,
+          "maxMs": 0.0175,
+          "meanMs": 0.008395833373069761
+        }
+      }
+    }
+  ]
+}

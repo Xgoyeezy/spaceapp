@@ -1,0 +1,10041 @@
+[
+  {
+    "count": 2000,
+    "run": 0,
+    "first": "wasm",
+    "precomputed": true,
+    "label": "foreground",
+    "startedAt": "2026-10-17T05:11:33.533Z",
+    "focusAtStart": true,
+    "focusAtEnd": true,
+    "blurEvents": 0,
+    "visibilityValid": true,
+    "valid": true,
+    "mismatches": 0,
+    "checksum": 6927408,
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "setup": {
+      "instantiateMs": 2.4000000059604645,
+      "copyAndMemoryMs": 0.20000001788139343,
+      "copiedBytes": 49180,
+      "memoryBytes": 131072
+    },
+    "wasmBytes": 1332,
+    "individual": {
+      "js": {
+        "p50Ms": 0,
+        "p95Ms": 0.10000002384185791,
+        "maxMs": 1,
+        "meanMs": 0.047499999850988385
+      },
+      "wasm": {
+        "p50Ms": 0,
+        "p95Ms": 0.10000002384185791,
+        "maxMs": 2,
+        "meanMs": 0.0494999997317791
+      }
+    },
+    "batchPerQuery": {
+      "js": {
+        "p50Ms": 0.009500000029802322,
+        "p95Ms": 0.015999999940395356,
+        "maxMs": 0.01799999997019768,
+        "meanMs": 0.00827083334326744
+      },
+      "wasm": {
+        "p50Ms": 0.0075,
+        "p95Ms": 0.014500000029802323,
+        "maxMs": 0.015,
+        "meanMs": 0.007812499993791182
+      }
+    },
+    "samples": [
+      {
+        "sample": 0,
+        "timestamp": 3882.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1838,
+          "ms": 0.20000001788139343
+        },
+        "js": {
+          "selected": 1838,
+          "ms": 1
+        }
+      },
+      {
+        "sample": 1,
+        "timestamp": 3898.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1838,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1838,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 2,
+        "timestamp": 3914.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1838,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": 1838,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 3,
+        "timestamp": 3931.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1762,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1762,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 4,
+        "timestamp": 3949.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1762,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1762,
+          "ms": 0.19999998807907104
+        }
+      },
+      {
+        "sample": 5,
+        "timestamp": 3965.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 679,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 679,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 6,
+        "timestamp": 3982.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 679,
+          "ms": 0
+        },
+        "js": {
+          "selected": 679,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 7,
+        "timestamp": 3999.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 888,
+          "ms": 0.20000001788139343
+        },
+        "wasm": {
+          "selected": 888,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 8,
+        "timestamp": 4015.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 888,
+          "ms": 0.29999998211860657
+        },
+        "js": {
+          "selected": 888,
+          "ms": 0.20000001788139343
+        }
+      },
+      {
+        "sample": 9,
+        "timestamp": 4032.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 888,
+          "ms": 0.4000000059604645
+        },
+        "wasm": {
+          "selected": 888,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 10,
+        "timestamp": 4049.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 777,
+          "ms": 0
+        },
+        "js": {
+          "selected": 777,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 11,
+        "timestamp": 4065.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 777,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 777,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 12,
+        "timestamp": 4082.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 777,
+          "ms": 0
+        },
+        "js": {
+          "selected": 777,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 13,
+        "timestamp": 4099.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 777,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 777,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 14,
+        "timestamp": 4115.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 18,
+          "ms": 0
+        },
+        "js": {
+          "selected": 18,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 15,
+        "timestamp": 4131.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 18,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 18,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 16,
+        "timestamp": 4148.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 18,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 18,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 17,
+        "timestamp": 4165.4,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 18,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 18,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 18,
+        "timestamp": 4182.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 18,
+          "ms": 0
+        },
+        "js": {
+          "selected": 18,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 19,
+        "timestamp": 4199.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 150,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 150,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 20,
+        "timestamp": 4214.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 131,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 131,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 21,
+        "timestamp": 4231.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 720,
+          "ms": 0.20000001788139343
+        },
+        "wasm": {
+          "selected": 720,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 22,
+        "timestamp": 4249.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 720,
+          "ms": 2
+        },
+        "js": {
+          "selected": 720,
+          "ms": 0.7000000178813934
+        }
+      },
+      {
+        "sample": 23,
+        "timestamp": 4265.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 720,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 720,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 24,
+        "timestamp": 4282.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 720,
+          "ms": 0
+        },
+        "js": {
+          "selected": 720,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 25,
+        "timestamp": 4298.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1498,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1498,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 26,
+        "timestamp": 4315.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1498,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1498,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 27,
+        "timestamp": 4332.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1498,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1498,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 28,
+        "timestamp": 4349.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1498,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1498,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 29,
+        "timestamp": 4365.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1498,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1498,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 30,
+        "timestamp": 4382.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1498,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1498,
+          "ms": 0.20000001788139343
+        }
+      },
+      {
+        "sample": 31,
+        "timestamp": 4399.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1498,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1498,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 32,
+        "timestamp": 4431.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1498,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1498,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 33,
+        "timestamp": 4449.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1455,
+          "ms": 0.19999998807907104
+        },
+        "wasm": {
+          "selected": 1455,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 34,
+        "timestamp": 4465.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1455,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1455,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 35,
+        "timestamp": 4481.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 956,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 956,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 36,
+        "timestamp": 4499.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 956,
+          "ms": 0
+        },
+        "js": {
+          "selected": 956,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 37,
+        "timestamp": 4514.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 956,
+          "ms": 0.29999998211860657
+        },
+        "wasm": {
+          "selected": 956,
+          "ms": 0.20000001788139343
+        }
+      },
+      {
+        "sample": 38,
+        "timestamp": 4532.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1431,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1431,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 39,
+        "timestamp": 4548.7,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1195,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1195,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 40,
+        "timestamp": 4565.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1195,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1195,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 41,
+        "timestamp": 4581.7,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1431,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1431,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 42,
+        "timestamp": 4599.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1431,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": 1431,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 43,
+        "timestamp": 4615.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1431,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1431,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 44,
+        "timestamp": 4631.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1431,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1431,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 45,
+        "timestamp": 4648.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 25,
+          "ms": 0.20000001788139343
+        },
+        "wasm": {
+          "selected": 25,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 46,
+        "timestamp": 4665.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 25,
+          "ms": 0
+        },
+        "js": {
+          "selected": 25,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 47,
+        "timestamp": 4682.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 25,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 25,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 48,
+        "timestamp": 4698.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 690,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 49,
+        "timestamp": 4715,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 690,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 50,
+        "timestamp": 4732.1,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 690,
+          "ms": 0
+        },
+        "js": {
+          "selected": 690,
+          "ms": 0.4000000059604645
+        }
+      },
+      {
+        "sample": 51,
+        "timestamp": 4749.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 52,
+        "timestamp": 4765.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 690,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 53,
+        "timestamp": 4782.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 690,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 690,
+          "ms": 0.19999998807907104
+        }
+      },
+      {
+        "sample": 54,
+        "timestamp": 4799.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 690,
+          "ms": 0
+        },
+        "js": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 55,
+        "timestamp": 4814.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 690,
+          "ms": 0.20000001788139343
+        },
+        "wasm": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 56,
+        "timestamp": 4832.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 690,
+          "ms": 0
+        },
+        "js": {
+          "selected": 690,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 57,
+        "timestamp": 4849.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 690,
+          "ms": 0.19999998807907104
+        },
+        "wasm": {
+          "selected": 690,
+          "ms": 0.20000001788139343
+        }
+      },
+      {
+        "sample": 58,
+        "timestamp": 4865.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 59,
+        "timestamp": 4882.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 60,
+        "timestamp": 4898.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 690,
+          "ms": 0
+        },
+        "js": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 61,
+        "timestamp": 4915.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 690,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 62,
+        "timestamp": 4932.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 690,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 63,
+        "timestamp": 4949.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 690,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 64,
+        "timestamp": 4965.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 690,
+          "ms": 0
+        },
+        "js": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 65,
+        "timestamp": 4982.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 690,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 66,
+        "timestamp": 4998.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 690,
+          "ms": 0.6000000238418579
+        },
+        "js": {
+          "selected": 690,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 67,
+        "timestamp": 5015.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 690,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 690,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 68,
+        "timestamp": 5032.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 690,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": 690,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 69,
+        "timestamp": 5049.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1018,
+          "ms": 0.30000001192092896
+        },
+        "wasm": {
+          "selected": 1018,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 70,
+        "timestamp": 5064.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1018,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1018,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 71,
+        "timestamp": 5081.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1018,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1018,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 72,
+        "timestamp": 5099.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1018,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1018,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 73,
+        "timestamp": 5115.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1018,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1018,
+          "ms": 0.30000001192092896
+        }
+      },
+      {
+        "sample": 74,
+        "timestamp": 5131.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1018,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1018,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 75,
+        "timestamp": 5149.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1018,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1018,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 76,
+        "timestamp": 5165.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1018,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1018,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 77,
+        "timestamp": 5181.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1018,
+          "ms": 0.19999998807907104
+        },
+        "wasm": {
+          "selected": 1018,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 78,
+        "timestamp": 5198.4,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1018,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1018,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 79,
+        "timestamp": 5214.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1018,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1018,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 80,
+        "timestamp": 5231.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1018,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1018,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 81,
+        "timestamp": 5249.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1018,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1018,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 82,
+        "timestamp": 5265.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1018,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1018,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 83,
+        "timestamp": 5281.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1018,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1018,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 84,
+        "timestamp": 5299.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1018,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1018,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 85,
+        "timestamp": 5315.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1018,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 1018,
+          "ms": 0.29999998211860657
+        }
+      },
+      {
+        "sample": 86,
+        "timestamp": 5332.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1018,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": 1018,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 87,
+        "timestamp": 5349.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1018,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1018,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 88,
+        "timestamp": 5365,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.20000001788139343
+        }
+      },
+      {
+        "sample": 89,
+        "timestamp": 5382.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.5
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 90,
+        "timestamp": 5399.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 91,
+        "timestamp": 5415.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 92,
+        "timestamp": 5448.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 93,
+        "timestamp": 5465.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 94,
+        "timestamp": 5481.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 95,
+        "timestamp": 5498.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 96,
+        "timestamp": 5515.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 97,
+        "timestamp": 5532.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 98,
+        "timestamp": 5549.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 99,
+        "timestamp": 5565.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1740,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1740,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 100,
+        "timestamp": 5581.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1740,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1740,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 101,
+        "timestamp": 5599.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1740,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1740,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 102,
+        "timestamp": 5632.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1740,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1740,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 103,
+        "timestamp": 5649.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1740,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1740,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 104,
+        "timestamp": 5665.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1740,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1740,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 105,
+        "timestamp": 5682.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1740,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1740,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 106,
+        "timestamp": 5699.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1740,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1740,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 107,
+        "timestamp": 5732.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1740,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1740,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 108,
+        "timestamp": 5765.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1740,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1740,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 109,
+        "timestamp": 5782.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1740,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1740,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 110,
+        "timestamp": 5799.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 111,
+        "timestamp": 5832.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 112,
+        "timestamp": 5849.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 113,
+        "timestamp": 5865.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 114,
+        "timestamp": 5899.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 115,
+        "timestamp": 5915.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 116,
+        "timestamp": 5932.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 117,
+        "timestamp": 5964.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 118,
+        "timestamp": 5981.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 119,
+        "timestamp": 5998.4,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 120,
+        "timestamp": 6015.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 121,
+        "timestamp": 6049.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 122,
+        "timestamp": 6082.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 123,
+        "timestamp": 6099.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 124,
+        "timestamp": 6131.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 125,
+        "timestamp": 6149.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 126,
+        "timestamp": 6165.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 127,
+        "timestamp": 6199.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 128,
+        "timestamp": 6231.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 129,
+        "timestamp": 6249.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 130,
+        "timestamp": 6282.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 131,
+        "timestamp": 6299.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 132,
+        "timestamp": 6332.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 133,
+        "timestamp": 6349.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 134,
+        "timestamp": 6365.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1984,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1984,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 135,
+        "timestamp": 6398.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1984,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1984,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 136,
+        "timestamp": 6415.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1984,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1984,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 137,
+        "timestamp": 6432.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1984,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1984,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 138,
+        "timestamp": 6448.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1984,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1984,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 139,
+        "timestamp": 6465.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1984,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1984,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 140,
+        "timestamp": 6482.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1984,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1984,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 141,
+        "timestamp": 6499.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1984,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1984,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 142,
+        "timestamp": 6515.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1984,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1984,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 143,
+        "timestamp": 6532.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1984,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1984,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 144,
+        "timestamp": 6565.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1984,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1984,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 145,
+        "timestamp": 6582.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1984,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1984,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 146,
+        "timestamp": 6599.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 147,
+        "timestamp": 6615.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 148,
+        "timestamp": 6632.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 149,
+        "timestamp": 6649.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 293,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 293,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 150,
+        "timestamp": 6665.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 293,
+          "ms": 0
+        },
+        "js": {
+          "selected": 293,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 151,
+        "timestamp": 6682.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 293,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 293,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 152,
+        "timestamp": 6715.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 293,
+          "ms": 0
+        },
+        "js": {
+          "selected": 293,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 153,
+        "timestamp": 6732.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 293,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 293,
+          "ms": 0.19999998807907104
+        }
+      },
+      {
+        "sample": 154,
+        "timestamp": 6749.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 293,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 293,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 155,
+        "timestamp": 6765.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 293,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 293,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 156,
+        "timestamp": 6782.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 581,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 581,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 157,
+        "timestamp": 6799.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 581,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 581,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 158,
+        "timestamp": 6815.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 581,
+          "ms": 0
+        },
+        "js": {
+          "selected": 581,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 159,
+        "timestamp": 6848.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 581,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 581,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 160,
+        "timestamp": 6864.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 581,
+          "ms": 0
+        },
+        "js": {
+          "selected": 581,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 161,
+        "timestamp": 6881.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 581,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 581,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 162,
+        "timestamp": 6898.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 581,
+          "ms": 0
+        },
+        "js": {
+          "selected": 581,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 163,
+        "timestamp": 6915.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 581,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 581,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 164,
+        "timestamp": 6948.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 581,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 581,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 165,
+        "timestamp": 6965.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 581,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 581,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 166,
+        "timestamp": 6982.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 581,
+          "ms": 0
+        },
+        "js": {
+          "selected": 581,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 167,
+        "timestamp": 7015.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 168,
+        "timestamp": 7048.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 169,
+        "timestamp": 7065.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 170,
+        "timestamp": 7099.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 171,
+        "timestamp": 7115.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 445,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 445,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 172,
+        "timestamp": 7132.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 445,
+          "ms": 0
+        },
+        "js": {
+          "selected": 445,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 173,
+        "timestamp": 7165.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 445,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 445,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 174,
+        "timestamp": 7182.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 175,
+        "timestamp": 7199.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 176,
+        "timestamp": 7232.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 177,
+        "timestamp": 7249.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 178,
+        "timestamp": 7265.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 179,
+        "timestamp": 7298.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 180,
+        "timestamp": 7315.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 181,
+        "timestamp": 7331.7,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 578,
+          "ms": 0.29999998211860657
+        },
+        "wasm": {
+          "selected": 578,
+          "ms": 0.30000001192092896
+        }
+      },
+      {
+        "sample": 182,
+        "timestamp": 7348.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 578,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 578,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 183,
+        "timestamp": 7365.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 578,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 578,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 184,
+        "timestamp": 7382.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 578,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 578,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 185,
+        "timestamp": 7399.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 578,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 578,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 186,
+        "timestamp": 7415.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 578,
+          "ms": 0
+        },
+        "js": {
+          "selected": 578,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 187,
+        "timestamp": 7432.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 578,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 578,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 188,
+        "timestamp": 7449.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 578,
+          "ms": 0
+        },
+        "js": {
+          "selected": 578,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 189,
+        "timestamp": 7481.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 578,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 578,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 190,
+        "timestamp": 7499.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 578,
+          "ms": 0
+        },
+        "js": {
+          "selected": 578,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 191,
+        "timestamp": 7515.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 578,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 578,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 192,
+        "timestamp": 7532.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 578,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 578,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 193,
+        "timestamp": 7549.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 578,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 578,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 194,
+        "timestamp": 7565.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 578,
+          "ms": 0
+        },
+        "js": {
+          "selected": 578,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 195,
+        "timestamp": 7582.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 578,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 578,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 196,
+        "timestamp": 7615.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 46,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 46,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 197,
+        "timestamp": 7632.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 46,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 46,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 198,
+        "timestamp": 7649.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 199,
+        "timestamp": 7665.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 200,
+        "timestamp": 7682.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 201,
+        "timestamp": 7699.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 202,
+        "timestamp": 7732.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 203,
+        "timestamp": 7765.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 204,
+        "timestamp": 7782.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 205,
+        "timestamp": 7815.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 206,
+        "timestamp": 7848.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 207,
+        "timestamp": 7865,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 208,
+        "timestamp": 7882.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 209,
+        "timestamp": 7899.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 210,
+        "timestamp": 7915.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 211,
+        "timestamp": 7932.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 212,
+        "timestamp": 7949.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 213,
+        "timestamp": 7965.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1653,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1653,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 214,
+        "timestamp": 7999.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 361,
+          "ms": 0
+        },
+        "js": {
+          "selected": 361,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 215,
+        "timestamp": 8032.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 361,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 361,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 216,
+        "timestamp": 8049.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 361,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 361,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 217,
+        "timestamp": 8082.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 361,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 361,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 218,
+        "timestamp": 8115.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 361,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 361,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 219,
+        "timestamp": 8132.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1693,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1693,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 220,
+        "timestamp": 8149.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1693,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1693,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 221,
+        "timestamp": 8165.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1693,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1693,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 222,
+        "timestamp": 8182.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1693,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1693,
+          "ms": 0.19999998807907104
+        }
+      },
+      {
+        "sample": 223,
+        "timestamp": 8199.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1427,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1427,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 224,
+        "timestamp": 8215.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1427,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1427,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 225,
+        "timestamp": 8232.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1427,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1427,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 226,
+        "timestamp": 8249.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1427,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1427,
+          "ms": 0.30000001192092896
+        }
+      },
+      {
+        "sample": 227,
+        "timestamp": 8265.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1427,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1427,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 228,
+        "timestamp": 8282.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 229,
+        "timestamp": 8315.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 230,
+        "timestamp": 8349.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 231,
+        "timestamp": 8365.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 232,
+        "timestamp": 8382.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 233,
+        "timestamp": 8399.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 234,
+        "timestamp": 8432.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 235,
+        "timestamp": 8449.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 236,
+        "timestamp": 8465.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 237,
+        "timestamp": 8498.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 238,
+        "timestamp": 8515.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 239,
+        "timestamp": 8532.4,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 240,
+        "timestamp": 8548.7,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 241,
+        "timestamp": 8565.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 242,
+        "timestamp": 8599.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 243,
+        "timestamp": 8631.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 244,
+        "timestamp": 8649.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 245,
+        "timestamp": 8665.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1718,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 1718,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 246,
+        "timestamp": 8682.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1718,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1718,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 247,
+        "timestamp": 8714.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1718,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1718,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 248,
+        "timestamp": 8732.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1718,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1718,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 249,
+        "timestamp": 8748.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1718,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1718,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 250,
+        "timestamp": 8765.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1718,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1718,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 251,
+        "timestamp": 8782.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 444,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 444,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 252,
+        "timestamp": 8799.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 444,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 444,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 253,
+        "timestamp": 8815.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 444,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 444,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 254,
+        "timestamp": 8832.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 444,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 444,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 255,
+        "timestamp": 8864.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 444,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 444,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 256,
+        "timestamp": 8882.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 444,
+          "ms": 0
+        },
+        "js": {
+          "selected": 444,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 257,
+        "timestamp": 8899.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 444,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 444,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 258,
+        "timestamp": 8914.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 444,
+          "ms": 0
+        },
+        "js": {
+          "selected": 444,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 259,
+        "timestamp": 8931.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 444,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 444,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 260,
+        "timestamp": 8948.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 444,
+          "ms": 0
+        },
+        "js": {
+          "selected": 444,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 261,
+        "timestamp": 8965.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 444,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 444,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 262,
+        "timestamp": 8999.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 444,
+          "ms": 0
+        },
+        "js": {
+          "selected": 444,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 263,
+        "timestamp": 9032.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 264,
+        "timestamp": 9064.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 265,
+        "timestamp": 9082.1,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 266,
+        "timestamp": 9099.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 267,
+        "timestamp": 9132.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 268,
+        "timestamp": 9149.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 269,
+        "timestamp": 9165.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 270,
+        "timestamp": 9182.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 271,
+        "timestamp": 9199.1,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 272,
+        "timestamp": 9215.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 273,
+        "timestamp": 9249.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 274,
+        "timestamp": 9265.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 275,
+        "timestamp": 9282.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 276,
+        "timestamp": 9315.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 277,
+        "timestamp": 9332.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 278,
+        "timestamp": 9364.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 279,
+        "timestamp": 9382.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 280,
+        "timestamp": 9399.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 281,
+        "timestamp": 9414.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 282,
+        "timestamp": 9432.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 283,
+        "timestamp": 9464.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 284,
+        "timestamp": 9482.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 285,
+        "timestamp": 9515.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 286,
+        "timestamp": 9532.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 287,
+        "timestamp": 9565.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 288,
+        "timestamp": 9582.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 289,
+        "timestamp": 9599.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 290,
+        "timestamp": 9615.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 291,
+        "timestamp": 9632.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 292,
+        "timestamp": 9649,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1850,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 293,
+        "timestamp": 9665.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1850,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 1850,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 294,
+        "timestamp": 9699.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1167,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1167,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 295,
+        "timestamp": 9715.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1927,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1927,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 296,
+        "timestamp": 9748.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1927,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1927,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 297,
+        "timestamp": 9764.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1927,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1927,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 298,
+        "timestamp": 9782.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1927,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1927,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 299,
+        "timestamp": 9799.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1927,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1927,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 300,
+        "timestamp": 9815.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1927,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1927,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 301,
+        "timestamp": 9832.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1927,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1927,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 302,
+        "timestamp": 9849.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1927,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1927,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 303,
+        "timestamp": 9865.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1927,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1927,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 304,
+        "timestamp": 9899.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1927,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1927,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 305,
+        "timestamp": 9932.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1927,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1927,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 306,
+        "timestamp": 9948.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 714,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 714,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 307,
+        "timestamp": 9965.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 714,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 714,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 308,
+        "timestamp": 9999.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 714,
+          "ms": 0
+        },
+        "js": {
+          "selected": 714,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 309,
+        "timestamp": 10031.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 714,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 714,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 310,
+        "timestamp": 10048.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 311,
+        "timestamp": 10065.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 312,
+        "timestamp": 10082.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 313,
+        "timestamp": 10114.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 314,
+        "timestamp": 10132.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 315,
+        "timestamp": 10149.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 316,
+        "timestamp": 10165.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 317,
+        "timestamp": 10198.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 318,
+        "timestamp": 10215,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 319,
+        "timestamp": 10232,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 320,
+        "timestamp": 10265.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 321,
+        "timestamp": 10282.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 322,
+        "timestamp": 10299.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 323,
+        "timestamp": 10331.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 324,
+        "timestamp": 10349.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 325,
+        "timestamp": 10382.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 326,
+        "timestamp": 10399.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 327,
+        "timestamp": 10415.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 328,
+        "timestamp": 10432.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 329,
+        "timestamp": 10449.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 330,
+        "timestamp": 10481.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1698,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1698,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 331,
+        "timestamp": 10499.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1664,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1664,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 332,
+        "timestamp": 10515.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1664,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1664,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 333,
+        "timestamp": 10549.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1664,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1664,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 334,
+        "timestamp": 10565.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1664,
+          "ms": 0.20000001788139343
+        },
+        "js": {
+          "selected": 1664,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 335,
+        "timestamp": 10582.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1493,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1493,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 336,
+        "timestamp": 10598.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1109,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1109,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 337,
+        "timestamp": 10615.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1109,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1109,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 338,
+        "timestamp": 10632.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1109,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1109,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 339,
+        "timestamp": 10649.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1109,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1109,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 340,
+        "timestamp": 10665.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1109,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1109,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 341,
+        "timestamp": 10699.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1109,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1109,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 342,
+        "timestamp": 10731.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1109,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1109,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 343,
+        "timestamp": 10749.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1109,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1109,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 344,
+        "timestamp": 10765.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1147,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1147,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 345,
+        "timestamp": 10782.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1147,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1147,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 346,
+        "timestamp": 10815,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1147,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1147,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 347,
+        "timestamp": 10831.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1147,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 1147,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 348,
+        "timestamp": 10849.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1147,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1147,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 349,
+        "timestamp": 10865.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1147,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1147,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 350,
+        "timestamp": 10882.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1147,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1147,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 351,
+        "timestamp": 10915.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1147,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1147,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 352,
+        "timestamp": 10932.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1147,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1147,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 353,
+        "timestamp": 10965.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1147,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1147,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 354,
+        "timestamp": 10981.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1147,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1147,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 355,
+        "timestamp": 10999.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1147,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1147,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 356,
+        "timestamp": 11015.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1147,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1147,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 357,
+        "timestamp": 11032.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 581,
+          "ms": 0.19999998807907104
+        },
+        "wasm": {
+          "selected": 581,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 358,
+        "timestamp": 11049.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 581,
+          "ms": 0
+        },
+        "js": {
+          "selected": 581,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 359,
+        "timestamp": 11065.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 581,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 581,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 360,
+        "timestamp": 11082.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 771,
+          "ms": 0
+        },
+        "js": {
+          "selected": 771,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 361,
+        "timestamp": 11115.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 771,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 771,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 362,
+        "timestamp": 11149.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 363,
+        "timestamp": 11182.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 87,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 87,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 364,
+        "timestamp": 11199.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 787,
+          "ms": 0
+        },
+        "js": {
+          "selected": 787,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 365,
+        "timestamp": 11215.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 787,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 787,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 366,
+        "timestamp": 11232.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 87,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 87,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 367,
+        "timestamp": 11249.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 87,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 87,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 368,
+        "timestamp": 11282.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 369,
+        "timestamp": 11299.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 370,
+        "timestamp": 11315.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 371,
+        "timestamp": 11332.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.30000001192092896
+        }
+      },
+      {
+        "sample": 372,
+        "timestamp": 11349.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 373,
+        "timestamp": 11365.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 374,
+        "timestamp": 11382.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 375,
+        "timestamp": 11399.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 376,
+        "timestamp": 11415.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 377,
+        "timestamp": 11448.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 378,
+        "timestamp": 11465.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 379,
+        "timestamp": 11482.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 380,
+        "timestamp": 11499.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 381,
+        "timestamp": 11515.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 382,
+        "timestamp": 11532.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 383,
+        "timestamp": 11549.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 384,
+        "timestamp": 11565.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.19999998807907104
+        }
+      },
+      {
+        "sample": 385,
+        "timestamp": 11582.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 386,
+        "timestamp": 11614.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 387,
+        "timestamp": 11632.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 388,
+        "timestamp": 11649.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 389,
+        "timestamp": 11665.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 390,
+        "timestamp": 11682.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 391,
+        "timestamp": 11699.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 392,
+        "timestamp": 11715.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 393,
+        "timestamp": 11732.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 394,
+        "timestamp": 11749.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 395,
+        "timestamp": 11765.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 396,
+        "timestamp": 11798.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 397,
+        "timestamp": 11815.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 398,
+        "timestamp": 11832.4,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 399,
+        "timestamp": 11848.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 400,
+        "timestamp": 11865.4,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 401,
+        "timestamp": 11882.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 402,
+        "timestamp": 11899.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 403,
+        "timestamp": 11915.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 404,
+        "timestamp": 11932.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 405,
+        "timestamp": 11964.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 406,
+        "timestamp": 11981.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 407,
+        "timestamp": 11999.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 408,
+        "timestamp": 12015.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 409,
+        "timestamp": 12032.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 410,
+        "timestamp": 12049.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 411,
+        "timestamp": 12065.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 412,
+        "timestamp": 12099.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 413,
+        "timestamp": 12132.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 414,
+        "timestamp": 12149.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 415,
+        "timestamp": 12165.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 416,
+        "timestamp": 12182.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 417,
+        "timestamp": 12198.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 418,
+        "timestamp": 12231.7,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 419,
+        "timestamp": 12248.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 420,
+        "timestamp": 12265.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 421,
+        "timestamp": 12298.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 422,
+        "timestamp": 12315.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 423,
+        "timestamp": 12332.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 424,
+        "timestamp": 12349.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 425,
+        "timestamp": 12365.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 426,
+        "timestamp": 12382.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 427,
+        "timestamp": 12399.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 428,
+        "timestamp": 12432.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 429,
+        "timestamp": 12449.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 430,
+        "timestamp": 12465.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 431,
+        "timestamp": 12482.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 432,
+        "timestamp": 12514.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 433,
+        "timestamp": 12532.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 434,
+        "timestamp": 12548.7,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 435,
+        "timestamp": 12565.1,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 436,
+        "timestamp": 12582.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.20000001788139343
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 437,
+        "timestamp": 12614.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 438,
+        "timestamp": 12632.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 439,
+        "timestamp": 12649.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 440,
+        "timestamp": 12665.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 441,
+        "timestamp": 12682.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 442,
+        "timestamp": 12699.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 443,
+        "timestamp": 12716,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 444,
+        "timestamp": 12749.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 445,
+        "timestamp": 12765.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 446,
+        "timestamp": 12782.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 447,
+        "timestamp": 12799,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 448,
+        "timestamp": 12815.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 449,
+        "timestamp": 12832.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 450,
+        "timestamp": 12865.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 451,
+        "timestamp": 12881.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 452,
+        "timestamp": 12899.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 453,
+        "timestamp": 12915.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 454,
+        "timestamp": 12949.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 455,
+        "timestamp": 12982.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 456,
+        "timestamp": 12999.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 457,
+        "timestamp": 13015.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 458,
+        "timestamp": 13032.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 459,
+        "timestamp": 13065.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 460,
+        "timestamp": 13099.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 461,
+        "timestamp": 13132.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 462,
+        "timestamp": 13149.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 463,
+        "timestamp": 13165.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 464,
+        "timestamp": 13198.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.19999998807907104
+        }
+      },
+      {
+        "sample": 465,
+        "timestamp": 13215.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 466,
+        "timestamp": 13232.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 467,
+        "timestamp": 13249.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 468,
+        "timestamp": 13265.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 469,
+        "timestamp": 13298.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 470,
+        "timestamp": 13315.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 471,
+        "timestamp": 13349.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 472,
+        "timestamp": 13365.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 473,
+        "timestamp": 13382.1,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 474,
+        "timestamp": 13399.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 475,
+        "timestamp": 13415.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 476,
+        "timestamp": 13432.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 477,
+        "timestamp": 13449.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 478,
+        "timestamp": 13482.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 479,
+        "timestamp": 13515.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 480,
+        "timestamp": 13532.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 481,
+        "timestamp": 13549.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 482,
+        "timestamp": 13565.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 483,
+        "timestamp": 13582.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 484,
+        "timestamp": 13599.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 485,
+        "timestamp": 13615.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 486,
+        "timestamp": 13632.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 487,
+        "timestamp": 13649.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 488,
+        "timestamp": 13665.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 489,
+        "timestamp": 13682.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 490,
+        "timestamp": 13699.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 491,
+        "timestamp": 13715.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 492,
+        "timestamp": 13749.3,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 493,
+        "timestamp": 13765.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 494,
+        "timestamp": 13798.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 495,
+        "timestamp": 13815.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 496,
+        "timestamp": 13832.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 497,
+        "timestamp": 13849.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 498,
+        "timestamp": 13865.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 499,
+        "timestamp": 13899.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 500,
+        "timestamp": 13915.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 501,
+        "timestamp": 13932.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 502,
+        "timestamp": 13949.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 503,
+        "timestamp": 13965.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 504,
+        "timestamp": 13982.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 505,
+        "timestamp": 14015.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 506,
+        "timestamp": 14032.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 507,
+        "timestamp": 14049.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 508,
+        "timestamp": 14065.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 509,
+        "timestamp": 14099.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 510,
+        "timestamp": 14115.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.7000000178813934
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 511,
+        "timestamp": 14132.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 512,
+        "timestamp": 14149.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 513,
+        "timestamp": 14165.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 514,
+        "timestamp": 14182.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 515,
+        "timestamp": 14215.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 516,
+        "timestamp": 14249.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 517,
+        "timestamp": 14282.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 518,
+        "timestamp": 14299,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 519,
+        "timestamp": 14315.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 520,
+        "timestamp": 14332.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0.20000001788139343
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 521,
+        "timestamp": 14349.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": -1,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": -1,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 522,
+        "timestamp": 14365.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": -1,
+          "ms": 0
+        },
+        "js": {
+          "selected": -1,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 523,
+        "timestamp": 14382.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1373,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1373,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 524,
+        "timestamp": 14399.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1373,
+          "ms": 0.19999998807907104
+        },
+        "js": {
+          "selected": 1373,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 525,
+        "timestamp": 14415.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1012,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1012,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 526,
+        "timestamp": 14449.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1012,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1012,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 527,
+        "timestamp": 14482.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1012,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 1012,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 528,
+        "timestamp": 14499.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1012,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1012,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 529,
+        "timestamp": 14515.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1544,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1544,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 530,
+        "timestamp": 14549.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1544,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1544,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 531,
+        "timestamp": 14581.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1544,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1544,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 532,
+        "timestamp": 14599.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 575,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 575,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 533,
+        "timestamp": 14615.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 575,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 575,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 534,
+        "timestamp": 14648.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 575,
+          "ms": 0
+        },
+        "js": {
+          "selected": 575,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 535,
+        "timestamp": 14664.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 575,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 575,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 536,
+        "timestamp": 14681.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 575,
+          "ms": 0
+        },
+        "js": {
+          "selected": 575,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 537,
+        "timestamp": 14698.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1259,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1259,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 538,
+        "timestamp": 14715.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1259,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1259,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 539,
+        "timestamp": 14732.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1943,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1943,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 540,
+        "timestamp": 14749.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 746,
+          "ms": 0
+        },
+        "js": {
+          "selected": 746,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 541,
+        "timestamp": 14782.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 746,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 746,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 542,
+        "timestamp": 14815.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 746,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 746,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 543,
+        "timestamp": 14849.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 746,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 746,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 544,
+        "timestamp": 14865.7,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 746,
+          "ms": 0
+        },
+        "js": {
+          "selected": 746,
+          "ms": 0.19999998807907104
+        }
+      },
+      {
+        "sample": 545,
+        "timestamp": 14882.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 803,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 803,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 546,
+        "timestamp": 14898.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 290,
+          "ms": 0
+        },
+        "js": {
+          "selected": 290,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 547,
+        "timestamp": 14915.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 290,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 290,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 548,
+        "timestamp": 14932.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 290,
+          "ms": 0
+        },
+        "js": {
+          "selected": 290,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 549,
+        "timestamp": 14949.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 290,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 290,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 550,
+        "timestamp": 14982.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 290,
+          "ms": 0
+        },
+        "js": {
+          "selected": 290,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 551,
+        "timestamp": 14998.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 157,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 157,
+          "ms": 0.20000001788139343
+        }
+      },
+      {
+        "sample": 552,
+        "timestamp": 15015.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 427,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 427,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 553,
+        "timestamp": 15032.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 427,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 427,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 554,
+        "timestamp": 15065.7,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 28,
+          "ms": 0
+        },
+        "js": {
+          "selected": 28,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 555,
+        "timestamp": 15082.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 28,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 28,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 556,
+        "timestamp": 15099.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 28,
+          "ms": 0
+        },
+        "js": {
+          "selected": 28,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 557,
+        "timestamp": 15132.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 812,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 812,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 558,
+        "timestamp": 15149.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 812,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 812,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 559,
+        "timestamp": 15182.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 812,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 812,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 560,
+        "timestamp": 15215.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 812,
+          "ms": 0
+        },
+        "js": {
+          "selected": 812,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 561,
+        "timestamp": 15232.5,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 812,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 812,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 562,
+        "timestamp": 15249.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 622,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 622,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 563,
+        "timestamp": 15265.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 622,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 622,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 564,
+        "timestamp": 15298.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 622,
+          "ms": 0
+        },
+        "js": {
+          "selected": 622,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 565,
+        "timestamp": 15315.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 622,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 622,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 566,
+        "timestamp": 15332.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 332,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 332,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 567,
+        "timestamp": 15349.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 332,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 332,
+          "ms": 0.10000002384185791
+        }
+      },
+      {
+        "sample": 568,
+        "timestamp": 15365.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 90,
+          "ms": 0.10000002384185791
+        },
+        "js": {
+          "selected": 90,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 569,
+        "timestamp": 15382.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 90,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 90,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 570,
+        "timestamp": 15398.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 90,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 90,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 571,
+        "timestamp": 15415.8,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 90,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 90,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 572,
+        "timestamp": 15432.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1534,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1534,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 573,
+        "timestamp": 15465.7,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1838,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1838,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 574,
+        "timestamp": 15499.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1838,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1838,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 575,
+        "timestamp": 15531.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1838,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1838,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 576,
+        "timestamp": 15549.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1629,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1629,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 577,
+        "timestamp": 15565.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1762,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1762,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 578,
+        "timestamp": 15582.6,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1762,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1762,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 579,
+        "timestamp": 15599.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 926,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 926,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 580,
+        "timestamp": 15615.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 926,
+          "ms": 0
+        },
+        "js": {
+          "selected": 926,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 581,
+        "timestamp": 15648.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 926,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 926,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 582,
+        "timestamp": 15664.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 15,
+          "ms": 0
+        },
+        "js": {
+          "selected": 15,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 583,
+        "timestamp": 15682.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1420,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1420,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 584,
+        "timestamp": 15698.2,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1420,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1420,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 585,
+        "timestamp": 15714.9,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1819,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1819,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 586,
+        "timestamp": 15732.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1819,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1819,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 587,
+        "timestamp": 15749.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1743,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1743,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 588,
+        "timestamp": 15765.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1743,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1743,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 589,
+        "timestamp": 15782.6,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1268,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1268,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 590,
+        "timestamp": 15815.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1268,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1268,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 591,
+        "timestamp": 15849.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1268,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1268,
+          "ms": 0.09999999403953552
+        }
+      },
+      {
+        "sample": 592,
+        "timestamp": 15882.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1268,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1268,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 593,
+        "timestamp": 15899.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1936,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1936,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 594,
+        "timestamp": 15915.9,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1936,
+          "ms": 0.09999999403953552
+        },
+        "js": {
+          "selected": 1936,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 595,
+        "timestamp": 15949.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1347,
+          "ms": 0.09999999403953552
+        },
+        "wasm": {
+          "selected": 1347,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 596,
+        "timestamp": 15965.8,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1252,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1252,
+          "ms": 0.20000001788139343
+        }
+      },
+      {
+        "sample": 597,
+        "timestamp": 15999.3,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1347,
+          "ms": 0.10000002384185791
+        },
+        "wasm": {
+          "selected": 1347,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 598,
+        "timestamp": 16031.5,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "selected": 1347,
+          "ms": 0
+        },
+        "js": {
+          "selected": 1347,
+          "ms": 0
+        }
+      },
+      {
+        "sample": 599,
+        "timestamp": 16049.2,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "selected": 1309,
+          "ms": 0
+        },
+        "wasm": {
+          "selected": 1309,
+          "ms": 0
+        }
+      }
+    ],
+    "batches": [
+      {
+        "batch": 0,
+        "queries": 200,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "ms": 2,
+          "checksum": 155352
+        },
+        "js": {
+          "ms": 2.699999988079071,
+          "checksum": 155352
+        }
+      },
+      {
+        "batch": 1,
+        "queries": 200,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "ms": 1.5,
+          "checksum": 230096
+        },
+        "wasm": {
+          "ms": 1.5,
+          "checksum": 230096
+        }
+      },
+      {
+        "batch": 2,
+        "queries": 200,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "ms": 2.9000000059604645,
+          "checksum": 153744
+        },
+        "js": {
+          "ms": 3.199999988079071,
+          "checksum": 153744
+        }
+      },
+      {
+        "batch": 3,
+        "queries": 200,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "ms": 2.0999999940395355,
+          "checksum": 119704
+        },
+        "wasm": {
+          "ms": 2.5999999940395355,
+          "checksum": 119704
+        }
+      },
+      {
+        "batch": 4,
+        "queries": 200,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "ms": 2.4000000059604645,
+          "checksum": 139080
+        },
+        "js": {
+          "ms": 3.5999999940395355,
+          "checksum": 139080
+        }
+      },
+      {
+        "batch": 5,
+        "queries": 200,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "ms": 2.2000000178813934,
+          "checksum": 192712
+        },
+        "wasm": {
+          "ms": 3,
+          "checksum": 192712
+        }
+      },
+      {
+        "batch": 6,
+        "queries": 200,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "ms": 1.7999999821186066,
+          "checksum": 75832
+        },
+        "js": {
+          "ms": 1.9000000059604645,
+          "checksum": 75832
+        }
+      },
+      {
+        "batch": 7,
+        "queries": 200,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "ms": 2,
+          "checksum": 70032
+        },
+        "wasm": {
+          "ms": 2.2999999821186066,
+          "checksum": 70032
+        }
+      },
+      {
+        "batch": 8,
+        "queries": 200,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "ms": 2,
+          "checksum": 104568
+        },
+        "js": {
+          "ms": 1.9000000059604645,
+          "checksum": 104568
+        }
+      },
+      {
+        "batch": 9,
+        "queries": 200,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "ms": 2.4000000059604645,
+          "checksum": 333896
+        },
+        "wasm": {
+          "ms": 2.300000011920929,
+          "checksum": 333896
+        }
+      },
+      {
+        "batch": 10,
+        "queries": 200,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "ms": 0.7000000178813934,
+          "checksum": 233968
+        },
+        "js": {
+          "ms": 0.5999999940395355,
+          "checksum": 233968
+        }
+      },
+      {
+        "batch": 11,
+        "queries": 200,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "ms": 1.9000000059604645,
+          "checksum": 367616
+        },
+        "wasm": {
+          "ms": 2.0999999940395355,
+          "checksum": 367616
+        }
+      },
+      {
+        "batch": 12,
+        "queries": 200,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "ms": 1.0999999940395355,
+          "checksum": 319104
+        },
+        "js": {
+          "ms": 1,
+          "checksum": 319104
+        }
+      },
+      {
+        "batch": 13,
+        "queries": 200,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "ms": 2,
+          "checksum": 272728
+        },
+        "wasm": {
+          "ms": 1.7999999821186066,
+          "checksum": 272728
+        }
+      },
+      {
+        "batch": 14,
+        "queries": 200,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "ms": 1.7000000178813934,
+          "checksum": 105128
+        },
+        "js": {
+          "ms": 1.699999988079071,
+          "checksum": 105128
+        }
+      },
+      {
+        "batch": 15,
+        "queries": 200,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "ms": 1.2999999821186066,
+          "checksum": -200
+        },
+        "wasm": {
+          "ms": 1.300000011920929,
+          "checksum": -200
+        }
+      },
+      {
+        "batch": 16,
+        "queries": 200,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "ms": 0.3999999761581421,
+          "checksum": -200
+        },
+        "js": {
+          "ms": 0.30000001192092896,
+          "checksum": -200
+        }
+      },
+      {
+        "batch": 17,
+        "queries": 200,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "ms": 0.19999998807907104,
+          "checksum": -200
+        },
+        "wasm": {
+          "ms": 0.20000001788139343,
+          "checksum": -200
+        }
+      },
+      {
+        "batch": 18,
+        "queries": 200,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "ms": 0.4000000059604645,
+          "checksum": -200
+        },
+        "js": {
+          "ms": 0.4000000059604645,
+          "checksum": -200
+        }
+      },
+      {
+        "batch": 19,
+        "queries": 200,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "ms": 0.7000000178813934,
+          "checksum": -200
+        },
+        "wasm": {
+          "ms": 0.699999988079071,
+          "checksum": -200
+        }
+      },
+      {
+        "batch": 20,
+        "queries": 200,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "ms": 1.2999999821186066,
+          "checksum": 21784
+        },
+        "js": {
+          "ms": 1.2000000178813934,
+          "checksum": 21784
+        }
+      },
+      {
+        "batch": 21,
+        "queries": 200,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "ms": 2.2000000178813934,
+          "checksum": 173672
+        },
+        "wasm": {
+          "ms": 0.9000000059604645,
+          "checksum": 173672
+        }
+      },
+      {
+        "batch": 22,
+        "queries": 200,
+        "order": [
+          "wasm",
+          "js"
+        ],
+        "wasm": {
+          "ms": 0.699999988079071,
+          "checksum": 113336
+        },
+        "js": {
+          "ms": 0.7000000178813934,
+          "checksum": 113336
+        }
+      },
+      {
+        "batch": 23,
+        "queries": 200,
+        "order": [
+          "js",
+          "wasm"
+        ],
+        "js": {
+          "ms": 2,
+          "checksum": 282352
+        },
+        "wasm": {
+          "ms": 1.4000000059604645,
+          "checksum": 282352
+        }
+      }
+    ]
+  }
+]

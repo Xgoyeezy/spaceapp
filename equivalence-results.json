@@ -1,0 +1,258 @@
+{
+  "runtime": "v22.23.3",
+  "v8": "12.4.254.21-node.57",
+  "result": [
+    {
+      "name": "captured-2000",
+      "precomputed": false,
+      "count": 2000,
+      "queries": 5601,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 3.059582999999975,
+        "copyAndMemoryMs": 0.04158300000000281,
+        "copiedBytes": 49180,
+        "memoryBytes": 131072
+      }
+    },
+    {
+      "name": "captured-50000",
+      "precomputed": false,
+      "count": 50000,
+      "queries": 5601,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.15570800000000418,
+        "copyAndMemoryMs": 0.13945799999999053,
+        "copiedBytes": 1208476,
+        "memoryBytes": 1310720
+      }
+    },
+    {
+      "name": "generated-0",
+      "precomputed": false,
+      "count": 0,
+      "queries": 5000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.5212500000000091,
+        "copyAndMemoryMs": 0.021834000000012566,
+        "copiedBytes": 0,
+        "memoryBytes": 131072
+      }
+    },
+    {
+      "name": "generated-1",
+      "precomputed": false,
+      "count": 1,
+      "queries": 5000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.09916600000002518,
+        "copyAndMemoryMs": 0.019125000000030923,
+        "copiedBytes": 56,
+        "memoryBytes": 131072
+      }
+    },
+    {
+      "name": "generated-24",
+      "precomputed": false,
+      "count": 24,
+      "queries": 5000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.08708400000000438,
+        "copyAndMemoryMs": 0.014415999999982887,
+        "copiedBytes": 516,
+        "memoryBytes": 131072
+      }
+    },
+    {
+      "name": "generated-25",
+      "precomputed": false,
+      "count": 25,
+      "queries": 5000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.08862499999997908,
+        "copyAndMemoryMs": 0.1362500000000182,
+        "copiedBytes": 608,
+        "memoryBytes": 131072
+      }
+    },
+    {
+      "name": "generated-2000",
+      "precomputed": false,
+      "count": 2000,
+      "queries": 5000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 9.829457999999988,
+        "copyAndMemoryMs": 0.04524999999995316,
+        "copiedBytes": 49180,
+        "memoryBytes": 131072
+      }
+    },
+    {
+      "name": "generated-50000",
+      "precomputed": false,
+      "count": 50000,
+      "queries": 5000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.1334169999999517,
+        "copyAndMemoryMs": 0.11337499999996226,
+        "copiedBytes": 1208476,
+        "memoryBytes": 1310720
+      }
+    },
+    {
+      "name": "coincident-tie-and-focus",
+      "precomputed": false,
+      "count": 1000,
+      "queries": 2000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.11333400000000893,
+        "copyAndMemoryMs": 0.01629200000002129,
+        "copiedBytes": 24572,
+        "memoryBytes": 131072
+      }
+    },
+    {
+      "name": "captured-2000",
+      "precomputed": true,
+      "count": 2000,
+      "queries": 5601,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.09620899999993071,
+        "copyAndMemoryMs": 0.016917000000034932,
+        "copiedBytes": 49180,
+        "memoryBytes": 131072
+      }
+    },
+    {
+      "name": "captured-50000",
+      "precomputed": true,
+      "count": 50000,
+      "queries": 5601,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.11629200000004403,
+        "copyAndMemoryMs": 0.11025000000006457,
+        "copiedBytes": 1208476,
+        "memoryBytes": 1310720
+      }
+    },
+    {
+      "name": "generated-0",
+      "precomputed": true,
+      "count": 0,
+      "queries": 5000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.09987499999999727,
+        "copyAndMemoryMs": 0.007375000000024556,
+        "copiedBytes": 0,
+        "memoryBytes": 131072
+      }
+    },
+    {
+      "name": "generated-1",
+      "precomputed": true,
+      "count": 1,
+      "queries": 5000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.09166700000002947,
+        "copyAndMemoryMs": 0.009875000000079126,
+        "copiedBytes": 56,
+        "memoryBytes": 131072
+      }
+    },
+    {
+      "name": "generated-24",
+      "precomputed": true,
+      "count": 24,
+      "queries": 5000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.07849999999996271,
+        "copyAndMemoryMs": 0.009708999999929802,
+        "copiedBytes": 516,
+        "memoryBytes": 131072
+      }
+    },
+    {
+      "name": "generated-25",
+      "precomputed": true,
+      "count": 25,
+      "queries": 5000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.08641699999998309,
+        "copyAndMemoryMs": 0.007958000000030552,
+        "copiedBytes": 608,
+        "memoryBytes": 131072
+      }
+    },
+    {
+      "name": "generated-2000",
+      "precomputed": true,
+      "count": 2000,
+      "queries": 5000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 7.610833000000071,
+        "copyAndMemoryMs": 0.015957999999955064,
+        "copiedBytes": 49180,
+        "memoryBytes": 131072
+      }
+    },
+    {
+      "name": "generated-50000",
+      "precomputed": true,
+      "count": 50000,
+      "queries": 5000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.09845800000005056,
+        "copyAndMemoryMs": 0.11312499999996817,
+        "copiedBytes": 1208476,
+        "memoryBytes": 1310720
+      }
+    },
+    {
+      "name": "coincident-tie-and-focus",
+      "precomputed": true,
+      "count": 1000,
+      "queries": 2000,
+      "mismatches": 0,
+      "examples": [],
+      "setup": {
+        "instantiateMs": 0.09616699999992306,
+        "copyAndMemoryMs": 0.01066600000001472,
+        "copiedBytes": 24572,
+        "memoryBytes": 131072
+      }
+    }
+  ]
+}

@@ -2,6 +2,7 @@ name: Compile isolated C picking diagnostic
 on:
   push:
     branches: [diagnostic/62-wasm-picking]
+    paths: [picking.c, build.sh, .github/workflows/wasm-picking.yml]
 permissions:
   contents: read
 jobs:

@@ -12,14 +12,12 @@ static inline double larger(double a, double b) { return a > b ? a : b; }
 
 /* The caller validates and copies a trusted index once, with a stack slot for
  * every tree node. Inputs are finite and zoom is positive, as in the app. */
-int pick_node(const float *points, const float *radii, const u32 *order,
+int pick_node_precomputed(const float *points, const float *radii, const u32 *order,
               const float *bounds, const i32 *tree, i32 *stack, int tree_length,
-              double yaw, double pitch, double zoom, double scale,
+              double cy, double sy, double cp, double sp, double zoom, double scale,
               double width, double height, double screen_x, double screen_y,
               int focus) {
     if (!tree_length) return -1;
-    const double cy = host_cos(yaw), sy = host_sin(yaw);
-    const double cp = host_cos(pitch), sp = host_sin(pitch);
     const double px = screen_x - width / 2, py = height / 2 - screen_y;
     const double zoom_scale = scale * zoom, root_zoom = __builtin_sqrt(zoom);
     stack[0] = 0;
@@ -69,4 +67,14 @@ int pick_node(const float *points, const float *radii, const u32 *order,
         }
     }
     return selected;
+}
+
+int pick_node(const float *points, const float *radii, const u32 *order,
+              const float *bounds, const i32 *tree, i32 *stack, int tree_length,
+              double yaw, double pitch, double zoom, double scale,
+              double width, double height, double screen_x, double screen_y,
+              int focus) {
+    return pick_node_precomputed(points, radii, order, bounds, tree, stack,
+        tree_length, host_cos(yaw), host_sin(yaw), host_cos(pitch), host_sin(pitch),
+        zoom, scale, width, height, screen_x, screen_y, focus);
 }

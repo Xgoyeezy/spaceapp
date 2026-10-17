@@ -44,6 +44,7 @@ try {
   await writeFile(envFile, [
     "SPACE_PUBLIC_DISTRIBUTION=true", "SPACE_RUNTIME_STORE=postgres", "SPACE_INSTANCE=dev", "SPACE_INSTANCE_ENABLED_JOBS=",
     "SPACE_TEMPORAL_NAMESPACE=spaceapp-smoke", "SPACE_TEMPORAL_TASK_QUEUE=spaceapp-smoke-turns", "SPACE_INSTALL_ROOT=/app",
+    "SPACE_ARTIFACT_ROOT=/var/lib/spaceapp/artifacts",
     "SPACE_OPTIONAL_MODULES=none", "SPACE_DEV_LOGIN=false", `SPACE_SESSION_SECRET=${sessionSecret}`,
     "SPACEAPP_WORKFLOWS_ENABLED=false", "SPACE_CLI_ENABLED=false", "SPACE_CLI_ROOT_ENABLED=false",
     "SPACE_CLI_HOST_SOCKET=/run/spaceapp-cli/smoke.sock", "SPACE_CLI_ADMIN_HOST_SOCKET=/run/spaceapp-cli/admin.sock",
@@ -91,9 +92,34 @@ try {
     if (target === "browser") {
       const html = await docker(["exec", "--user", "10001:10001", id, "chromium", "--headless", "--no-sandbox", "--disable-dev-shm-usage", "--dump-dom", "about:blank"]);
       assert.ok(html.includes("<html>"), "Headless Chromium produced a document");
+      // A pane uses headed Chromium under Xvfb. A headless process alone does
+      // not exercise that production path (and missed an absent Xvfb binary).
+      await docker(["exec", "--user", "10001:10001", id, "node", "--input-type=module", "-e", `
+        import assert from 'node:assert/strict';
+        import {readFile} from 'node:fs/promises';
+        import {PostgresSpaceStore} from './packages/db/dist/index.js';
+        import {BrowserHostClient} from './packages/browser-host/dist/client.js';
+        const store=PostgresSpaceStore.fromConnectionString((await readFile('/run/secrets/database-url','utf8')).trim());
+        const client=new BrowserHostClient({socketPath:${JSON.stringify(path)}});
+        let pane;
+        try {
+          const room=await store.createRoom({name:'Container browser smoke',initialPaneCount:0});
+          pane=await store.createPane({roomId:room.id,mode:'BROWSER',title:'Headed browser smoke'});
+          const result=await client.startOrRestore({pane,targetUrl:'about:blank',traceId:'container-smoke'});
+          assert.equal(result.session.status,'READY');
+          const pages=await client.listPages(pane);
+          assert.ok(pages.pages.some(page=>page.url==='about:blank'));
+          const frame=await client.captureFrame(result.session.sessionId);
+          assert.ok(frame.screenshotDataUrl?.startsWith('data:image/png;base64,'));
+          console.log('headed browser pane and frame ok');
+        } finally {
+          try { if(pane) await client.stopPane(pane.id); }
+          finally { await client.close(); await store.dispose(); }
+        }
+      `]);
     }
   }
-  console.log(JSON.stringify({ target, image, passed: true, nonRootProbe: true, postgresMigrations: target !== "cli", chromium: target === "browser" }));
+  console.log(JSON.stringify({ target, image, passed: true, nonRootProbe: true, postgresMigrations: target !== "cli", chromium: target === "browser", headedBrowserPane: target === "browser" }));
 } catch (error) {
   for (const name of containers) console.error(await docker(["logs", "--tail", "30", name], { tolerate: true }));
   throw error;

@@ -1,0 +1,29 @@
+name: Compile isolated C picking diagnostic
+on:
+  push:
+    branches: [diagnostic/62-wasm-picking]
+permissions:
+  contents: read
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Ensure the free runner has its WebAssembly linker
+        run: |
+          if ! command -v wasm-ld >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq lld
+          fi
+      - run: bash build.sh
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: wasm-picking
+          path: |
+            picking.wasm
+            compiler.txt
+            SHA256SUMS
+          retention-days: 7

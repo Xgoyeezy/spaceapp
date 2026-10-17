@@ -16,6 +16,13 @@ label-detail threshold. Text widths are measured lazily and cached for at most
 graph resets the cache; rotation does not remeasure unchanged text. Label counts,
 font, collision rules and rendering resolution are unchanged.
 
+WebGL startup schedules context creation, GPU program setup and graph upload in
+separate browser tasks so their costs do not accumulate in the React mount task.
+The canvas stays busy and benchmark controls stay disabled until setup finishes.
+Unmounting or losing the context cancels pending stages; restoration starts a
+new sequence using the latest graph and layout. An individual setup stage can
+still block, so the long-task measurement remains the acceptance check.
+
 Large live responses are parsed in a worker. Graph input and atlas styles cross
 worker boundaries in bounded batches; edges are referenced by transferred indices
 instead of cloning the complete graph back onto the main thread. Position textures,

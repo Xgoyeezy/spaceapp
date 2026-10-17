@@ -6,6 +6,7 @@ import { DEFAULT_MEMORY_CAMERA, memory3DVolumeRatio, type MemoryCamera3D, type M
 import { MemoryGraph3DFallback } from "./MemoryGraph3DFallback.js";
 import { memoryFallbackGraph, prepareMemoryGpuData } from "./memory-webgl-data.js";
 import { MemoryWebGLRenderer } from "./memory-webgl-renderer.js";
+import { queueMemoryWebGLSetup } from "./memory-webgl-setup.js";
 
 import { buildMemoryPickIndex, type MemoryPickIndex } from "./memory-picking.js";
 import { memoryBenchmarkEnabled, measureMemoryWork, memoryWorkDurations } from "./memory-benchmark.js";
@@ -39,6 +40,7 @@ export function MemoryGraph3D(props: Props) {
   }, [props.picking, props.pickIds, coordinates, graphData]);
   const resolvedPickingRef = useRef(resolvedPicking); resolvedPickingRef.current = resolvedPicking;
   const [fallback, setFallback] = useState(false);
+  const [initializing, setInitializing] = useState(true);
   const fallbackGraph = useMemo(() => fallback ? memoryFallbackGraph(nodes, edges) : null, [fallback, nodes, edges]);
   const fallbackCoordinates = useMemo(() => new Map(fallbackGraph?.nodes.flatMap(node => {
     const p = coordinates.get(node.id); return p ? [[node.id, p] as const] : [];
@@ -84,8 +86,9 @@ export function MemoryGraph3D(props: Props) {
   useEffect(() => {
     const canvas = canvasRef.current, labelCanvas = labelsRef.current;
     if (!canvas || !labelCanvas) return;
-    const context = labelCanvas.getContext("2d");
+    let context: CanvasRenderingContext2D | null = null;
     let gl: WebGL2RenderingContext | null = null;
+    let cancelSetup = () => {};
     let frame = 0, hover: string | null = null, pointer: { x: number; y: number } | null = null;
     let dragged = false, downX = 0, downY = 0, disposed = false;
     let pendingBenchmark: "render" | "scheduler" | null = null;
@@ -98,8 +101,8 @@ export function MemoryGraph3D(props: Props) {
     const pointers = new Map<number, { x: number; y: number }>();
     const render = (now: number) => {
       frame = 0;
-      const active = renderer.current;
-      if (!active || !context) return;
+      const active = renderer.current, labelContext = context;
+      if (!active || !labelContext) return;
       if (benchmark.current && document.visibilityState !== "visible") invalidateBenchmark("The tab became hidden. Keep it visible and start a new run.");
       const sample = benchmark.current;
       if (sample) {
@@ -120,7 +123,7 @@ export function MemoryGraph3D(props: Props) {
       if (sample?.mode !== "scheduler") {
       active.setFocus(hover ?? current.current.selectedNodeId);
       measureMemoryWork("draw GPU frame", () => active.render(camera.current));
-      measureMemoryWork("draw labels", () => active.labels(context, camera.current, current.current.showTitles));
+      measureMemoryWork("draw labels", () => active.labels(labelContext, camera.current, current.current.showTitles));
       canvas.dataset.rotation = `${camera.current.yaw.toFixed(3)},${camera.current.pitch.toFixed(3)}`;
       }
       if (sample) {
@@ -147,16 +150,21 @@ export function MemoryGraph3D(props: Props) {
       context?.setTransform(dpr, 0, 0, dpr, 0, 0); schedule();
     };
     const initialize = () => {
-      try {
+      cancelSetup();
+      setInitializing(true);
+      cancelSetup = queueMemoryWebGLSetup([() => {
+        context = labelCanvas.getContext("2d");
         gl = measureMemoryWork("create WebGL context", () => canvas.getContext("webgl2", { alpha: true, antialias: false, depth: true, preserveDrawingBuffer: false }));
         if (!gl || !context) throw new Error("WebGL2 unavailable");
-        const context3D = gl;
-        const active = measureMemoryWork("initialize GPU programs", () => new MemoryWebGLRenderer(context3D)); renderer.current = active;
+      }, () => {
+        renderer.current = measureMemoryWork("initialize GPU programs", () => new MemoryWebGLRenderer(gl!));
+      }, () => {
+        const active = renderer.current!;
         active.setGraph(current.current.nodes, graphDataRef.current); active.setPositions(current.current.coordinates, current.current.gpuPositions, current.current.extent); active.setPicking(resolvedPickingRef.current.index, resolvedPickingRef.current.ids, current.current.gpuData?.index);
-        setFallback(false); resize();
-      } catch { renderer.current?.dispose(); renderer.current = null; setFallback(true); }
+        setFallback(false); setInitializing(false); resize();
+      }], () => { renderer.current?.dispose(); renderer.current = null; setInitializing(false); setFallback(true); });
     };
-    const lost = (event: Event) => { event.preventDefault(); invalidateBenchmark("The WebGL context was lost. Restore it before starting a new run."); cancelAnimationFrame(frame); frame = 0; renderer.current = null; setFallback(true); };
+    const lost = (event: Event) => { event.preventDefault(); cancelSetup(); invalidateBenchmark("The WebGL context was lost. Restore it before starting a new run."); cancelAnimationFrame(frame); frame = 0; renderer.current = null; setInitializing(false); setFallback(true); };
     const restored = () => { if (!disposed) initialize(); };
     canvas.addEventListener("webglcontextlost", lost); canvas.addEventListener("webglcontextrestored", restored);
     initialize();
@@ -217,7 +225,7 @@ export function MemoryGraph3D(props: Props) {
     let restoreTimer: ReturnType<typeof setTimeout> | undefined;
     loseContext.current = () => { const extension = gl?.getExtension("WEBGL_lose_context"); extension?.loseContext(); restoreTimer = setTimeout(() => extension?.restoreContext(), 3000); };
     return () => {
-      disposed = true; clearTimeout(restoreTimer); observer.disconnect(); cancelAnimationFrame(frame); renderer.current?.dispose(); renderer.current = null; redraw.current = () => {};
+      disposed = true; cancelSetup(); clearTimeout(restoreTimer); observer.disconnect(); cancelAnimationFrame(frame); renderer.current?.dispose(); renderer.current = null; redraw.current = () => {};
       benchmark.current = null; pendingBenchmark = null;
       document.removeEventListener("visibilitychange", visibilityChanged);
       canvas.removeEventListener("webglcontextlost", lost); canvas.removeEventListener("webglcontextrestored", restored);
@@ -231,11 +239,11 @@ export function MemoryGraph3D(props: Props) {
   useEffect(() => { camera.current = { ...DEFAULT_MEMORY_CAMERA }; redraw.current(); }, [resetToken]);
   return <>
     <div className="memory-3d-surface" style={fallback ? { visibility: "hidden", pointerEvents: "none" } : undefined}>
-      <canvas ref={canvasRef} tabIndex={fallback ? -1 : 0} role="application" aria-hidden={fallback} aria-label="3D memory graph. Drag or use arrow keys to rotate 360 degrees. Scroll, pinch, or use plus/minus to zoom. Click a node to open." aria-busy={loading} data-renderer="webgl2" data-titles-visible={showTitles} data-layout-volume={volume.toFixed(4)} />
+      <canvas ref={canvasRef} tabIndex={fallback ? -1 : 0} role="application" aria-hidden={fallback} aria-label="3D memory graph. Drag or use arrow keys to rotate 360 degrees. Scroll, pinch, or use plus/minus to zoom. Click a node to open." aria-busy={loading || initializing} data-renderer="webgl2" data-titles-visible={showTitles} data-layout-volume={volume.toFixed(4)} />
       <canvas ref={labelsRef} aria-hidden="true" className="memory-3d-labels" />
       <span className="memory-3d-hint">Drag or arrows to rotate · Scroll, pinch or +/− to zoom · Click to explore</span>
     </div>
     {fallback && fallbackGraph ? <><MemoryGraph3DFallback {...props} {...fallbackGraph} coordinates={fallbackCoordinates} /><span className="memory-3d-fallback-notice" role="status">Canvas view · showing up to 2,000 nodes</span></> : null}
-    {benchmarkEnabled ? <div className="memory-3d-benchmark"><button disabled={fallback || loading} onClick={() => benchmarkStart.current()}>Measure 600 frames</button><button disabled={fallback || loading} onClick={() => benchmarkStart.current("scheduler")}>Measure scheduling baseline</button><button disabled={fallback} onClick={() => loseContext.current()}>Test context recovery</button><pre data-testid="memory-benchmark-result">{benchmarkResult}</pre></div> : null}
+    {benchmarkEnabled ? <div className="memory-3d-benchmark"><button disabled={fallback || loading || initializing} onClick={() => benchmarkStart.current()}>Measure 600 frames</button><button disabled={fallback || loading || initializing} onClick={() => benchmarkStart.current("scheduler")}>Measure scheduling baseline</button><button disabled={fallback || initializing} onClick={() => loseContext.current()}>Test context recovery</button><pre data-testid="memory-benchmark-result">{benchmarkResult}</pre></div> : null}
   </>;
 }

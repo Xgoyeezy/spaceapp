@@ -2,11 +2,14 @@ import { act, cleanup, fireEvent, render, screen } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MemoryGraph3D } from "../src/features/memory-workspace/MemoryGraph3D.js";
 
+const rendererCalls = vi.hoisted(() => ({ construct: vi.fn(), dispose: vi.fn(), setGraph: vi.fn() }));
 vi.mock("../src/features/memory-workspace/memory-webgl-renderer.js", () => ({
   MemoryWebGLRenderer: class {
     width = 1; height = 1; dpr = 1;
+    constructor() { rendererCalls.construct(); }
     resize(width: number, height: number, dpr: number) { this.width = width; this.height = height; this.dpr = dpr; }
-    setGraph() {} setPositions() {} setPicking() {} setFocus() {} render() {} labels() {} dispose() {}
+    setGraph() { rendererCalls.setGraph(); } setPositions() {} setPicking() {} setFocus() {} render() {} labels() {}
+    dispose() { rendererCalls.dispose(); }
     pick() { return null; }
   }
 }));
@@ -22,9 +25,15 @@ const tick = (now: number) => act(() => {
   const pending = [...callbacks.values()]; callbacks.clear();
   for (const callback of pending) callback(now);
 });
-const mount = () => render(<MemoryGraph3D nodes={[]} edges={[]} positions={new Map()} coordinates={new Map()} showTitles selectedNodeId={null} onSelectNode={() => {}} loading={false} resetToken={0} />);
+const mount = (finishSetup = true) => {
+  const view = render(<MemoryGraph3D nodes={[]} edges={[]} positions={new Map()} coordinates={new Map()} showTitles selectedNodeId={null} onSelectNode={() => {}} loading={false} resetToken={0} />);
+  if (finishSetup) act(() => vi.runAllTimers());
+  return view;
+};
 
 beforeEach(() => {
+  vi.useFakeTimers();
+  Object.values(rendererCalls).forEach(call => call.mockClear());
   history.replaceState(null, "", "/demo-workspace?memoryBenchmark=1");
   visibility = "visible"; callbacks = new Map(); nextFrame = 1; width = 900;
   vi.spyOn(document, "visibilityState", "get").mockImplementation(() => visibility);
@@ -40,7 +49,62 @@ beforeEach(() => {
   });
 });
 
-afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); history.replaceState(null, "", "/"); });
+afterEach(() => { cleanup(); vi.useRealTimers(); vi.restoreAllMocks(); vi.unstubAllGlobals(); history.replaceState(null, "", "/"); });
+
+describe("memory WebGL startup", () => {
+  it("yields between context creation, program setup and graph upload, keeping measurement disabled until ready", () => {
+    mount(false);
+    const button = screen.getByRole("button", { name: "Measure 600 frames" }) as HTMLButtonElement;
+    expect(button.disabled).toBe(true);
+    expect(HTMLCanvasElement.prototype.getContext).not.toHaveBeenCalled();
+    act(() => vi.advanceTimersToNextTimer());
+    expect(HTMLCanvasElement.prototype.getContext).toHaveBeenCalledWith("webgl2", expect.any(Object));
+    expect(rendererCalls.construct).not.toHaveBeenCalled();
+    act(() => vi.advanceTimersToNextTimer());
+    expect(rendererCalls.construct).toHaveBeenCalledTimes(1);
+    expect(rendererCalls.setGraph).not.toHaveBeenCalled();
+    expect(button.disabled).toBe(true);
+    act(() => vi.advanceTimersToNextTimer());
+    expect(rendererCalls.setGraph).toHaveBeenCalledTimes(1);
+    expect(button.disabled).toBe(false);
+    expect(screen.getByRole("application").getAttribute("aria-busy")).toBe("false");
+  });
+
+  it("cancels pending startup and disposes created resources on unmount", () => {
+    const first = mount(false);
+    first.unmount();
+    act(() => vi.runAllTimers());
+    expect(rendererCalls.construct).not.toHaveBeenCalled();
+    const second = mount(false);
+    act(() => { vi.advanceTimersToNextTimer(); vi.advanceTimersToNextTimer(); });
+    second.unmount();
+    act(() => vi.runAllTimers());
+    expect(rendererCalls.construct).toHaveBeenCalledTimes(1);
+    expect(rendererCalls.dispose).toHaveBeenCalledTimes(1);
+    expect(rendererCalls.setGraph).not.toHaveBeenCalled();
+  });
+
+  it("cancels a lost context's pending setup and initializes again after restoration", () => {
+    mount(false);
+    act(() => vi.advanceTimersToNextTimer());
+    const canvas = screen.getByRole("application");
+    fireEvent(canvas, new Event("webglcontextlost", { cancelable: true }));
+    act(() => vi.runAllTimers());
+    expect(rendererCalls.construct).not.toHaveBeenCalled();
+    fireEvent(canvas, new Event("webglcontextrestored"));
+    act(() => vi.runAllTimers());
+    expect(rendererCalls.construct).toHaveBeenCalledTimes(1);
+    expect((screen.getByRole("button", { name: "Measure 600 frames" }) as HTMLButtonElement).disabled).toBe(false);
+  });
+
+  it("stops later setup stages and uses the fallback when program creation fails", () => {
+    rendererCalls.construct.mockImplementationOnce(() => { throw new Error("shader failed"); });
+    mount();
+    expect(rendererCalls.setGraph).not.toHaveBeenCalled();
+    expect(screen.getByText("Canvas view · showing up to 2,000 nodes")).not.toBeNull();
+    expect((screen.getByRole("button", { name: "Measure 600 frames" }) as HTMLButtonElement).disabled).toBe(true);
+  });
+});
 
 describe("memory frame benchmark validity", () => {
   it("waits for a hidden tab, then measures all 600 intervals without filtering slow frames", () => {

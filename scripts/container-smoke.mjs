@@ -94,17 +94,26 @@ try {
       assert.ok(html.includes("<html>"), "Headless Chromium produced a document");
       // A pane uses headed Chromium under Xvfb. A headless process alone does
       // not exercise that production path (and missed an absent Xvfb binary).
+      // Seed the isolated database as the entrypoint's secret-reading user.
+      // Keep the private bind directory private; the uid 10001 client below
+      // receives only the synthetic pane, never direct secret-file access.
+      await docker(["exec", "--user", "0:0", id, "node", "--input-type=module", "-e", `
+        import {readFile,writeFile} from 'node:fs/promises';
+        import {PostgresSpaceStore} from './packages/db/dist/index.js';
+        const store=PostgresSpaceStore.fromConnectionString((await readFile('/run/secrets/database-url','utf8')).trim());
+        try {
+          const room=await store.createRoom({name:'Container browser smoke',initialPaneCount:0});
+          const pane=await store.createPane({roomId:room.id,mode:'BROWSER',title:'Headed browser smoke'});
+          await writeFile('/tmp/browser-smoke-pane.json',JSON.stringify(pane),{flag:'wx',mode:0o644});
+        } finally { await store.dispose(); }
+      `]);
       await docker(["exec", "--user", "10001:10001", id, "node", "--input-type=module", "-e", `
         import assert from 'node:assert/strict';
         import {readFile} from 'node:fs/promises';
-        import {PostgresSpaceStore} from './packages/db/dist/index.js';
         import {BrowserHostClient} from './packages/browser-host/dist/client.js';
-        const store=PostgresSpaceStore.fromConnectionString((await readFile('/run/secrets/database-url','utf8')).trim());
         const client=new BrowserHostClient({socketPath:${JSON.stringify(path)}});
-        let pane;
+        const pane=JSON.parse(await readFile('/tmp/browser-smoke-pane.json','utf8'));
         try {
-          const room=await store.createRoom({name:'Container browser smoke',initialPaneCount:0});
-          pane=await store.createPane({roomId:room.id,mode:'BROWSER',title:'Headed browser smoke'});
           const result=await client.startOrRestore({pane,targetUrl:'about:blank',traceId:'container-smoke'});
           assert.equal(result.session.status,'READY');
           const pages=await client.listPages(pane);
@@ -113,8 +122,8 @@ try {
           assert.ok(frame.screenshotDataUrl?.startsWith('data:image/png;base64,'));
           console.log('headed browser pane and frame ok');
         } finally {
-          try { if(pane) await client.stopPane(pane.id); }
-          finally { await client.close(); await store.dispose(); }
+          try { await client.stopPane(pane.id); }
+          finally { await client.close(); }
         }
       `]);
     }

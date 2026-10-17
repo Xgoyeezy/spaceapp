@@ -4,7 +4,9 @@ The 3D view uses WebGL2 instanced node billboards and batched edges. The depth
 buffer resolves overlap; the animation loop does not sort the graph. The layout
 worker streams positions before convergence and builds a median-split spatial
 index for picking. Pointer movement queries that index instead of scanning nodes
-or synchronously reading the GPU. Labels examine at most 384 candidates and draw
+or synchronously reading the GPU. Each renderer reuses traversal storage across
+queries; replacing the index resizes that storage outside the pointer path.
+Labels examine at most 384 candidates and draw
 at most 64 labels, preserving core/source priority, collision avoidance and the
 Titles switch.
 
@@ -53,12 +55,23 @@ requestAnimationFrame interval p95, CPU render/pick timings, maximum pick time,
 main-thread long tasks since the workspace opened, actual viewport/DPR, browser
 version and GPU renderer. Copy this JSON with the machine model, RAM and OS into
 the PR. Measure the compiled build, keep the tab visible, and record material
-background load. Frame intervals include browser scheduling; CPU duration alone
+background load. A run requested in a hidden tab waits and starts automatically
+when the tab becomes visible. Hiding the tab, changing graph size or pixel density,
+or losing the WebGL context invalidates an active run; start a fresh run after
+correcting the condition. Only results with `status: "complete"` and `valid: true`
+contain a completed 600-frame measurement. Interrupted samples are not filtered
+into a passing result. Frame intervals include browser scheduling; CPU duration alone
 is not a frame-rate result. The long-task observer reports zero when it sees no
-tasks of at least 50 ms, not a claim that every task took zero time.
+tasks of at least 50 ms on browsers supporting that observer, not a claim that
+every task took zero time. `observerSupport` records available observer types;
+unsupported task and long-animation-frame metrics are `null`, not zero.
 `maxPageTaskMs` additionally includes the application's earlier startup tasks;
 these are reported separately from Memory loading and layout. Diagnostic long
 animation frames and measured graph work phases help locate stalls.
+`longestMemoryTask` includes the start time of the largest observed task after
+Memory opened. Compare it with `loadStartedAt`, `benchmarkStartedAt` and the long
+animation frames to investigate a stall; a task's duration alone does not identify
+the code responsible. The task maximum is cumulative while Memory remains open.
 
 The target is p95 at most 33 ms for 50k nodes/150k edges, and 16.7 ms for 2k nodes.
 Picking must stay within 4 ms and load/layout tasks within 100 ms. Report failures

@@ -13,6 +13,7 @@ describe("memory WebGL data", () => {
     let state = 17;
     for (let i = 0; i < points.length; i++) { state = (Math.imul(state, 1664525) + 1013904223) >>> 0; points[i] = (state / 4294967296 - 0.5) * 300; }
     const index = buildMemoryPickIndex(points, radii);
+    const scratch = new Int32Array(index.tree.length / 4);
     for (const camera of [{ yaw: 0, pitch: 0, zoom: 1 }, { yaw: 2.1, pitch: -0.6, zoom: 2 }, { yaw: -1, pitch: 1, zoom: 0.35 }]) {
       for (let sample = 0; sample < 40; sample++) {
         const x = 200 + sample * 11, y = 180 + sample % 11 * 12;
@@ -23,11 +24,24 @@ describe("memory WebGL data", () => {
           if (Math.hypot(p.x - x, p.y - y) <= radius && p.z < depth) { expected = i; depth = p.z; }
         }
         expect(pickMemoryNode(index, camera, 1.4, 900, 600, x, y)).toBe(expected);
+        expect(pickMemoryNode(index, camera, 1.4, 900, 600, x, y, -1, scratch)).toBe(expected);
       }
     }
     const overlapping = buildMemoryPickIndex(new Float32Array([0, 0, 10, 0, 0, -10]), new Float32Array([2, 2]));
     expect(pickMemoryNode(overlapping, { yaw: 0, pitch: 0, zoom: 1 }, 1, 900, 600, 450, 300)).toBe(1);
     expect(pickMemoryNode(overlapping, { yaw: 0, pitch: 0, zoom: 1 }, 1, 900, 600, 0, 0)).toBe(-1);
+  });
+  it("reuses picking storage across misses, depth ties and focused-node hits", () => {
+    const points = new Float32Array(240 * 3), radii = new Float32Array(240).fill(2);
+    for (let i = 2; i < 240; i++) { points[i * 3] = 100 + i; points[i * 3 + 2] = 20; }
+    radii[0] = 10;
+    const index = buildMemoryPickIndex(points, radii), scratch = new Int32Array(index.tree.length / 4);
+    const camera = { yaw: 0, pitch: 0, zoom: 1 };
+    expect(pickMemoryNode(index, camera, 1, 900, 600, 450, 300, -1, scratch)).toBe(0);
+    expect(pickMemoryNode(index, camera, 1, 900, 600, 0, 0, -1, scratch)).toBe(-1);
+    expect(pickMemoryNode(index, camera, 1, 900, 600, 466, 300, -1, scratch)).toBe(-1);
+    expect(pickMemoryNode(index, camera, 1, 900, 600, 466, 300, 0, scratch)).toBe(0);
+    expect(pickMemoryNode(index, camera, 1, 900, 600, 450, 300, -1, new Int32Array(1))).toBe(0);
   });
   it("bounds label work, keeps core/source priority and always includes selected nodes", () => {
     const nodes = Array.from({ length: 50000 }, (_, i) => node(i, i < 30 ? "SOURCE" : "MEMORY"));

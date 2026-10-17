@@ -107,6 +107,7 @@ export class MemoryWebGLRenderer {
   private labelCache = new MemoryLabelCache([], []);
   private coordinates: MemoryCoordinates = new Map<string, MemoryPoint3D>();
   private picking: MemoryPickIndex | null = null;
+  private pickStack = new Int32Array(0);
   private pickIds: string[] = [];
   private pickIdIndex = new Map<string, number>();
   private flags = new Uint8Array(0);
@@ -221,6 +222,8 @@ export class MemoryWebGLRenderer {
 
   setPicking(picking: MemoryPickIndex | null, ids: string[], index?: Map<string, number>) {
     this.picking = picking;
+    const stackSize = (picking?.tree.length ?? 0) / 4;
+    if (this.pickStack.length !== stackSize) this.pickStack = new Int32Array(stackSize);
     if (this.pickIds !== ids) { this.pickIds = ids; this.pickIdIndex = index ?? new Map(ids.map((id, i) => [id, i])); }
   }
 
@@ -229,7 +232,7 @@ export class MemoryWebGLRenderer {
     const focusId = this.nodes[this.focus]?.id;
     // The worker's sorted IDs are stable across frames; avoid a linear search on each pointer move.
     const focused = focusId ? this.pickIdIndex.get(focusId) ?? -1 : -1;
-    const selected = pickMemoryNode(this.picking, camera, Math.min(this.width, this.height) * 0.4 / this.extent, this.width, this.height, x, y, focused);
+    const selected = pickMemoryNode(this.picking, camera, Math.min(this.width, this.height) * 0.4 / this.extent, this.width, this.height, x, y, focused, this.pickStack);
     return this.pickIds[selected] ?? null;
   }
 

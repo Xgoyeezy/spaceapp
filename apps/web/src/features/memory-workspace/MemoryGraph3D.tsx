@@ -45,9 +45,14 @@ export function MemoryGraph3D(props: Props) {
   }) ?? []), [fallbackGraph, coordinates]);
   const volume = useMemo(() => measureMemoryWork("layout volume", () => props.volume ?? memory3DVolumeRatio([...coordinates.values()])), [coordinates, props.volume]);
   const benchmarkEnabled = memoryBenchmarkEnabled();
+  const observerSupport = useMemo(() => {
+    const types = typeof PerformanceObserver === "undefined" ? [] : PerformanceObserver.supportedEntryTypes ?? [];
+    return { longTasks: types.includes("longtask"), longAnimationFrames: types.includes("long-animation-frame") };
+  }, []);
   const [benchmarkResult, setBenchmarkResult] = useState("");
   const benchmark = useRef<{ mode: "render" | "scheduler"; start: number; previous: number; frame: number[]; cpu: number[]; pick: number[] } | null>(null);
   const longTasks = useRef<number[]>([]);
+  const longestMemoryTask = useRef<{ startTime: number; duration: number } | null>(null);
   const pageLongTasks = useRef<number[]>([]);
   const longFrames = useRef<unknown[]>([]);
   const benchmarkStart = useRef<(mode?: "render" | "scheduler") => void>(() => {}), loseContext = useRef<() => void>(() => {});
@@ -55,23 +60,26 @@ export function MemoryGraph3D(props: Props) {
 
   useEffect(() => {
     if (!benchmarkEnabled || typeof PerformanceObserver === "undefined") return;
-    const observer = new PerformanceObserver(list => {
+    const observer = observerSupport.longTasks ? new PerformanceObserver(list => {
       for (const entry of list.getEntries()) {
         pageLongTasks.current.push(entry.duration);
-        if (entry.startTime >= loadStarted.current) longTasks.current.push(entry.duration);
+        if (entry.startTime >= loadStarted.current) {
+          longTasks.current.push(entry.duration);
+          if (entry.duration > (longestMemoryTask.current?.duration ?? 0)) longestMemoryTask.current = { startTime: entry.startTime, duration: entry.duration };
+        }
       }
-    });
-    observer.observe({ type: "longtask", buffered: true });
-    const frames = new PerformanceObserver(list => {
+    }) : null;
+    observer?.observe({ type: "longtask", buffered: true });
+    const frames = observerSupport.longAnimationFrames ? new PerformanceObserver(list => {
       for (const entry of list.getEntries()) {
         if (entry.startTime < loadStarted.current || entry.duration < 100) continue;
         const detail = entry as PerformanceEntry & { scripts?: Array<{ duration: number; invoker: string; sourceURL: string; sourceFunctionName: string; sourceCharPosition: number }> };
         if (longFrames.current.length < 20) longFrames.current.push({ startTime: entry.startTime, duration: entry.duration, scripts: detail.scripts?.map(script => ({ duration: script.duration, invoker: script.invoker, source: script.sourceURL, function: script.sourceFunctionName, position: script.sourceCharPosition })) });
       }
-    });
-    if (PerformanceObserver.supportedEntryTypes.includes("long-animation-frame")) frames.observe({ type: "long-animation-frame", buffered: true });
-    return () => { observer.disconnect(); frames.disconnect(); };
-  }, [benchmarkEnabled]);
+    }) : null;
+    frames?.observe({ type: "long-animation-frame", buffered: true });
+    return () => { observer?.disconnect(); frames?.disconnect(); };
+  }, [benchmarkEnabled, observerSupport]);
 
   useEffect(() => {
     const canvas = canvasRef.current, labelCanvas = labelsRef.current;
@@ -80,11 +88,19 @@ export function MemoryGraph3D(props: Props) {
     let gl: WebGL2RenderingContext | null = null;
     let frame = 0, hover: string | null = null, pointer: { x: number; y: number } | null = null;
     let dragged = false, downX = 0, downY = 0, disposed = false;
+    let pendingBenchmark: "render" | "scheduler" | null = null;
+    const invalidateBenchmark = (reason: string) => {
+      const sample = benchmark.current;
+      if (sample || pendingBenchmark) setBenchmarkResult(JSON.stringify({ status: "invalid", valid: false, mode: sample?.mode ?? pendingBenchmark, reason, frames: sample?.frame.length ?? 0 }, null, 2));
+      benchmark.current = null;
+      pendingBenchmark = null;
+    };
     const pointers = new Map<number, { x: number; y: number }>();
     const render = (now: number) => {
       frame = 0;
       const active = renderer.current;
       if (!active || !context) return;
+      if (benchmark.current && document.visibilityState !== "visible") invalidateBenchmark("The tab became hidden. Keep it visible and start a new run.");
       const sample = benchmark.current;
       if (sample) {
         if (sample.mode === "render") {
@@ -111,9 +127,9 @@ export function MemoryGraph3D(props: Props) {
         sample.cpu.push(performance.now() - started);
         if (sample.frame.length >= 600) {
           const debug = gl?.getExtension("WEBGL_debug_renderer_info");
-          setBenchmarkResult(JSON.stringify({ mode: sample.mode, nodes: current.current.nodes.length, edges: current.current.edges.length, frames: sample.frame.length,
+          setBenchmarkResult(JSON.stringify({ status: "complete", valid: true, visibility: document.visibilityState, mode: sample.mode, nodes: current.current.nodes.length, edges: current.current.edges.length, frames: sample.frame.length,
             frameMinMs: Math.min(...sample.frame), frameP50Ms: percentile(sample.frame, 0.5), frameP95Ms: percentile(sample.frame, 0.95), cpuP95Ms: percentile(sample.cpu, 0.95), pickP95Ms: percentile(sample.pick, 0.95), pickMaxMs: Math.max(0, ...sample.pick),
-            maxLoadOrLayoutTaskMs: Math.max(0, ...longTasks.current), maxPageTaskMs: Math.max(0, ...pageLongTasks.current), longFrames: longFrames.current, pickWorstFrame: sample.pick.indexOf(Math.max(0, ...sample.pick)), maxWorkMs: memoryWorkDurations(), width: active.width, height: active.height, dpr: active.dpr,
+            observerSupport, maxLoadOrLayoutTaskMs: observerSupport.longTasks ? Math.max(0, ...longTasks.current) : null, maxPageTaskMs: observerSupport.longTasks ? Math.max(0, ...pageLongTasks.current) : null, longestMemoryTask: longestMemoryTask.current, loadStartedAt: loadStarted.current, benchmarkStartedAt: sample.start, longFrames: observerSupport.longAnimationFrames ? longFrames.current : null, pickWorstFrame: sample.pick.indexOf(Math.max(0, ...sample.pick)), maxWorkMs: memoryWorkDurations(), width: active.width, height: active.height, dpr: active.dpr,
             renderer: debug && gl ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : gl?.getParameter(gl.RENDERER), userAgent: navigator.userAgent }, null, 2));
           benchmark.current = null;
         } else schedule();
@@ -123,6 +139,8 @@ export function MemoryGraph3D(props: Props) {
     redraw.current = schedule;
     const resize = () => {
       const rect = canvas.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const active = renderer.current;
+      if (benchmark.current && active && (Math.max(1, rect.width) !== active.width || Math.max(1, rect.height) !== active.height || dpr !== active.dpr)) invalidateBenchmark("The graph size or pixel density changed. Start a new run at a fixed size.");
       try { renderer.current?.resize(rect.width, rect.height, dpr); }
       catch { renderer.current?.dispose(); renderer.current = null; setFallback(true); }
       labelCanvas.width = Math.max(1, Math.round(rect.width * dpr)); labelCanvas.height = Math.max(1, Math.round(rect.height * dpr));
@@ -138,7 +156,7 @@ export function MemoryGraph3D(props: Props) {
         setFallback(false); resize();
       } catch { renderer.current?.dispose(); renderer.current = null; setFallback(true); }
     };
-    const lost = (event: Event) => { event.preventDefault(); cancelAnimationFrame(frame); frame = 0; renderer.current = null; benchmark.current = null; setFallback(true); };
+    const lost = (event: Event) => { event.preventDefault(); invalidateBenchmark("The WebGL context was lost. Restore it before starting a new run."); cancelAnimationFrame(frame); frame = 0; renderer.current = null; setFallback(true); };
     const restored = () => { if (!disposed) initialize(); };
     canvas.addEventListener("webglcontextlost", lost); canvas.addEventListener("webglcontextrestored", restored);
     initialize();
@@ -178,11 +196,30 @@ export function MemoryGraph3D(props: Props) {
     const observer = new ResizeObserver(resize); observer.observe(canvas);
     canvas.addEventListener("pointerdown", down); canvas.addEventListener("pointermove", move); canvas.addEventListener("pointerup", up); canvas.addEventListener("pointercancel", cancel); canvas.addEventListener("pointerleave", leave);
     canvas.addEventListener("wheel", wheel, { passive: false }); canvas.addEventListener("keydown", key);
-    benchmarkStart.current = (mode = "render") => { benchmark.current = { mode, start: performance.now(), previous: 0, frame: [], cpu: [], pick: [] }; setBenchmarkResult(mode === "render" ? "Measuring 600 rotating and zooming frames…" : "Measuring browser frame scheduling without rendering…"); schedule(); };
+    benchmarkStart.current = (mode = "render") => {
+      benchmark.current = null;
+      if (document.visibilityState !== "visible") {
+        pendingBenchmark = mode;
+        setBenchmarkResult("Waiting for this tab to become visible. Bring the Memory tab to the front; the run will start automatically.");
+        return;
+      }
+      pendingBenchmark = null;
+      benchmark.current = { mode, start: performance.now(), previous: 0, frame: [], cpu: [], pick: [] };
+      setBenchmarkResult(mode === "render" ? "Measuring 600 rotating and zooming frames…" : "Measuring browser frame scheduling without rendering…");
+      schedule();
+    };
+    const visibilityChanged = () => {
+      if (document.visibilityState !== "visible") {
+        if (benchmark.current) invalidateBenchmark("The tab became hidden. Keep it visible and start a new run.");
+      } else if (pendingBenchmark) benchmarkStart.current(pendingBenchmark);
+    };
+    if (benchmarkEnabled) document.addEventListener("visibilitychange", visibilityChanged);
     let restoreTimer: ReturnType<typeof setTimeout> | undefined;
     loseContext.current = () => { const extension = gl?.getExtension("WEBGL_lose_context"); extension?.loseContext(); restoreTimer = setTimeout(() => extension?.restoreContext(), 3000); };
     return () => {
       disposed = true; clearTimeout(restoreTimer); observer.disconnect(); cancelAnimationFrame(frame); renderer.current?.dispose(); renderer.current = null; redraw.current = () => {};
+      benchmark.current = null; pendingBenchmark = null;
+      document.removeEventListener("visibilitychange", visibilityChanged);
       canvas.removeEventListener("webglcontextlost", lost); canvas.removeEventListener("webglcontextrestored", restored);
       canvas.removeEventListener("pointerdown", down); canvas.removeEventListener("pointermove", move); canvas.removeEventListener("pointerup", up); canvas.removeEventListener("pointercancel", cancel); canvas.removeEventListener("pointerleave", leave);
       canvas.removeEventListener("wheel", wheel); canvas.removeEventListener("keydown", key);

@@ -31,15 +31,16 @@ export function buildMemoryPickIndex(points: Float32Array, radii: Float32Array):
 }
 
 /** Conservative projected-sphere pruning, then exact circle/depth tests in small leaves. */
-export function pickMemoryNode(index: MemoryPickIndex, camera: MemoryCamera3D, scale: number, width: number, height: number, screenX: number, screenY: number, focus = -1): number {
+export function pickMemoryNode(index: MemoryPickIndex, camera: MemoryCamera3D, scale: number, width: number, height: number, screenX: number, screenY: number, focus = -1, scratch?: Int32Array): number {
   if (!index.tree.length) return -1;
   const { bounds, tree, points, radii, order } = index;
   const cy = Math.cos(camera.yaw), sy = Math.sin(camera.yaw), cp = Math.cos(camera.pitch), sp = Math.sin(camera.pitch);
   const px = screenX - width / 2, py = height / 2 - screenY, zoomScale = scale * camera.zoom, rootZoom = Math.sqrt(camera.zoom);
-  const depth = (id: number) => { const at = id * 5; return bounds[at + 1]! * sp + (-bounds[at]! * sy + bounds[at + 2]! * cy) * cp; };
-  const stack = [0]; let selected = -1, bestDepth = Infinity;
-  while (stack.length) {
-    const id = stack.pop()!, at = id * 5, cx = bounds[at]!, yy = bounds[at + 1]!, zz = bounds[at + 2]!, radius = bounds[at + 3]!;
+  const stack = scratch && scratch.length >= tree.length / 4 ? scratch : new Int32Array(tree.length / 4);
+  stack[0] = 0;
+  let remaining = 1, selected = -1, bestDepth = Infinity;
+  while (remaining) {
+    const id = stack[--remaining]!, at = id * 5, cx = bounds[at]!, yy = bounds[at + 1]!, zz = bounds[at + 2]!, radius = bounds[at + 3]!;
     const x = cx * cy + zz * sy, d = -cx * sy + zz * cy, y = yy * cp - d * sp, z = yy * sp + d * cp;
     if (z - radius > bestDepth) continue;
     const near = 650 / Math.max(120, 650 + (z - radius) * scale), far = 650 / Math.max(120, 650 + (z + radius) * scale);
@@ -48,7 +49,11 @@ export function pickMemoryNode(index: MemoryPickIndex, camera: MemoryCamera3D, s
     if (px < Math.min(minX * near, minX * far) - padding || px > Math.max(maxX * near, maxX * far) + padding || py < Math.min(minY * near, minY * far) - padding || py > Math.max(maxY * near, maxY * far) + padding) continue;
     const row = id * 4, left = tree[row + 2]!, right = tree[row + 3]!;
     if (left >= 0) {
-      if (depth(left) < depth(right)) stack.push(right, left); else stack.push(left, right);
+      const l = left * 5, r = right * 5;
+      const leftDepth = bounds[l + 1]! * sp + (-bounds[l]! * sy + bounds[l + 2]! * cy) * cp;
+      const rightDepth = bounds[r + 1]! * sp + (-bounds[r]! * sy + bounds[r + 2]! * cy) * cp;
+      if (leftDepth < rightDepth) { stack[remaining++] = right; stack[remaining++] = left; }
+      else { stack[remaining++] = left; stack[remaining++] = right; }
       continue;
     }
     for (let i = tree[row]!; i < tree[row + 1]!; i++) {

@@ -13,7 +13,7 @@ jobs:
       matrix:
         include:
           - bounty: 62
-            revision: f24c35bf5fd8f919f084862e119a25fbfd5ea58f
+            revision: c2dcf8dfddc20fcfc2971188d62c5b6e7f13563f
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:

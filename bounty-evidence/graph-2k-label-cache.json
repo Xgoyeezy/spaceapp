@@ -1,0 +1,82 @@
+{
+  "sourceRevision": "c2dcf8dfddc20fcfc2971188d62c5b6e7f13563f",
+  "baselineFile": "graph-2k-before-label-cache.json",
+  "machine": { "model": "Mac14,2", "chip": "Apple M2", "cpuCores": 8, "ramGiB": 16, "os": "macOS 27.0.1" },
+  "procedure": "Compiled preview, normal Workspace to Memory navigation, titles enabled. Two consecutive 600-frame rotating/zooming runs with moving-pointer picking, followed by a scheduling-only diagnostic. Other user applications stayed running. No local builds or tests ran during the measurements.",
+  "interpretation": "Observed CPU p95 fell from 2.4 ms to 1.9 ms on the first optimized run and 1.2 ms on the warmed repeat. Frame p95 remains 17.6 ms, including the scheduling-only baseline, so the strict 16.7 ms requirement is still unmet. The repeat is warm and is not a controlled causal estimate. maxWorkMs is cumulative since page load, including earlier render work when the scheduler diagnostic runs. Zero long-task duration means none observed at or above 50 ms.",
+  "runs": [
+    {
+      "mode": "render", "nodes": 2000, "edges": 6000, "frames": 600,
+      "frameMinMs": 15.599999999998545,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 17.600000000002183,
+      "cpuP95Ms": 1.9000000059604645,
+      "pickP95Ms": 0.19999998807907104,
+      "pickMaxMs": 2.4000000059604645,
+      "maxLoadOrLayoutTaskMs": 0, "maxPageTaskMs": 189,
+      "longFrames": [], "pickWorstFrame": 0,
+      "maxWorkMs": {
+        "layout volume": 0.09999999403953552,
+        "create WebGL context": 11.200000017881393,
+        "initialize GPU programs": 11.699999988079071,
+        "GPU graph upload": 0.19999998807907104,
+        "GPU positions and pick index": 0.19999998807907104,
+        "draw GPU frame": 5.5999999940395355,
+        "draw labels": 12.599999994039536,
+        "send nodes": 0.5, "send edges": 0.9000000059604645,
+        "send run": 0, "receive layout": 4.4000000059604645
+      },
+      "width": 898.5078125, "height": 516, "dpr": 2,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+    },
+    {
+      "mode": "render", "nodes": 2000, "edges": 6000, "frames": 600,
+      "frameMinMs": 15.599999999991269,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 17.599999999998545,
+      "cpuP95Ms": 1.2000000178813934,
+      "pickP95Ms": 0.10000002384185791,
+      "pickMaxMs": 0.5,
+      "maxLoadOrLayoutTaskMs": 0, "maxPageTaskMs": 189,
+      "longFrames": [], "pickWorstFrame": 127,
+      "maxWorkMs": {
+        "layout volume": 0.09999999403953552,
+        "create WebGL context": 11.200000017881393,
+        "initialize GPU programs": 11.699999988079071,
+        "GPU graph upload": 0.19999998807907104,
+        "GPU positions and pick index": 0.19999998807907104,
+        "draw GPU frame": 5.5999999940395355,
+        "draw labels": 12.599999994039536,
+        "send nodes": 0.5, "send edges": 0.9000000059604645,
+        "send run": 0, "receive layout": 4.4000000059604645
+      },
+      "width": 898.5078125, "height": 516, "dpr": 2,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+    },
+    {
+      "mode": "scheduler", "nodes": 2000, "edges": 6000, "frames": 600,
+      "frameMinMs": 15.599999999991269,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 17.59999999999127,
+      "cpuP95Ms": 0, "pickP95Ms": 0, "pickMaxMs": 0,
+      "maxLoadOrLayoutTaskMs": 0, "maxPageTaskMs": 189,
+      "longFrames": [], "pickWorstFrame": -1,
+      "maxWorkMs": {
+        "layout volume": 0.09999999403953552,
+        "create WebGL context": 11.200000017881393,
+        "initialize GPU programs": 11.699999988079071,
+        "GPU graph upload": 0.19999998807907104,
+        "GPU positions and pick index": 0.19999998807907104,
+        "draw GPU frame": 5.5999999940395355,
+        "draw labels": 12.599999994039536,
+        "send nodes": 0.5, "send edges": 0.9000000059604645,
+        "send run": 0, "receive layout": 4.4000000059604645
+      },
+      "width": 898.5078125, "height": 516, "dpr": 2,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "sourceRevision": "c2dcf8dfddc20fcfc2971188d62c5b6e7f13563f",
+  "machine": { "model": "Mac14,2", "chip": "Apple M2", "cpuCores": 8, "ramGiB": 16, "os": "macOS 27.0.1" },
+  "procedure": "Compiled preview, normal Workspace to Memory navigation, titles enabled. Waited for layout completion before 600 rotating/zooming frames with moving-pointer picking. Other user applications stayed running. No local builds or tests ran during measurement.",
+  "interpretation": "The 50k render run meets the 33 ms frame-p95, 4 ms maximum picking and 100 ms maximum main-thread load/layout task bounds. No main-thread task at or above 50 ms was observed after Memory opened. The separate long-animation-frame diagnostic did observe a 105.8 ms frame during loading, including a 38.4 ms script; it is retained below. Earlier whole-application startup peaked at a 170 ms task.",
+  "result": {
+    "mode": "render", "nodes": 50000, "edges": 150000, "frames": 600,
+    "frameMinMs": 15.599999999991269,
+    "frameP50Ms": 16.69999999999709,
+    "frameP95Ms": 17.5,
+    "cpuP95Ms": 1.100000023841858,
+    "pickP95Ms": 0.19999998807907104,
+    "pickMaxMs": 1,
+    "maxLoadOrLayoutTaskMs": 0,
+    "maxPageTaskMs": 170,
+    "longFrames": [
+      {
+        "startTime": 22976.40000000596,
+        "duration": 105.80000001192093,
+        "scripts": [
+          {
+            "duration": 38.400000005960464,
+            "invoker": "Scheduler.yield.then",
+            "source": "http://127.0.0.1:4922/assets/memory-yield-DriqnFX7.js",
+            "function": "", "position": 60
+          }
+        ]
+      }
+    ],
+    "pickWorstFrame": 175,
+    "maxWorkMs": {
+      "layout volume": 0.20000001788139343,
+      "create WebGL context": 13.400000005960464,
+      "initialize GPU programs": 10.299999982118607,
+      "GPU graph upload": 6.9000000059604645,
+      "GPU positions and pick index": 1.7999999821186066,
+      "draw GPU frame": 1.4000000059604645,
+      "draw labels": 4.0999999940395355,
+      "send nodes": 8.599999994039536,
+      "send edges": 0.7000000178813934,
+      "send run": 0,
+      "receive layout": 8.800000011920929
+    },
+    "width": 898.5078125, "height": 516, "dpr": 2,
+    "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+  }
+}

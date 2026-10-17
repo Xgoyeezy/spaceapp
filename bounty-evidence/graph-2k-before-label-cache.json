@@ -1,0 +1,39 @@
+{
+  "sourceRevision": "f24c35bf5fd8f919f084862e119a25fbfd5ea58f",
+  "machine": { "model": "Mac14,2", "chip": "Apple M2", "cpuCores": 8, "ramGiB": 16, "os": "macOS 27.0.1" },
+  "procedure": "Compiled preview, normal Workspace to Memory navigation, titles enabled; 600 rotating and zooming frames with moving-pointer picking. Other user applications stayed running. No build or test command ran during this measurement.",
+  "result": {
+    "mode": "render",
+    "nodes": 2000,
+    "edges": 6000,
+    "frames": 600,
+    "frameMinMs": 15.599999999976717,
+    "frameP50Ms": 16.699999999982538,
+    "frameP95Ms": 17.60000000000582,
+    "cpuP95Ms": 2.4000000059604645,
+    "pickP95Ms": 0.19999998807907104,
+    "pickMaxMs": 2.5999999940395355,
+    "maxLoadOrLayoutTaskMs": 68,
+    "maxPageTaskMs": 166,
+    "longFrames": [],
+    "pickWorstFrame": 203,
+    "maxWorkMs": {
+      "layout volume": 0.10000002384185791,
+      "create WebGL context": 27.200000017881393,
+      "initialize GPU programs": 18.099999994039536,
+      "GPU graph upload": 0.29999998211860657,
+      "GPU positions and pick index": 0.10000002384185791,
+      "draw GPU frame": 28.599999994039536,
+      "draw labels": 32.39999997615814,
+      "send nodes": 0.800000011920929,
+      "send edges": 3.300000011920929,
+      "send run": 0,
+      "receive layout": 1.7999999821186066
+    },
+    "width": 898.5078125,
+    "height": 516,
+    "dpr": 2,
+    "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+  }
+}

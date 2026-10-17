@@ -1,5 +1,9 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { execFile } from "node:child_process";
+import { randomBytes } from "node:crypto";
+import { copyFile, lstat, mkdir, mkdtemp, readFile, realpath, rm, writeFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { promisify } from "node:util";
 import test from "node:test";
 import { devCompose, devEnvironment, devStackConfig, pinnedDevImages, pinnedOpenCode } from "../dev-stack-config.mjs";
 import { devProcessIdentity, devSupervisorIsAlive } from "../dev-stack-process.mjs";
@@ -68,4 +72,33 @@ test("stale supervisor records do not confuse a reused live PID with the owned p
   assert.equal(await devSupervisorIsAlive({ pid: -1, identity }), false);
   assert.equal(await devSupervisorIsAlive({ pid: process.pid }), true);
   await assert.rejects(devSupervisorIsAlive({ pid: process.pid, identity }, async () => { throw new Error("process identity unavailable"); }), /unavailable/);
+});
+
+for (const existingRecord of [false, true]) test(`failed startup ${existingRecord ? "preserves an existing" : "removes its own"} supervisor record`, { skip: process.platform === "win32" }, async () => {
+  const root = await realpath(await mkdtemp("/tmp/spaceapp-dev-startup-"));
+  const fixture = devStackConfig(root);
+  const run = promisify(execFile);
+  try {
+    for (const path of ["scripts/dev-stack.mjs", "scripts/dev-stack-config.mjs", "scripts/dev-stack-process.mjs", "Dockerfile", "packages/run-spaceapp/templates/compose.yml"]) {
+      await mkdir(dirname(join(root, path)), { recursive: true });
+      await copyFile(new URL(`../../${path}`, import.meta.url), join(root, path));
+    }
+    await mkdir(join(fixture.state, "secrets"), { recursive: true, mode: 0o700 });
+    await writeFile(join(fixture.state, "config.json"), JSON.stringify(fixture), { mode: 0o600 });
+    for (const name of ["postgres-password", "session-secret", "setup-token", "control-token"]) {
+      await writeFile(join(fixture.state, "secrets", name), randomBytes(32).toString("hex"), { mode: 0o600 });
+    }
+    // A directory at the socket path fails before Docker or any service starts.
+    // It must not be recursively removed as part of startup cleanup.
+    const socketPath = join(fixture.state, "control.sock"), runningFile = join(fixture.state, "running.json");
+    await mkdir(socketPath);
+    const previous = JSON.stringify({ pid: process.pid, identity: await devProcessIdentity(process.pid), project: fixture.project });
+    if (existingRecord) await writeFile(runningFile, previous, { mode: 0o600 });
+    await assert.rejects(run(process.execPath, [join(root, "scripts/dev-stack.mjs"), "up"], {
+      env: { PATH: process.env.PATH }, timeout: 10_000, maxBuffer: 16_384
+    }), error => error.code === 1 && (existingRecord ? /has a supervisor record/.test(error.stderr) : /directory|EISDIR/.test(error.stderr)));
+    if (existingRecord) assert.equal(await readFile(runningFile, "utf8"), previous);
+    else await assert.rejects(lstat(runningFile), { code: "ENOENT" });
+    assert.ok((await lstat(socketPath)).isDirectory());
+  } finally { await rm(root, { recursive: true, force: true }); }
 });

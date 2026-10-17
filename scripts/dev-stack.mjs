@@ -18,7 +18,7 @@ if (Number(process.versions.node.split(".")[0]) !== 22) throw new Error("The con
 let config = devStackConfig(root, process.env);
 const state = config.state, marker = join(state, "config.json"), runningFile = join(state, "running.json"), controlPath = join(state, "control.sock");
 const children = new Set();
-let control, closing = false, shutdownPromise, serviceFailure;
+let control, closing = false, shutdownPromise, serviceFailure, wroteRunning = false;
 let secrets = {};
 const safeError = error => redact(error instanceof Error ? error.message : String(error));
 function redact(text) {
@@ -181,6 +181,7 @@ try {
     const identity = await devProcessIdentity(process.pid);
     if (!identity) throw new Error("Cannot record this dev-stack supervisor's process identity.");
     await writeFile(runningFile, JSON.stringify({ pid: process.pid, identity, project: config.project }), { flag: "wx", mode: 0o600 });
+    wroteRunning = true;
     await rm(controlPath, { force: true });
     control = net.createServer(socket => {
       let body = ""; socket.setTimeout(3000, () => socket.destroy());
@@ -238,4 +239,5 @@ try {
 } catch (error) {
   console.error(safeError(error)); process.exitCode = 1;
   if (control) { try { await stop(); } catch (stopError) { console.error(safeError(stopError)); } }
+  else if (wroteRunning) { try { await rm(runningFile, { force: true }); } catch (cleanupError) { console.error(safeError(cleanupError)); } }
 }

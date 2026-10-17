@@ -1,0 +1,325 @@
+[
+  {
+    "label": "38f2622 Chrome 2000 nodes; started through UI automation after manual attempt returned no result",
+    "result": {
+      "status": "complete",
+      "valid": true,
+      "visibility": "visible",
+      "mode": "render",
+      "frames": 600,
+      "observerSupport": {
+        "longTasks": true,
+        "longAnimationFrames": true
+      },
+      "width": 898.5078125,
+      "height": 460,
+      "dpr": 2,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "nodes": 2000,
+      "edges": 6000,
+      "frameMinMs": 15.599999999991269,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 17.60000000000582,
+      "cpuP95Ms": 2.2999999821186066,
+      "pickP95Ms": 0.10000002384185791,
+      "pickMaxMs": 12.900000005960464,
+      "maxLoadOrLayoutTaskMs": 119,
+      "maxPageTaskMs": 160,
+      "longestMemoryTask": {
+        "startTime": 83483.90000000596,
+        "duration": 119
+      },
+      "loadStartedAt": 10276,
+      "benchmarkStartedAt": 90957.5,
+      "longFrames": [
+        {
+          "startTime": 10701.200000017881,
+          "duration": 133.5,
+          "scripts": [
+            {
+              "duration": 72.80000001192093,
+              "invoker": "BODY.onclick",
+              "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+              "function": "Ws",
+              "position": 212737
+            }
+          ]
+        },
+        {
+          "startTime": 43818.70000001788,
+          "duration": 229.2999999821186,
+          "scripts": []
+        },
+        {
+          "startTime": 83450.5,
+          "duration": 101.09999999403954,
+          "scripts": [
+            {
+              "duration": 17.200000017881393,
+              "invoker": "MessagePort.onmessage",
+              "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+              "function": "rt",
+              "position": 10089
+            }
+          ]
+        }
+      ],
+      "pickWorstFrame": 7,
+      "maxWorkMs": {
+        "layout volume": 0.09999999403953552,
+        "create WebGL context": 11.300000011920929,
+        "initialize GPU programs": 16.19999998807907,
+        "GPU graph upload": 0.30000001192092896,
+        "GPU positions and pick index": 2.699999988079071,
+        "draw GPU frame": 9.400000005960464,
+        "draw labels": 6.300000011920929,
+        "send nodes": 1,
+        "send edges": 1.199999988079071,
+        "send run": 0,
+        "receive layout": 62.400000005960464
+      }
+    }
+  },
+  {
+    "label": "38f2622 Chrome 2000 nodes warm repeat",
+    "result": {
+      "status": "complete",
+      "valid": true,
+      "visibility": "visible",
+      "mode": "render",
+      "frames": 600,
+      "observerSupport": {
+        "longTasks": true,
+        "longAnimationFrames": true
+      },
+      "width": 898.5078125,
+      "height": 460,
+      "dpr": 2,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "nodes": 2000,
+      "edges": 6000,
+      "frameMinMs": 15.60000000000582,
+      "frameP50Ms": 16.699999999982538,
+      "frameP95Ms": 17.60000000000582,
+      "cpuP95Ms": 1.0999999940395355,
+      "pickP95Ms": 0.10000002384185791,
+      "pickMaxMs": 0.30000001192092896,
+      "maxLoadOrLayoutTaskMs": 119,
+      "maxPageTaskMs": 160,
+      "longestMemoryTask": {
+        "startTime": 83483.90000000596,
+        "duration": 119
+      },
+      "loadStartedAt": 10276,
+      "benchmarkStartedAt": 151777.90000000596,
+      "longFrames": [
+        {
+          "startTime": 10701.200000017881,
+          "duration": 133.5,
+          "scripts": [
+            {
+              "duration": 72.80000001192093,
+              "invoker": "BODY.onclick",
+              "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+              "function": "Ws",
+              "position": 212737
+            }
+          ]
+        },
+        {
+          "startTime": 43818.70000001788,
+          "duration": 229.2999999821186,
+          "scripts": []
+        },
+        {
+          "startTime": 83450.5,
+          "duration": 101.09999999403954,
+          "scripts": [
+            {
+              "duration": 17.200000017881393,
+              "invoker": "MessagePort.onmessage",
+              "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+              "function": "rt",
+              "position": 10089
+            }
+          ]
+        }
+      ],
+      "pickWorstFrame": 241,
+      "maxWorkMs": {
+        "layout volume": 0.09999999403953552,
+        "create WebGL context": 11.300000011920929,
+        "initialize GPU programs": 16.19999998807907,
+        "GPU graph upload": 0.30000001192092896,
+        "GPU positions and pick index": 2.699999988079071,
+        "draw GPU frame": 9.400000005960464,
+        "draw labels": 6.300000011920929,
+        "send nodes": 1,
+        "send edges": 1.199999988079071,
+        "send run": 0,
+        "receive layout": 62.400000005960464
+      }
+    }
+  },
+  {
+    "label": "38f2622 Chrome 10000 nodes",
+    "result": {
+      "status": "complete",
+      "valid": true,
+      "visibility": "visible",
+      "mode": "render",
+      "frames": 600,
+      "observerSupport": {
+        "longTasks": true,
+        "longAnimationFrames": true
+      },
+      "width": 898.5078125,
+      "height": 460,
+      "dpr": 2,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "nodes": 10000,
+      "edges": 30000,
+      "frameMinMs": 15.5,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 17.69999999999709,
+      "cpuP95Ms": 2.5,
+      "pickP95Ms": 0.20000001788139343,
+      "pickMaxMs": 8.900000005960464,
+      "maxLoadOrLayoutTaskMs": 0,
+      "maxPageTaskMs": 185,
+      "longestMemoryTask": null,
+      "loadStartedAt": 9299.799999982119,
+      "benchmarkStartedAt": 64163.19999998808,
+      "longFrames": [],
+      "pickWorstFrame": 11,
+      "maxWorkMs": {
+        "layout volume": 0,
+        "create WebGL context": 34.400000005960464,
+        "initialize GPU programs": 20.5,
+        "GPU graph upload": 0.4000000059604645,
+        "GPU positions and pick index": 3.5,
+        "draw GPU frame": 6.9000000059604645,
+        "draw labels": 38.70000001788139,
+        "send nodes": 0.4000000059604645,
+        "send edges": 0.699999988079071,
+        "send run": 0,
+        "receive layout": 4.9000000059604645
+      }
+    }
+  },
+  {
+    "label": "candidate-final-50000",
+    "result": {
+      "status": "complete",
+      "valid": true,
+      "visibility": "visible",
+      "mode": "render",
+      "frames": 600,
+      "observerSupport": {
+        "longTasks": true,
+        "longAnimationFrames": true
+      },
+      "width": 898.5078125,
+      "height": 460,
+      "dpr": 2,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "nodes": 50000,
+      "edges": 150000,
+      "frameMinMs": 15.599999999976717,
+      "frameP50Ms": 16.699999999982538,
+      "frameP95Ms": 17.5,
+      "cpuP95Ms": 2,
+      "pickP95Ms": 0.19999998807907104,
+      "pickMaxMs": 36.70000001788139,
+      "maxLoadOrLayoutTaskMs": 64,
+      "maxPageTaskMs": 186,
+      "longestMemoryTask": {
+        "startTime": 246348.59999999404,
+        "duration": 64
+      },
+      "loadStartedAt": 7600.699999988079,
+      "benchmarkStartedAt": 246284.90000000596,
+      "longFrames": [
+        {
+          "startTime": 18363.90000000596,
+          "duration": 181.69999998807907,
+          "scripts": []
+        }
+      ],
+      "pickWorstFrame": 3,
+      "maxWorkMs": {
+        "layout volume": 0,
+        "create WebGL context": 6.399999976158142,
+        "initialize GPU programs": 4.200000017881393,
+        "GPU graph upload": 4.5999999940395355,
+        "GPU positions and pick index": 1.7999999821186066,
+        "draw GPU frame": 1.7999999821186066,
+        "draw labels": 8.400000005960464,
+        "send nodes": 7,
+        "send edges": 1.800000011920929,
+        "send run": 0,
+        "receive layout": 38.5
+      }
+    }
+  },
+  {
+    "label": "38f2622 Chrome 50000 nodes warm repeat",
+    "result": {
+      "status": "complete",
+      "valid": true,
+      "visibility": "visible",
+      "mode": "render",
+      "frames": 600,
+      "observerSupport": {
+        "longTasks": true,
+        "longAnimationFrames": true
+      },
+      "width": 898.5078125,
+      "height": 460,
+      "dpr": 2,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "nodes": 50000,
+      "edges": 150000,
+      "frameMinMs": 15.599999999976717,
+      "frameP50Ms": 16.699999999953434,
+      "frameP95Ms": 17.599999999976717,
+      "cpuP95Ms": 2.899999976158142,
+      "pickP95Ms": 0.19999998807907104,
+      "pickMaxMs": 2.0999999940395355,
+      "maxLoadOrLayoutTaskMs": 64,
+      "maxPageTaskMs": 186,
+      "longestMemoryTask": {
+        "startTime": 246348.59999999404,
+        "duration": 64
+      },
+      "loadStartedAt": 7600.699999988079,
+      "benchmarkStartedAt": 280900.8000000119,
+      "longFrames": [
+        {
+          "startTime": 18363.90000000596,
+          "duration": 181.69999998807907,
+          "scripts": []
+        }
+      ],
+      "pickWorstFrame": 264,
+      "maxWorkMs": {
+        "layout volume": 0,
+        "create WebGL context": 6.399999976158142,
+        "initialize GPU programs": 4.200000017881393,
+        "GPU graph upload": 4.5999999940395355,
+        "GPU positions and pick index": 1.7999999821186066,
+        "draw GPU frame": 8.200000017881393,
+        "draw labels": 16.099999994039536,
+        "send nodes": 7,
+        "send edges": 1.800000011920929,
+        "send run": 0,
+        "receive layout": 38.5
+      }
+    }
+  }
+]

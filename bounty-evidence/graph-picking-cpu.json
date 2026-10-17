@@ -1,0 +1,52 @@
+{
+  "kind": "Node-only diagnostic, not browser acceptance",
+  "nodes": 2000,
+  "queriesPerRound": 6000,
+  "rounds": [
+    {
+      "baselineMs": 17.605166999999994,
+      "candidateMs": 11.052834000000018
+    },
+    {
+      "baselineMs": 17.871208999999965,
+      "candidateMs": 11.821125000000052
+    },
+    {
+      "baselineMs": 17.639917000000025,
+      "candidateMs": 11.080667000000005
+    },
+    {
+      "baselineMs": 17.65229099999999,
+      "candidateMs": 10.79362500000002
+    },
+    {
+      "baselineMs": 17.41229199999998,
+      "candidateMs": 11.037874999999985
+    },
+    {
+      "baselineMs": 17.515416999999957,
+      "candidateMs": 10.84370899999999
+    },
+    {
+      "baselineMs": 17.601,
+      "candidateMs": 10.973250000000007
+    },
+    {
+      "baselineMs": 17.568208000000027,
+      "candidateMs": 11.135499999999979
+    },
+    {
+      "baselineMs": 17.569458999999938,
+      "candidateMs": 10.91537500000004
+    },
+    {
+      "baselineMs": 17.72345800000005,
+      "candidateMs": 10.951083999999923
+    }
+  ],
+  "baselineMedianMs": 17.603083499999997,
+  "candidateMedianMs": 11.005562499999996,
+  "checksum": 109360720,
+  "aggregation": "Median is the mean of the two middle observations for 10 rounds; original measured rounds are unchanged.",
+  "reductionPercent": 37.479348433471905
+}

@@ -1,0 +1,14 @@
+{
+  "label": "Safari foreground 2000 nodes",
+  "capture": "Fields read from the native accessibility text after the user left the queued Memory tab in front for 20 seconds. Accessibility truncated the trailing JSON metadata; this is a partial capture, not the full result.",
+  "capturedFields": {
+    "status": "complete", "valid": true, "visibility": "visible", "mode": "render",
+    "nodes": 2000, "edges": 6000, "frames": 600,
+    "frameMinMs": 8, "frameP50Ms": 17, "frameP95Ms": 18,
+    "cpuP95Ms": 1, "pickP95Ms": 0, "pickMaxMs": 1,
+    "observerSupport": { "longTasks": false, "longAnimationFrames": false },
+    "maxLoadOrLayoutTaskMs": null, "maxPageTaskMs": null, "longFrames": null,
+    "pickWorstFrame": 1
+  },
+  "limits": "No 16.7 ms frame pass. A reported zero picking p95 does not mean zero work. Safari did not support either task observer in this run, so this is not loading acceptance evidence. Viewport, DPR and renderer metadata were beyond the native text truncation and are not asserted here."
+}

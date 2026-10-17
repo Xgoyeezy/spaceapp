@@ -1,0 +1,34 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Animated frame scheduling control</title>
+<style>body{margin:12px;background:#09111b;color:#d7e7ef;font:14px system-ui}button{font:inherit;padding:10px}canvas{display:block;width:1101.0078125px;height:742px;margin-top:8px;max-width:100%}pre{white-space:pre-wrap}</style>
+<p>Diagnostic only: one moving rectangle, no graph, React, worker or application. This is not a graph acceptance test.</p>
+<button id="measure">Measure 600 animated frames</button>
+<canvas id="canvas" aria-label="Animated rectangle scheduling control"></canvas>
+<pre id="result" role="status">Ready</pre>
+<script>
+const button=document.getElementById('measure'),canvas=document.getElementById('canvas'),result=document.getElementById('result');
+const context=canvas.getContext('2d');
+let active=false;
+document.addEventListener('visibilitychange',()=>{if(active&&document.hidden){active=false;button.disabled=false;result.textContent='Invalid: the tab became hidden.';}});
+button.addEventListener('click',()=>{
+  if(document.hidden){result.textContent='Bring this tab to the front before measuring.';return;}
+  const rect=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio,2);
+  canvas.width=Math.round(rect.width*dpr);canvas.height=Math.round(rect.height*dpr);context.setTransform(dpr,0,0,dpr,0,0);
+  const intervals=[],cpu=[];let previous=0;
+  active=true;button.disabled=true;result.textContent='Measuring 600 animated frames…';
+  const tick=now=>{
+    if(!active)return;
+    if(previous)intervals.push(now-previous);previous=now;
+    const started=performance.now();
+    context.fillStyle='#09111b';context.fillRect(0,0,rect.width,rect.height);
+    context.fillStyle='#66ccff';context.fillRect(rect.width*(.5+.3*Math.sin(now/1000))-24,rect.height/2-24,48,48);
+    cpu.push(performance.now()-started);
+    if(intervals.length<600){requestAnimationFrame(tick);return;}
+    active=false;button.disabled=false;
+    const p=(values,f)=>[...values].sort((a,b)=>a-b)[Math.max(0,Math.ceil(values.length*f)-1)]??0;
+    result.textContent=JSON.stringify({mode:'animated-scheduler-control',frames:intervals.length,visibility:document.visibilityState,frameMinMs:Math.min(...intervals),frameP50Ms:p(intervals,.5),frameP95Ms:p(intervals,.95),frameMaxMs:Math.max(...intervals),cpuP95Ms:p(cpu,.95),width:rect.width,height:rect.height,dpr,userAgent:navigator.userAgent},null,2);
+  };
+  requestAnimationFrame(tick);
+});
+</script>

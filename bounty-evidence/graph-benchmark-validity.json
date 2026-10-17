@@ -1,0 +1,22 @@
+{
+  "sourceRevision": "38f2622b2cdb15e2587f4b8bd437ead7ebf57bc3",
+  "action": "Start render benchmark, then use Test context recovery",
+  "result": {
+    "status": "invalid",
+    "valid": false,
+    "mode": "render",
+    "reason": "The WebGL context was lost. Restore it before starting a new run.",
+    "frames": 60
+  },
+  "afterRestoration": {
+    "measureEnabled": true,
+    "fallbackNoticeCount": 0,
+    "interruptedResultRemainedInvalid": true
+  },
+  "finalResultCopyVerification": {
+    "entries": 5,
+    "sortedKeyJsonLength": 7428,
+    "fnv1a": "bf823b74",
+    "note": "The in-browser capture and saved file payload matched after sorting object keys. This is a copy consistency check, not a cryptographic signature."
+  }
+}

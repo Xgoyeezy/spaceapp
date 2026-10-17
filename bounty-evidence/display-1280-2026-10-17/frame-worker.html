@@ -1,0 +1,16 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Frame scheduling comparison</title><style>body{font:16px system-ui;color:#edf3ff;background:#101722;margin:24px}button{padding:12px}canvas{width:900px;height:460px;max-width:95vw;border:1px solid #456}pre{white-space:pre-wrap}</style></head><body><h1>Frame scheduling comparison</h1><p>600 intervals, all retained, moving rectangle at DPR 2. The worker result measures callbacks inside the worker.</p><button id="main">Measure main thread</button><button id="worker">Measure worker</button><button id="download" disabled>Download comparison</button><p id="status">Ready</p><div id="surface"></div><pre id="result"></pre><script type="module">
+const result=document.querySelector('#result'), status=document.querySelector('#status'), surface=document.querySelector('#surface'), buttons=[...document.querySelectorAll('button')];
+let worker;const results=[];
+function measure(canvas,done){
+ const ctx=canvas.getContext('2d'), samples=[];let previous=0,previousWall=0;
+ function frame(now){const wall=performance.now();if(previous)samples.push({interval:now-previous,wall:wall-previousWall,lag:wall-now});previous=now;previousWall=wall;ctx.fillStyle='#182335';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#75c9ff';ctx.fillRect(400+Math.sin(now/800)*300,160,120,120);if(samples.length<600)requestAnimationFrame(frame);else done(samples);}
+ requestAnimationFrame(frame);
+}
+function run(mode){
+ buttons.forEach(b=>b.disabled=true);worker?.terminate();surface.replaceChildren();const canvas=document.createElement('canvas');canvas.width=1800;canvas.height=920;surface.append(canvas);status.textContent='Measuring '+mode+'…';let hidden=document.visibilityState!=='visible';const check=()=>{if(document.visibilityState!=='visible')hidden=true;};document.addEventListener('visibilitychange',check);
+ const done=samples=>{document.removeEventListener('visibilitychange',check);const p=(key,n)=>samples.map(s=>s[key]).sort((a,b)=>a-b)[Math.ceil(samples.length*n)-1];const out={mode,valid:!hidden,frames:samples.length,frameP50Ms:p('interval',.5),frameP95Ms:p('interval',.95),callbackP95Ms:p('wall',.95),callbackLagP95Ms:p('lag',.95),averageMs:samples.reduce((sum,s)=>sum+s.interval,0)/samples.length,userAgent:navigator.userAgent,samples};results.push(out);result.textContent=JSON.stringify({...out,samples:undefined},null,2);status.textContent='Complete';buttons.forEach(b=>b.disabled=false);};
+ if(mode==='main'){measure(canvas,done);return;}
+ const url=URL.createObjectURL(new Blob([`const measure=${measure.toString()};onmessage=e=>measure(e.data,s=>postMessage(s));`],{type:'text/javascript'}));worker=new Worker(url);URL.revokeObjectURL(url);worker.onmessage=e=>done(e.data);worker.onerror=e=>{status.textContent=e.message;buttons.forEach(b=>b.disabled=false);};const offscreen=canvas.transferControlToOffscreen();worker.postMessage(offscreen,[offscreen]);
+}
+document.querySelector('#main').onclick=()=>run('main');document.querySelector('#worker').onclick=()=>run('worker');document.querySelector('#download').onclick=()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(results,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='frame-worker-comparison.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+</script></body></html>

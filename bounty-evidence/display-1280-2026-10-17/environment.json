@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-10-17T04:50:29.444609+00:00",
+  "display": [
+    {
+      "_spdisplays_pixels": "2560 x 1664"
+    },
+    {
+      "_spdisplays_resolution": "1280 x 832 @ 60.00Hz"
+    },
+    {
+      "spdisplays_pixelresolution": "spdisplays_2560x1664Retina"
+    }
+  ],
+  "powerSource": "Now drawing from 'AC Power'",
+  "userReportedSetting": "1280",
+  "source": "f0a2078918870b0abb0ed6cf7c02d6dea8b07e7f",
+  "afterMeasurements": {
+    "checkedAt": "2026-10-17T04:57:25.978516+00:00",
+    "display": [
+      {
+        "_spdisplays_pixels": "2560 x 1664"
+      },
+      {
+        "_spdisplays_resolution": "1280 x 832 @ 60.00Hz"
+      },
+      {
+        "spdisplays_pixelresolution": "spdisplays_2560x1664Retina"
+      }
+    ],
+    "powerSource": "Now drawing from 'AC Power'"
+  }
+}

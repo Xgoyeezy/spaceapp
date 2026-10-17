@@ -1,0 +1,66 @@
+{
+  "recordedAt": "2026-10-17T04:56:30.645352+00:00",
+  "source": "f0a2078918870b0abb0ed6cf7c02d6dea8b07e7f",
+  "graphRuns": [
+    {
+      "mode": "render",
+      "frameP95Ms": 17.60000000000582,
+      "cpuP95Ms": 2.4000000059604645,
+      "pickMaxMs": 2.0999999940395355,
+      "width": 792.7578125,
+      "height": 382,
+      "dpr": 2,
+      "frames": 600,
+      "valid": true
+    },
+    {
+      "mode": "scheduler",
+      "frameP95Ms": 17.60000000000582,
+      "cpuP95Ms": 0,
+      "pickMaxMs": 0,
+      "width": 792.7578125,
+      "height": 382,
+      "dpr": 2,
+      "frames": 600,
+      "valid": true
+    },
+    {
+      "mode": "render",
+      "frameP95Ms": 17.60000000000582,
+      "cpuP95Ms": 2.199999988079071,
+      "pickMaxMs": 2.5,
+      "width": 792.7578125,
+      "height": 382,
+      "dpr": 2,
+      "frames": 600,
+      "valid": true
+    }
+  ],
+  "controlRuns": [
+    {
+      "mode": "main",
+      "frameP95Ms": 17.600000000000364,
+      "averageMs": 16.72116666666667,
+      "over25ms": 1,
+      "frames": 600,
+      "valid": true
+    },
+    {
+      "mode": "worker",
+      "frameP95Ms": 17.600000000000136,
+      "averageMs": 16.666666666666668,
+      "over25ms": 0,
+      "frames": 600,
+      "valid": true
+    }
+  ],
+  "controlCssPixels": [
+    900,
+    460
+  ],
+  "controlBackingPixels": [
+    1800,
+    920
+  ],
+  "controlSourceSha256": "116edb988e83afca536c69bfeb9da1b7851f1dfc27bcb069665e7b2b2d8b7dad"
+}

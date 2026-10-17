@@ -1,0 +1,355 @@
+{
+  "source": "f0a2078918870b0abb0ed6cf7c02d6dea8b07e7f",
+  "logicalDisplay": [
+    1280,
+    832
+  ],
+  "power": "AC",
+  "titles": true,
+  "notes": [
+    "Native responsive graph is smaller than earlier 1470 measurements; no viewport emulation used.",
+    "Browser window sizing happened before measurements. Cumulative task and animation-frame maxima include that setup period and are not a fresh loading test.",
+    "Runs ordered render, scheduling, render; all complete visible 600-interval runs."
+  ],
+  "runs": [
+    {
+      "status": "complete",
+      "valid": true,
+      "visibility": "visible",
+      "mode": "render",
+      "nodes": 2000,
+      "edges": 6000,
+      "frames": 600,
+      "frameMinMs": 15.599999999991269,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 17.60000000000582,
+      "cpuP95Ms": 2.4000000059604645,
+      "pickP95Ms": 0.19999998807907104,
+      "pickMaxMs": 2.0999999940395355,
+      "observerSupport": {
+        "longTasks": true,
+        "longAnimationFrames": true
+      },
+      "maxLoadOrLayoutTaskMs": 111,
+      "maxPageTaskMs": 154,
+      "longestMemoryTask": {
+        "startTime": 72222.69999998808,
+        "duration": 111
+      },
+      "loadStartedAt": 18061.69999998808,
+      "benchmarkStartedAt": 122016.79999998212,
+      "longFrames": [
+        {
+          "startTime": 72215.90000000596,
+          "duration": 125.19999998807907,
+          "scripts": [
+            {
+              "duration": 111.10000002384186,
+              "invoker": "MessagePort.onmessage",
+              "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+              "function": "rt",
+              "position": 10089
+            }
+          ]
+        },
+        {
+          "startTime": 78276.29999998212,
+          "duration": 103.30000001192093,
+          "scripts": []
+        },
+        {
+          "startTime": 121022.69999998808,
+          "duration": 106,
+          "scripts": [
+            {
+              "duration": 52,
+              "invoker": "MessagePort.onmessage",
+              "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+              "function": "rt",
+              "position": 10089
+            }
+          ]
+        },
+        {
+          "startTime": 121132.59999999404,
+          "duration": 184.19999998807907,
+          "scripts": [
+            {
+              "duration": 50,
+              "invoker": "MessagePort.onmessage",
+              "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+              "function": "rt",
+              "position": 10089
+            },
+            {
+              "duration": 11.799999982118607,
+              "invoker": "FrameRequestCallback",
+              "source": "http://127.0.0.1:4922/assets/vendor-xterm-Dre15qCx.js",
+              "function": "",
+              "position": 151910
+            },
+            {
+              "duration": 33.599999994039536,
+              "invoker": "FrameRequestCallback",
+              "source": "http://127.0.0.1:4922/assets/App-BCWrLu03.js",
+              "function": "te",
+              "position": 329936
+            },
+            {
+              "duration": 7,
+              "invoker": "ResizeObserverCallback",
+              "source": "http://127.0.0.1:4922/assets/browser-status-5YI6KCZt.js",
+              "function": "r",
+              "position": 7727
+            }
+          ]
+        }
+      ],
+      "pickWorstFrame": 0,
+      "maxWorkMs": {
+        "layout volume": 0.20000001788139343,
+        "GPU graph upload": 0.20000001788139343,
+        "GPU positions and pick index": 0.19999998807907104,
+        "create WebGL context": 42.69999998807907,
+        "send nodes": 1.0999999940395355,
+        "send edges": 1.100000023841858,
+        "send run": 0,
+        "initialize GPU programs": 15.599999994039536,
+        "draw GPU frame": 5,
+        "draw labels": 32,
+        "receive layout": 4.799999982118607
+      },
+      "width": 792.7578125,
+      "height": 382,
+      "dpr": 2,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+    },
+    {
+      "status": "complete",
+      "valid": true,
+      "visibility": "visible",
+      "mode": "scheduler",
+      "nodes": 2000,
+      "edges": 6000,
+      "frames": 600,
+      "frameMinMs": 15.400000000023283,
+      "frameP50Ms": 16.699999999982538,
+      "frameP95Ms": 17.60000000000582,
+      "cpuP95Ms": 0,
+      "pickP95Ms": 0,
+      "pickMaxMs": 0,
+      "observerSupport": {
+        "longTasks": true,
+        "longAnimationFrames": true
+      },
+      "maxLoadOrLayoutTaskMs": 111,
+      "maxPageTaskMs": 154,
+      "longestMemoryTask": {
+        "startTime": 72222.69999998808,
+        "duration": 111
+      },
+      "loadStartedAt": 18061.69999998808,
+      "benchmarkStartedAt": 146573.19999998808,
+      "longFrames": [
+        {
+          "startTime": 72215.90000000596,
+          "duration": 125.19999998807907,
+          "scripts": [
+            {
+              "duration": 111.10000002384186,
+              "invoker": "MessagePort.onmessage",
+              "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+              "function": "rt",
+              "position": 10089
+            }
+          ]
+        },
+        {
+          "startTime": 78276.29999998212,
+          "duration": 103.30000001192093,
+          "scripts": []
+        },
+        {
+          "startTime": 121022.69999998808,
+          "duration": 106,
+          "scripts": [
+            {
+              "duration": 52,
+              "invoker": "MessagePort.onmessage",
+              "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+              "function": "rt",
+              "position": 10089
+            }
+          ]
+        },
+        {
+          "startTime": 121132.59999999404,
+          "duration": 184.19999998807907,
+          "scripts": [
+            {
+              "duration": 50,
+              "invoker": "MessagePort.onmessage",
+              "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+              "function": "rt",
+              "position": 10089
+            },
+            {
+              "duration": 11.799999982118607,
+              "invoker": "FrameRequestCallback",
+              "source": "http://127.0.0.1:4922/assets/vendor-xterm-Dre15qCx.js",
+              "function": "",
+              "position": 151910
+            },
+            {
+              "duration": 33.599999994039536,
+              "invoker": "FrameRequestCallback",
+              "source": "http://127.0.0.1:4922/assets/App-BCWrLu03.js",
+              "function": "te",
+              "position": 329936
+            },
+            {
+              "duration": 7,
+              "invoker": "ResizeObserverCallback",
+              "source": "http://127.0.0.1:4922/assets/browser-status-5YI6KCZt.js",
+              "function": "r",
+              "position": 7727
+            }
+          ]
+        }
+      ],
+      "pickWorstFrame": -1,
+      "maxWorkMs": {
+        "layout volume": 0.20000001788139343,
+        "GPU graph upload": 0.20000001788139343,
+        "GPU positions and pick index": 0.19999998807907104,
+        "create WebGL context": 42.69999998807907,
+        "send nodes": 1.0999999940395355,
+        "send edges": 1.100000023841858,
+        "send run": 0,
+        "initialize GPU programs": 15.599999994039536,
+        "draw GPU frame": 5,
+        "draw labels": 32,
+        "receive layout": 4.799999982118607
+      },
+      "width": 792.7578125,
+      "height": 382,
+      "dpr": 2,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+    },
+    {
+      "status": "complete",
+      "valid": true,
+      "visibility": "visible",
+      "mode": "render",
+      "nodes": 2000,
+      "edges": 6000,
+      "frames": 600,
+      "frameMinMs": 15.599999999976717,
+      "frameP50Ms": 16.699999999982538,
+      "frameP95Ms": 17.60000000000582,
+      "cpuP95Ms": 2.199999988079071,
+      "pickP95Ms": 0.10000002384185791,
+      "pickMaxMs": 2.5,
+      "observerSupport": {
+        "longTasks": true,
+        "longAnimationFrames": true
+      },
+      "maxLoadOrLayoutTaskMs": 111,
+      "maxPageTaskMs": 154,
+      "longestMemoryTask": {
+        "startTime": 72222.69999998808,
+        "duration": 111
+      },
+      "loadStartedAt": 18061.69999998808,
+      "benchmarkStartedAt": 183330.19999998808,
+      "longFrames": [
+        {
+          "startTime": 72215.90000000596,
+          "duration": 125.19999998807907,
+          "scripts": [
+            {
+              "duration": 111.10000002384186,
+              "invoker": "MessagePort.onmessage",
+              "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+              "function": "rt",
+              "position": 10089
+            }
+          ]
+        },
+        {
+          "startTime": 78276.29999998212,
+          "duration": 103.30000001192093,
+          "scripts": []
+        },
+        {
+          "startTime": 121022.69999998808,
+          "duration": 106,
+          "scripts": [
+            {
+              "duration": 52,
+              "invoker": "MessagePort.onmessage",
+              "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+              "function": "rt",
+              "position": 10089
+            }
+          ]
+        },
+        {
+          "startTime": 121132.59999999404,
+          "duration": 184.19999998807907,
+          "scripts": [
+            {
+              "duration": 50,
+              "invoker": "MessagePort.onmessage",
+              "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+              "function": "rt",
+              "position": 10089
+            },
+            {
+              "duration": 11.799999982118607,
+              "invoker": "FrameRequestCallback",
+              "source": "http://127.0.0.1:4922/assets/vendor-xterm-Dre15qCx.js",
+              "function": "",
+              "position": 151910
+            },
+            {
+              "duration": 33.599999994039536,
+              "invoker": "FrameRequestCallback",
+              "source": "http://127.0.0.1:4922/assets/App-BCWrLu03.js",
+              "function": "te",
+              "position": 329936
+            },
+            {
+              "duration": 7,
+              "invoker": "ResizeObserverCallback",
+              "source": "http://127.0.0.1:4922/assets/browser-status-5YI6KCZt.js",
+              "function": "r",
+              "position": 7727
+            }
+          ]
+        }
+      ],
+      "pickWorstFrame": 0,
+      "maxWorkMs": {
+        "layout volume": 0.20000001788139343,
+        "GPU graph upload": 0.20000001788139343,
+        "GPU positions and pick index": 0.19999998807907104,
+        "create WebGL context": 42.69999998807907,
+        "send nodes": 1.0999999940395355,
+        "send edges": 1.100000023841858,
+        "send run": 0,
+        "initialize GPU programs": 15.599999994039536,
+        "draw GPU frame": 5,
+        "draw labels": 32,
+        "receive layout": 4.799999982118607
+      },
+      "width": 792.7578125,
+      "height": 382,
+      "dpr": 2,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+    }
+  ]
+}

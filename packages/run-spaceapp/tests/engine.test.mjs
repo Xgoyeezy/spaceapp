@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { Readable, Writable } from "node:stream";
@@ -47,7 +47,7 @@ test("rootless mounts preserve host ownership, read-only bindings, labels and fi
   const config = createDefaultConfig({ version: "1.1.6", profile: "small", engine: "podman" });
   config.workspaces = [{ id: "test-abcdef12", hostPath: "/tmp/source", containerPath: "/workspaces/test", readOnly: true }];
   const mounts = renderWorkspaceCompose(config), overrides = renderHostAccessCompose(config);
-  assert.match(mounts, /read_only: true/); assert.match(mounts, /selinux: z/); assert.match(mounts, /create_host_path: false/);
+  assert.match(mounts, /read_only: true/); assert.match(mounts, /selinux: z/); assert.match(mounts, /create_host_path: true/);
   assert.match(overrides, /keep-id:uid=10001,gid=10001/); assert.match(overrides, /user: "0:0"/);
   assert.match(overrides, /database-url:\/run\/secrets\/database-url:ro,z/);
   assert.doesNotMatch(mounts + overrides, /:U|chown|label=disable/);
@@ -83,6 +83,19 @@ test("answers select Podman on install and every later lifecycle command uses it
   assert.equal(JSON.parse(await readFile(join(root, "config.json"), "utf8")).engine, "podman");
   for (const command of ["status", "logs", "backup", "down", "up", "doctor"]) assert.equal(await run([command], { ...options, stdin: Readable.from([]) }), 0, output);
   assert.ok(calls.some(spec => spec.args.includes("scripts/portable-backup.mjs")));
+  const workspace = join(root, "workspace");
+  await mkdir(workspace);
+  assert.equal(await run(["workspace", "add", workspace], { ...options, stdin: Readable.from([]) }), 0, output);
+  assert.equal(await run(["up"], { ...options, stdin: Readable.from([]) }), 0, output);
+  await rm(workspace, { recursive: true });
+  for (const pathIsFile of [false, true]) {
+    if (pathIsFile) await writeFile(workspace, "not a directory");
+    const beforeStart = calls.length;
+    await assert.rejects(run(["up"], { ...options, stdin: Readable.from([]) }), /Registered workspace must be an existing directory/);
+    assert.equal(calls.length, beforeStart, "refuse before invoking Compose or creating the missing path");
+  }
+  assert.equal(await run(["down"], { ...options, stdin: Readable.from([]) }), 0, output);
+  assert.equal(await run(["workspace", "remove", workspace], { ...options, stdin: Readable.from([]) }), 0, output);
   const before = calls.length;
   await assert.rejects(run(["install", "--engine", "docker"], { ...options, stdin: Readable.from([]) }), /Switching engines is refused/);
   assert.equal(calls.length, before);

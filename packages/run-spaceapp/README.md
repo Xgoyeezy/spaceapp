@@ -39,7 +39,10 @@ of scope.
 Workspace bind mounts use shared SELinux `z` labels and
 `keep-id:uid=10001,gid=10001`, so files created by the application belong to the
 calling host user. Read-only workspace mounts remain read-only. SpaceApp does
-not recursively change host-workspace ownership. The Podman override mounts
+not recursively change host-workspace ownership. Before starting containers,
+the launcher refuses missing or non-directory workspace paths. The Compose
+bind configuration retains the shared SELinux label through its Bind API;
+`create_host_path: false` would drop that label in the Mount API. The Podman override mounts
 file-backed secrets read-only with shared SELinux labels; secret files remain
 inside the private installation directory. Named data and socket volumes,
 profiles, health dependencies, init, and resource limits are retained.

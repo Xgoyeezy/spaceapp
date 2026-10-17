@@ -1,4 +1,5 @@
 import { Writable } from "node:stream";
+import { stat } from "node:fs/promises";
 
 export function containerEngine(value = "docker") {
   if (!["docker", "podman"].includes(value)) throw new Error("Container engine must be docker or podman.");
@@ -36,9 +37,22 @@ export async function offerPodmanAlternative({ execute, nonInteractive, offerPod
 
 // One adapter covers lifecycle, checkpoint, storage and provider commands. No
 // shell strings or dynamic executable names reach the static spawn dispatcher.
-export function executeWithContainerEngine(execute, engine) {
+export function executeWithContainerEngine(execute, engine, { workspaceConfig = async () => null } = {}) {
   containerEngine(engine);
-  const adapted = (spec, io) => execute(adapted.engine === "podman" && spec.command === "docker" ? { ...spec, command: "podman" } : spec, io);
+  const adapted = async (spec, io) => {
+    if (adapted.engine === "podman" && ["docker", "podman"].includes(spec.command)) {
+      if (spec.args[0] === "compose" && (spec.args.includes("up") || spec.args.includes("run"))) {
+        for (const workspace of (await workspaceConfig())?.workspaces ?? []) {
+          let exists = false;
+          try { exists = (await stat(workspace.hostPath)).isDirectory(); }
+          catch (error) { if (error.code !== "ENOENT" && error.code !== "ENOTDIR") throw error; }
+          if (!exists) throw new Error(`Registered workspace must be an existing directory: ${workspace.hostPath}. Restore it or remove its workspace registration before starting containers.`);
+        }
+      }
+      return execute({ ...spec, command: "podman" }, io);
+    }
+    return execute(spec, io);
+  };
   adapted.engine = engine;
   return adapted;
 }

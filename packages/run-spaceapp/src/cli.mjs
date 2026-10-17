@@ -349,7 +349,7 @@ export async function run(argv, {
       ? await selectContainerEngine({ existing, requested: requestedEngine, execute, platform, nonInteractive: globalFlags.nonInteractive,
         offerPodman: () => promptYesNo(stdin, stdout, "Docker is unavailable and Podman is installed. Use rootless Podman?", { defaultYes: true, answerKey: "usePodman" }) })
       : existing?.engine ?? "docker";
-    execute = executeWithContainerEngine(execute, engine);
+    execute = executeWithContainerEngine(execute, engine, { workspaceConfig: () => readRawConfig(root) });
     if (command === "install" && !existing && !requestedEngine && platform !== "win32") {
       const originalEnsureDocker = ensureDocker, engineExecute = execute;
       ensureDocker = options => originalEnsureDocker({ ...options, alternativeEngine: async () => {

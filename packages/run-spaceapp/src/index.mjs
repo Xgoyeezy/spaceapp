@@ -583,12 +583,15 @@ export function renderRuntimeEnv(config) {
 
 export function renderWorkspaceCompose(config) {
   validateConfig(config);
+  // Compose's Mount API drops SELinux labels when create_host_path is false.
+  // Select its Bind API so :z reaches Podman; the launcher checks registered
+  // paths before any Compose up/run instead of creating missing workspaces.
   const mounts = config.workspaces.flatMap((workspace) => [
     "      - type: bind",
     `        source: ${JSON.stringify(workspace.hostPath)}`,
     `        target: ${JSON.stringify(workspace.containerPath)}`,
     `        read_only: ${workspace.readOnly}`,
-    ...(config.engine === "podman" ? ["        bind:", "          selinux: z", "          create_host_path: false"] : [])
+    ...(config.engine === "podman" ? ["        bind:", "          selinux: z", "          create_host_path: true"] : [])
   ]);
   const service = mounts.length > 0
     ? ["    volumes:", ...mounts]

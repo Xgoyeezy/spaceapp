@@ -1,0 +1,7846 @@
+[
+  {
+    "mode": "split",
+    "count": 50000,
+    "fixture": "actual graph with fixed approximate earlier camera path",
+    "originalMs": 3.5,
+    "run": 0,
+    "valid": true,
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "pickMaxMs": 1.2999999821186066,
+    "pickP95Ms": 0.19999998807907104,
+    "frameP95Ms": 33.399999999999636,
+    "worst": {
+      "sample": 341,
+      "ms": 1.2999999821186066,
+      "selected": 16292,
+      "interval": 16.199999999999818,
+      "callbackLag": 2.100000023841858,
+      "work": {
+        "selected": 16292,
+        "branches": 99,
+        "leaves": 6,
+        "points": 86
+      }
+    },
+    "maxPoints": 265,
+    "maxBranches": 149,
+    "replayMs": [
+      0.09999999403953552,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.10000002384185791,
+      0
+    ],
+    "equivalent": true,
+    "samples": [
+      {
+        "sample": 0,
+        "ms": 1,
+        "selected": 49142,
+        "interval": null,
+        "callbackLag": 0.40000001788138206
+      },
+      {
+        "sample": 1,
+        "ms": 0.9000000059604645,
+        "selected": 43622,
+        "interval": 16.69999999999999,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 2,
+        "ms": 0.19999998807907104,
+        "selected": 38079,
+        "interval": 16.599999999999994,
+        "callbackLag": 0.6000000178813991
+      },
+      {
+        "sample": 3,
+        "ms": 0.29999998211860657,
+        "selected": 38079,
+        "interval": 16.700000000000017,
+        "callbackLag": 0.30000002384184654
+      },
+      {
+        "sample": 4,
+        "ms": 1.199999988079071,
+        "selected": 38079,
+        "interval": 16.69999999999999,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 5,
+        "ms": 0.20000001788139343,
+        "selected": 38079,
+        "interval": 16.69999999999999,
+        "callbackLag": 0.30000000000001137
+      },
+      {
+        "sample": 6,
+        "ms": 0.4000000059604645,
+        "selected": 38976,
+        "interval": 16.600000000000023,
+        "callbackLag": 0.40000001788138206
+      },
+      {
+        "sample": 7,
+        "ms": 0,
+        "selected": 3602,
+        "interval": 32.5,
+        "callbackLag": 0.6000000059604531
+      },
+      {
+        "sample": 8,
+        "ms": 0.10000002384185791,
+        "selected": 3602,
+        "interval": 17.5,
+        "callbackLag": 0.6999999999999886
+      },
+      {
+        "sample": 9,
+        "ms": 0,
+        "selected": 3602,
+        "interval": 16.69999999999999,
+        "callbackLag": 1.800000011920929
+      },
+      {
+        "sample": 10,
+        "ms": 0.19999998807907104,
+        "selected": 3602,
+        "interval": 16.600000000000023,
+        "callbackLag": 0.5000000238418352
+      },
+      {
+        "sample": 11,
+        "ms": 0.09999999403953552,
+        "selected": 32789,
+        "interval": 16.69999999999999,
+        "callbackLag": 0.9000000178813821
+      },
+      {
+        "sample": 12,
+        "ms": 0.30000001192092896,
+        "selected": 1969,
+        "interval": 16.599999999999966,
+        "callbackLag": 0.6000000000000227
+      },
+      {
+        "sample": 13,
+        "ms": 0.10000002384185791,
+        "selected": 4154,
+        "interval": 16.100000000000023,
+        "callbackLag": 6.5
+      },
+      {
+        "sample": 14,
+        "ms": 0,
+        "selected": 26832,
+        "interval": 17.30000000000001,
+        "callbackLag": 4.600000005960453
+      },
+      {
+        "sample": 15,
+        "ms": 0.09999999403953552,
+        "selected": 26832,
+        "interval": 15.699999999999989,
+        "callbackLag": 5.600000023841858
+      },
+      {
+        "sample": 16,
+        "ms": 0,
+        "selected": 24877,
+        "interval": 17.600000000000023,
+        "callbackLag": 12.200000011920906
+      },
+      {
+        "sample": 17,
+        "ms": 0,
+        "selected": 24877,
+        "interval": 16.69999999999999,
+        "callbackLag": 0.19999999999998863
+      },
+      {
+        "sample": 18,
+        "ms": 0,
+        "selected": 24877,
+        "interval": 16.69999999999999,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 19,
+        "ms": 0,
+        "selected": 30627,
+        "interval": 16.600000000000023,
+        "callbackLag": 0.30000000596044174
+      },
+      {
+        "sample": 20,
+        "ms": 0,
+        "selected": 30627,
+        "interval": 16.69999999999999,
+        "callbackLag": 0.40000001788138206
+      },
+      {
+        "sample": 21,
+        "ms": 0.09999999403953552,
+        "selected": 30627,
+        "interval": 16.69999999999999,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 22,
+        "ms": 0.19999998807907104,
+        "selected": 30627,
+        "interval": 32.700000000000045,
+        "callbackLag": 0.40000002384181244
+      },
+      {
+        "sample": 23,
+        "ms": 0,
+        "selected": 12161,
+        "interval": 17.299999999999955,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 24,
+        "ms": 0,
+        "selected": 7673,
+        "interval": 16.600000000000023,
+        "callbackLag": 0.8999999999999773
+      },
+      {
+        "sample": 25,
+        "ms": 0.09999999403953552,
+        "selected": 7673,
+        "interval": 33.299999999999955,
+        "callbackLag": 0.5000000059604872
+      },
+      {
+        "sample": 26,
+        "ms": 0,
+        "selected": 29779,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.39999999999997726
+      },
+      {
+        "sample": 27,
+        "ms": 0,
+        "selected": 27824,
+        "interval": 16.699999999999932,
+        "callbackLag": 0.60000000596051
+      },
+      {
+        "sample": 28,
+        "ms": 0,
+        "selected": 15588,
+        "interval": 16.600000000000023,
+        "callbackLag": 0.7000000238418806
+      },
+      {
+        "sample": 29,
+        "ms": 0,
+        "selected": 15588,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.8999999999999773
+      },
+      {
+        "sample": 30,
+        "ms": 0,
+        "selected": 15588,
+        "interval": 32.799999999999955,
+        "callbackLag": 0.7000000238418806
+      },
+      {
+        "sample": 31,
+        "ms": 0.09999999403953552,
+        "selected": 15588,
+        "interval": 33.89999999999998,
+        "callbackLag": 0.60000000596051
+      },
+      {
+        "sample": 32,
+        "ms": 0,
+        "selected": 15588,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 33,
+        "ms": 0,
+        "selected": 16301,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.500000017881348
+      },
+      {
+        "sample": 34,
+        "ms": 0.09999999403953552,
+        "selected": 9332,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.4000000178814389
+      },
+      {
+        "sample": 35,
+        "ms": 0,
+        "selected": 9332,
+        "interval": 33.30000000000007,
+        "callbackLag": 0.5000000238418352
+      },
+      {
+        "sample": 36,
+        "ms": 0,
+        "selected": 9332,
+        "interval": 16.699999999999932,
+        "callbackLag": 0.60000000596051
+      },
+      {
+        "sample": 37,
+        "ms": 0.10000002384185791,
+        "selected": 41256,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 38,
+        "ms": 0.09999999403953552,
+        "selected": 5698,
+        "interval": 15.700000000000045,
+        "callbackLag": 1.6000000119208835
+      },
+      {
+        "sample": 39,
+        "ms": 0.30000001192092896,
+        "selected": 23551,
+        "interval": 17.59999999999991,
+        "callbackLag": 1.10000000596051
+      },
+      {
+        "sample": 40,
+        "ms": 0.09999999403953552,
+        "selected": 23551,
+        "interval": 33.30000000000007,
+        "callbackLag": 0.8000000059604417
+      },
+      {
+        "sample": 41,
+        "ms": 0.09999999403953552,
+        "selected": 23551,
+        "interval": 16.699999999999932,
+        "callbackLag": 2.3000000238419034
+      },
+      {
+        "sample": 42,
+        "ms": 0.09999999403953552,
+        "selected": 23551,
+        "interval": 16.600000000000023,
+        "callbackLag": 1.2000000238418806
+      },
+      {
+        "sample": 43,
+        "ms": 0,
+        "selected": 23551,
+        "interval": 33.39999999999998,
+        "callbackLag": 0.5000000119209744
+      },
+      {
+        "sample": 44,
+        "ms": 0.19999998807907104,
+        "selected": 23551,
+        "interval": 16.700000000000045,
+        "callbackLag": 1.2000000178813934
+      },
+      {
+        "sample": 45,
+        "ms": 0.10000002384185791,
+        "selected": 8302,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 46,
+        "ms": 0,
+        "selected": 8302,
+        "interval": 16,
+        "callbackLag": 10.70000001192102
+      },
+      {
+        "sample": 47,
+        "ms": 0,
+        "selected": 8302,
+        "interval": 17.40000000000009,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 48,
+        "ms": 0.10000002384185791,
+        "selected": 8302,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.2999999999999545
+      },
+      {
+        "sample": 49,
+        "ms": 0.09999999403953552,
+        "selected": 6370,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.3000000238419034
+      },
+      {
+        "sample": 50,
+        "ms": 0.09999999403953552,
+        "selected": 16559,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 51,
+        "ms": 0,
+        "selected": 16559,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 52,
+        "ms": 0.09999999403953552,
+        "selected": 6370,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.5000000119209744
+      },
+      {
+        "sample": 53,
+        "ms": 0,
+        "selected": 20860,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 54,
+        "ms": 0,
+        "selected": 20860,
+        "interval": 16.200000000000045,
+        "callbackLag": 8.900000023841812
+      },
+      {
+        "sample": 55,
+        "ms": 0.4000000059604645,
+        "selected": 42549,
+        "interval": 17.09999999999991,
+        "callbackLag": 0.5000000119209744
+      },
+      {
+        "sample": 56,
+        "ms": 0.09999999403953552,
+        "selected": 42549,
+        "interval": 16.600000000000136,
+        "callbackLag": 0.700000023841767
+      },
+      {
+        "sample": 57,
+        "ms": 0.09999999403953552,
+        "selected": 42549,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.8000000059605554
+      },
+      {
+        "sample": 58,
+        "ms": 0.09999999403953552,
+        "selected": 22769,
+        "interval": 16.600000000000136,
+        "callbackLag": 0.6000000119208835
+      },
+      {
+        "sample": 59,
+        "ms": 0.09999999403953552,
+        "selected": 22769,
+        "interval": 33.399999999999864,
+        "callbackLag": 0.8000000059605554
+      },
+      {
+        "sample": 60,
+        "ms": 0,
+        "selected": 22769,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.4000000178814389
+      },
+      {
+        "sample": 61,
+        "ms": 0,
+        "selected": 22769,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 62,
+        "ms": 0,
+        "selected": 22769,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.500000017881348
+      },
+      {
+        "sample": 63,
+        "ms": 0.10000002384185791,
+        "selected": 30911,
+        "interval": 33.200000000000045,
+        "callbackLag": 0.599999999999909
+      },
+      {
+        "sample": 64,
+        "ms": 0.09999999403953552,
+        "selected": 34798,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.8000000059605554
+      },
+      {
+        "sample": 65,
+        "ms": 0.19999998807907104,
+        "selected": 34798,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.5000000119209744
+      },
+      {
+        "sample": 66,
+        "ms": 0,
+        "selected": 34798,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 67,
+        "ms": 0.09999999403953552,
+        "selected": 34798,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.6000000178814844
+      },
+      {
+        "sample": 68,
+        "ms": 0,
+        "selected": 34798,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.60000000596051
+      },
+      {
+        "sample": 69,
+        "ms": 0,
+        "selected": 8233,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 70,
+        "ms": 0,
+        "selected": 8233,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.500000017881348
+      },
+      {
+        "sample": 71,
+        "ms": 0,
+        "selected": 8233,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.60000000596051
+      },
+      {
+        "sample": 72,
+        "ms": 0,
+        "selected": 8233,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 73,
+        "ms": 0,
+        "selected": 8233,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 74,
+        "ms": 0,
+        "selected": 26909,
+        "interval": 33.40000000000009,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 75,
+        "ms": 0,
+        "selected": 3932,
+        "interval": 33.299999999999955,
+        "callbackLag": 0.60000000596051
+      },
+      {
+        "sample": 76,
+        "ms": 0,
+        "selected": 3932,
+        "interval": 32.5,
+        "callbackLag": 0.9000000178814389
+      },
+      {
+        "sample": 77,
+        "ms": 0,
+        "selected": 3932,
+        "interval": 17.299999999999955,
+        "callbackLag": 0.5000000238419489
+      },
+      {
+        "sample": 78,
+        "ms": 0,
+        "selected": 505,
+        "interval": 16.90000000000009,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 79,
+        "ms": 0.10000002384185791,
+        "selected": 505,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 80,
+        "ms": 0.19999998807907104,
+        "selected": 7348,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.3000000238419034
+      },
+      {
+        "sample": 81,
+        "ms": 0,
+        "selected": 7348,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 82,
+        "ms": 0.10000002384185791,
+        "selected": 7348,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 83,
+        "ms": 0.09999999403953552,
+        "selected": 7348,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.60000000596051
+      },
+      {
+        "sample": 84,
+        "ms": 0.10000002384185791,
+        "selected": 7348,
+        "interval": 16.600000000000136,
+        "callbackLag": 0.599999999999909
+      },
+      {
+        "sample": 85,
+        "ms": 0.19999998807907104,
+        "selected": 7348,
+        "interval": 33.399999999999864,
+        "callbackLag": 0.8000000238419034
+      },
+      {
+        "sample": 86,
+        "ms": 0.19999998807907104,
+        "selected": 7348,
+        "interval": 16.40000000000009,
+        "callbackLag": 1.000000017881348
+      },
+      {
+        "sample": 87,
+        "ms": 0.09999999403953552,
+        "selected": 29152,
+        "interval": 16.899999999999864,
+        "callbackLag": 0.8000000059605554
+      },
+      {
+        "sample": 88,
+        "ms": 0,
+        "selected": 29152,
+        "interval": 16.800000000000182,
+        "callbackLag": 2.099999999999909
+      },
+      {
+        "sample": 89,
+        "ms": 0.20000001788139343,
+        "selected": 32625,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 90,
+        "ms": 0,
+        "selected": 32625,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 91,
+        "ms": 0.09999999403953552,
+        "selected": 29152,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.900000011920838
+      },
+      {
+        "sample": 92,
+        "ms": 0,
+        "selected": 25150,
+        "interval": 33.399999999999864,
+        "callbackLag": 0.5000000119209744
+      },
+      {
+        "sample": 93,
+        "ms": 0.19999998807907104,
+        "selected": 25150,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.7000000178813934
+      },
+      {
+        "sample": 94,
+        "ms": 0.10000002384185791,
+        "selected": 25150,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 95,
+        "ms": 0.09999999403953552,
+        "selected": 25150,
+        "interval": 16.700000000000045,
+        "callbackLag": 0.60000000596051
+      },
+      {
+        "sample": 96,
+        "ms": 0,
+        "selected": 25334,
+        "interval": 33.299999999999955,
+        "callbackLag": 0.7000000119210199
+      },
+      {
+        "sample": 97,
+        "ms": 0.09999999403953552,
+        "selected": 25334,
+        "interval": 16.700000000000273,
+        "callbackLag": 0.6000000059602826
+      },
+      {
+        "sample": 98,
+        "ms": 0,
+        "selected": 25334,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 99,
+        "ms": 0.09999999403953552,
+        "selected": 25334,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.2000000119210199
+      },
+      {
+        "sample": 100,
+        "ms": 0.10000002384185791,
+        "selected": 25334,
+        "interval": 16.700000000000273,
+        "callbackLag": 0.1999999999998181
+      },
+      {
+        "sample": 101,
+        "ms": 0.09999999403953552,
+        "selected": 25334,
+        "interval": 33.29999999999973,
+        "callbackLag": 0.5000000238419489
+      },
+      {
+        "sample": 102,
+        "ms": 0.09999999403953552,
+        "selected": 25334,
+        "interval": 33.40000000000009,
+        "callbackLag": 0.20000001788139343
+      },
+      {
+        "sample": 103,
+        "ms": 0,
+        "selected": 15697,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.3000000059605554
+      },
+      {
+        "sample": 104,
+        "ms": 0,
+        "selected": 15697,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.4000000238420398
+      },
+      {
+        "sample": 105,
+        "ms": 0.09999999403953552,
+        "selected": 15697,
+        "interval": 16.700000000000273,
+        "callbackLag": 0.3000000178813025
+      },
+      {
+        "sample": 106,
+        "ms": 0.09999999403953552,
+        "selected": 13581,
+        "interval": 16.799999999999727,
+        "callbackLag": 0.10000001192111085
+      },
+      {
+        "sample": 107,
+        "ms": 0,
+        "selected": 15697,
+        "interval": 32.5,
+        "callbackLag": 0.3000000000001819
+      },
+      {
+        "sample": 108,
+        "ms": 0.09999999403953552,
+        "selected": 16985,
+        "interval": 16.800000000000182,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 109,
+        "ms": 0,
+        "selected": 16985,
+        "interval": 17.199999999999818,
+        "callbackLag": 0.4000000238420398
+      },
+      {
+        "sample": 110,
+        "ms": 0.09999999403953552,
+        "selected": 16985,
+        "interval": 16.700000000000273,
+        "callbackLag": 0.3000000178813025
+      },
+      {
+        "sample": 111,
+        "ms": 0.09999999403953552,
+        "selected": 16985,
+        "interval": 33.40000000000009,
+        "callbackLag": 0.9000000178812115
+      },
+      {
+        "sample": 112,
+        "ms": 0.09999999403953552,
+        "selected": 16985,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 113,
+        "ms": 0,
+        "selected": 37340,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.5000000238419489
+      },
+      {
+        "sample": 114,
+        "ms": 0.09999999403953552,
+        "selected": 17951,
+        "interval": 33.40000000000009,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 115,
+        "ms": 0,
+        "selected": 17951,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 116,
+        "ms": 0.09999999403953552,
+        "selected": 49852,
+        "interval": 16.700000000000273,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 117,
+        "ms": 0.19999998807907104,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.20000001788139343
+      },
+      {
+        "sample": 118,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000238420398
+      },
+      {
+        "sample": 119,
+        "ms": 0.19999998807907104,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 120,
+        "ms": 0.19999998807907104,
+        "selected": -1,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.900000011920838
+      },
+      {
+        "sample": 121,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 122,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 33.40000000000009,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 123,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 124,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.9000000059604645
+      },
+      {
+        "sample": 125,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.3000000000001819
+      },
+      {
+        "sample": 126,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 127,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 128,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 32.40000000000009,
+        "callbackLag": 0.5000000059603735
+      },
+      {
+        "sample": 129,
+        "ms": 0,
+        "selected": -1,
+        "interval": 17.59999999999991,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 130,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.5000000238419489
+      },
+      {
+        "sample": 131,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.59999999999991,
+        "callbackLag": 1.800000000000182
+      },
+      {
+        "sample": 132,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000273,
+        "callbackLag": 0.5000000059603735
+      },
+      {
+        "sample": 133,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 134,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.700000000000273,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 135,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.7000000178813934
+      },
+      {
+        "sample": 136,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 137,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000273,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 138,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.29999999999973,
+        "callbackLag": 0.6000000178814844
+      },
+      {
+        "sample": 139,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.700000000000273,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 140,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 141,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.2000000119210199
+      },
+      {
+        "sample": 142,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 143,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.90000000000009,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 144,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 145,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.9000000059604645
+      },
+      {
+        "sample": 146,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.3000000059605554
+      },
+      {
+        "sample": 147,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.700000000000273,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 148,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.400000011920838
+      },
+      {
+        "sample": 149,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.3000000059605554
+      },
+      {
+        "sample": 150,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.800000000000182,
+        "callbackLag": 2.099999999999909
+      },
+      {
+        "sample": 151,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 0.5000000059603735
+      },
+      {
+        "sample": 152,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.40000000000009,
+        "callbackLag": 0.800000023841676
+      },
+      {
+        "sample": 153,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 154,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000238420398
+      },
+      {
+        "sample": 155,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 156,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 157,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.2000000119210199
+      },
+      {
+        "sample": 158,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000273,
+        "callbackLag": 0.1999999999998181
+      },
+      {
+        "sample": 159,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 160,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.3000000000001819
+      },
+      {
+        "sample": 161,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 162,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.20000001788139343
+      },
+      {
+        "sample": 163,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.10000001192111085
+      },
+      {
+        "sample": 164,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.1999999999998181
+      },
+      {
+        "sample": 165,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.20000001788139343
+      },
+      {
+        "sample": 166,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 33.19999999999982,
+        "callbackLag": 0.6000000119211109
+      },
+      {
+        "sample": 167,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 33.40000000000009,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 168,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.4000000238420398
+      },
+      {
+        "sample": 169,
+        "ms": 0.30000001192092896,
+        "selected": -1,
+        "interval": 33,
+        "callbackLag": 0.6000000119211109
+      },
+      {
+        "sample": 170,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.90000000000009,
+        "callbackLag": 0.5000000238419489
+      },
+      {
+        "sample": 171,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 16.90000000000009,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 172,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.40000000000009095
+      },
+      {
+        "sample": 173,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.700000000000273,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 174,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.5000000059603735
+      },
+      {
+        "sample": 175,
+        "ms": 0.30000001192092896,
+        "selected": -1,
+        "interval": 16.799999999999727,
+        "callbackLag": 2.2000000059606464
+      },
+      {
+        "sample": 176,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 177,
+        "ms": 0.19999998807907104,
+        "selected": -1,
+        "interval": 33.29999999999973,
+        "callbackLag": 1.20000001192102
+      },
+      {
+        "sample": 178,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.59999999999991,
+        "callbackLag": 1.1000000119211109
+      },
+      {
+        "sample": 179,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.800000000000182,
+        "callbackLag": 1.4000000059604645
+      },
+      {
+        "sample": 180,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.800000023841676
+      },
+      {
+        "sample": 181,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 182,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.900000000000091
+      },
+      {
+        "sample": 183,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.700000000000273,
+        "callbackLag": 0.6000000059602826
+      },
+      {
+        "sample": 184,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.9000000059604645
+      },
+      {
+        "sample": 185,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16,
+        "callbackLag": 3.2000000178813934
+      },
+      {
+        "sample": 186,
+        "ms": 0,
+        "selected": 21352,
+        "interval": 17.199999999999818,
+        "callbackLag": 0.4000000238420398
+      },
+      {
+        "sample": 187,
+        "ms": 0,
+        "selected": 21352,
+        "interval": 16.800000000000182,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 188,
+        "ms": 0,
+        "selected": 21352,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.3000000000001819
+      },
+      {
+        "sample": 189,
+        "ms": 0.09999999403953552,
+        "selected": 21352,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 190,
+        "ms": 0,
+        "selected": 21352,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 191,
+        "ms": 0.20000001788139343,
+        "selected": 21352,
+        "interval": 16.699999999999818,
+        "callbackLag": 1.300000000000182
+      },
+      {
+        "sample": 192,
+        "ms": 0.09999999403953552,
+        "selected": 21352,
+        "interval": 33.100000000000364,
+        "callbackLag": 0.6000000059602826
+      },
+      {
+        "sample": 193,
+        "ms": 0.09999999403953552,
+        "selected": 21352,
+        "interval": 33.5,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 194,
+        "ms": 0.09999999403953552,
+        "selected": 21352,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.3000000178813025
+      },
+      {
+        "sample": 195,
+        "ms": 0,
+        "selected": 21352,
+        "interval": 16.799999999999727,
+        "callbackLag": 0.20000000596064638
+      },
+      {
+        "sample": 196,
+        "ms": 0,
+        "selected": 21352,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 197,
+        "ms": 0.09999999403953552,
+        "selected": 38211,
+        "interval": 16.59999999999991,
+        "callbackLag": 0.5000000059603735
+      },
+      {
+        "sample": 198,
+        "ms": 0.19999998807907104,
+        "selected": 38211,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.2000000119210199
+      },
+      {
+        "sample": 199,
+        "ms": 0,
+        "selected": 3251,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.400000011920838
+      },
+      {
+        "sample": 200,
+        "ms": 0.19999998807907104,
+        "selected": 3251,
+        "interval": 16.799999999999727,
+        "callbackLag": 19.000000017881575
+      },
+      {
+        "sample": 201,
+        "ms": 0,
+        "selected": 3251,
+        "interval": 16.600000000000364,
+        "callbackLag": 4.199999999999818
+      },
+      {
+        "sample": 202,
+        "ms": 0.4000000059604645,
+        "selected": 3251,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 203,
+        "ms": 0.09999999403953552,
+        "selected": 3251,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.7000000059606464
+      },
+      {
+        "sample": 204,
+        "ms": 0.19999998807907104,
+        "selected": 3251,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.30000001788175723
+      },
+      {
+        "sample": 205,
+        "ms": 0.10000002384185791,
+        "selected": 3251,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 206,
+        "ms": 0,
+        "selected": 3251,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.20000000596064638
+      },
+      {
+        "sample": 207,
+        "ms": 0,
+        "selected": 3251,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 208,
+        "ms": 0,
+        "selected": 3251,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3000000059601007
+      },
+      {
+        "sample": 209,
+        "ms": 0,
+        "selected": 3251,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.1999999999998181
+      },
+      {
+        "sample": 210,
+        "ms": 0.09999999403953552,
+        "selected": 3251,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.20000001788139343
+      },
+      {
+        "sample": 211,
+        "ms": 0.09999999403953552,
+        "selected": 3251,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.20000000596064638
+      },
+      {
+        "sample": 212,
+        "ms": 0,
+        "selected": 3251,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 213,
+        "ms": 0,
+        "selected": 3251,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 214,
+        "ms": 0.09999999403953552,
+        "selected": 3251,
+        "interval": 33,
+        "callbackLag": 0.30000001788175723
+      },
+      {
+        "sample": 215,
+        "ms": 0.09999999403953552,
+        "selected": 3251,
+        "interval": 16.900000000000546,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 216,
+        "ms": 0,
+        "selected": 44007,
+        "interval": 16.899999999999636,
+        "callbackLag": 0.20000000596064638
+      },
+      {
+        "sample": 217,
+        "ms": 0.10000002384185791,
+        "selected": 44007,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.1999999999998181
+      },
+      {
+        "sample": 218,
+        "ms": 0,
+        "selected": 30529,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 219,
+        "ms": 0,
+        "selected": 30529,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 220,
+        "ms": 0.09999999403953552,
+        "selected": 29195,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.30000001788175723
+      },
+      {
+        "sample": 221,
+        "ms": 0.09999999403953552,
+        "selected": 29195,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 222,
+        "ms": 0,
+        "selected": 29195,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.6000000059602826
+      },
+      {
+        "sample": 223,
+        "ms": 0,
+        "selected": 1687,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 224,
+        "ms": 0,
+        "selected": 1687,
+        "interval": 16.399999999999636,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 225,
+        "ms": 0.30000001192092896,
+        "selected": 1687,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 226,
+        "ms": 0,
+        "selected": 1687,
+        "interval": 16.899999999999636,
+        "callbackLag": 2.5
+      },
+      {
+        "sample": 227,
+        "ms": 0.09999999403953552,
+        "selected": 1687,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 228,
+        "ms": 0.09999999403953552,
+        "selected": 1687,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.20000001788139343
+      },
+      {
+        "sample": 229,
+        "ms": 0.09999999403953552,
+        "selected": 1687,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.10000001192111085
+      },
+      {
+        "sample": 230,
+        "ms": 0,
+        "selected": 1687,
+        "interval": 33.19999999999982,
+        "callbackLag": 0.30000001788175723
+      },
+      {
+        "sample": 231,
+        "ms": 0,
+        "selected": 1687,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 232,
+        "ms": 0,
+        "selected": 1687,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.1999999999998181
+      },
+      {
+        "sample": 233,
+        "ms": 0.09999999403953552,
+        "selected": 1687,
+        "interval": 33,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 234,
+        "ms": 0.09999999403953552,
+        "selected": 1687,
+        "interval": 33.599999999999454,
+        "callbackLag": 0.30000001788175723
+      },
+      {
+        "sample": 235,
+        "ms": 0,
+        "selected": 1687,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3000000059601007
+      },
+      {
+        "sample": 236,
+        "ms": 0,
+        "selected": 1687,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.4000000238420398
+      },
+      {
+        "sample": 237,
+        "ms": 0,
+        "selected": 1687,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.30000001788175723
+      },
+      {
+        "sample": 238,
+        "ms": 0,
+        "selected": 1687,
+        "interval": 16.5,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 239,
+        "ms": 0,
+        "selected": 28620,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.6000000119211109
+      },
+      {
+        "sample": 240,
+        "ms": 0,
+        "selected": 6563,
+        "interval": 16.800000000000182,
+        "callbackLag": 0.20000001788139343
+      },
+      {
+        "sample": 241,
+        "ms": 0,
+        "selected": 6563,
+        "interval": 16.800000000000182,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 242,
+        "ms": 0,
+        "selected": 48331,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.20000001788139343
+      },
+      {
+        "sample": 243,
+        "ms": 0.09999999403953552,
+        "selected": 48331,
+        "interval": 32.899999999999636,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 244,
+        "ms": 0,
+        "selected": 48331,
+        "interval": 17,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 245,
+        "ms": 0,
+        "selected": 48331,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3000000059601007
+      },
+      {
+        "sample": 246,
+        "ms": 0.09999999403953552,
+        "selected": 48331,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 247,
+        "ms": 0,
+        "selected": 48331,
+        "interval": 16.5,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 248,
+        "ms": 0,
+        "selected": 48331,
+        "interval": 16.800000000000182,
+        "callbackLag": 0.3000000059601007
+      },
+      {
+        "sample": 249,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 250,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.20000001788139343
+      },
+      {
+        "sample": 251,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.6999999999998181
+      },
+      {
+        "sample": 252,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 253,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 254,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 16.800000000000182,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 255,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 256,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 257,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.3000000000001819
+      },
+      {
+        "sample": 258,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 33.5,
+        "callbackLag": 0.20000000596064638
+      },
+      {
+        "sample": 259,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.5,
+        "callbackLag": 0.3000000000001819
+      },
+      {
+        "sample": 260,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 33.400000000000546,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 261,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 262,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.20000001788139343
+      },
+      {
+        "sample": 263,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 1.800000000000182
+      },
+      {
+        "sample": 264,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 32.5,
+        "callbackLag": 0.7000000059606464
+      },
+      {
+        "sample": 265,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.5,
+        "callbackLag": 0.5000000178815753
+      },
+      {
+        "sample": 266,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 17.100000000000364,
+        "callbackLag": 0.1999999999998181
+      },
+      {
+        "sample": 267,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 17.199999999999818,
+        "callbackLag": 0.20000001788139343
+      },
+      {
+        "sample": 268,
+        "ms": 0.10000002384185791,
+        "selected": 32967,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 269,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 270,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 271,
+        "ms": 0.19999998807907104,
+        "selected": 32967,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.800000023841676
+      },
+      {
+        "sample": 272,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 273,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3000000059601007
+      },
+      {
+        "sample": 274,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 275,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 276,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 277,
+        "ms": 0.19999998807907104,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 278,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 33.399999999999636,
+        "callbackLag": 0.7000000059606464
+      },
+      {
+        "sample": 279,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 32.30000000000018,
+        "callbackLag": 0.7000000178813934
+      },
+      {
+        "sample": 280,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 17.600000000000364,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 281,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.6999999999998181
+      },
+      {
+        "sample": 282,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 283,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.7000000119205652
+      },
+      {
+        "sample": 284,
+        "ms": 0.19999998807907104,
+        "selected": 32967,
+        "interval": 16.299999999999272,
+        "callbackLag": 0.7000000238422217
+      },
+      {
+        "sample": 285,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 17,
+        "callbackLag": 1.8000000178817572
+      },
+      {
+        "sample": 286,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.800000000000182,
+        "callbackLag": 0.7000000059606464
+      },
+      {
+        "sample": 287,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 288,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.5,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 289,
+        "ms": 0.10000002384185791,
+        "selected": 32967,
+        "interval": 16.800000000000182,
+        "callbackLag": 0.6999999999998181
+      },
+      {
+        "sample": 290,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 32.30000000000018,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 291,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.6000000059602826
+      },
+      {
+        "sample": 292,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 17.599999999999454,
+        "callbackLag": 0.9000000119212928
+      },
+      {
+        "sample": 293,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 16.800000000000182,
+        "callbackLag": 0.5000000178815753
+      },
+      {
+        "sample": 294,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.6000000059602826
+      },
+      {
+        "sample": 295,
+        "ms": 0.20000001788139343,
+        "selected": 32967,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.6000000000003638
+      },
+      {
+        "sample": 296,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 297,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 298,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 1
+      },
+      {
+        "sample": 299,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 16.600000000000364,
+        "callbackLag": 1.0000000238414941
+      },
+      {
+        "sample": 300,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 301,
+        "ms": 0.10000002384185791,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 302,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.5000000178815753
+      },
+      {
+        "sample": 303,
+        "ms": 0.10000002384185791,
+        "selected": 32967,
+        "interval": 16.600000000000364,
+        "callbackLag": 1.199999999999818
+      },
+      {
+        "sample": 304,
+        "ms": 0.09999999403953552,
+        "selected": 32967,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 305,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 306,
+        "ms": 0,
+        "selected": 32967,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 307,
+        "ms": 0.09999999403953552,
+        "selected": 19305,
+        "interval": 16.699999999999818,
+        "callbackLag": 1.7000000178813934
+      },
+      {
+        "sample": 308,
+        "ms": 0.10000002384185791,
+        "selected": 19305,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 309,
+        "ms": 0.09999999403953552,
+        "selected": 19305,
+        "interval": 32.399999999999636,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 310,
+        "ms": 0,
+        "selected": 19305,
+        "interval": 17.600000000000364,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 311,
+        "ms": 0.10000002384185791,
+        "selected": 19305,
+        "interval": 16.399999999999636,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 312,
+        "ms": 0,
+        "selected": 19305,
+        "interval": 17,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 313,
+        "ms": 0.09999999403953552,
+        "selected": 19305,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.7000000119205652
+      },
+      {
+        "sample": 314,
+        "ms": 0.09999999403953552,
+        "selected": 19305,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 315,
+        "ms": 0.09999999403953552,
+        "selected": 11278,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.7000000238422217
+      },
+      {
+        "sample": 316,
+        "ms": 0.19999998807907104,
+        "selected": 11278,
+        "interval": 33.400000000000546,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 317,
+        "ms": 0.19999998807907104,
+        "selected": 17534,
+        "interval": 16.199999999999818,
+        "callbackLag": 0.800000011920929
+      },
+      {
+        "sample": 318,
+        "ms": 0,
+        "selected": 31357,
+        "interval": 17.199999999999818,
+        "callbackLag": 0.6000000119211109
+      },
+      {
+        "sample": 319,
+        "ms": 0.20000001788139343,
+        "selected": 31357,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.6999999999998181
+      },
+      {
+        "sample": 320,
+        "ms": 0.09999999403953552,
+        "selected": 31357,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.7000000238422217
+      },
+      {
+        "sample": 321,
+        "ms": 0.20000001788139343,
+        "selected": 31357,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3000000059601007
+      },
+      {
+        "sample": 322,
+        "ms": 0.09999999403953552,
+        "selected": 31357,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.800000023841676
+      },
+      {
+        "sample": 323,
+        "ms": 0,
+        "selected": 31357,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.7000000178813934
+      },
+      {
+        "sample": 324,
+        "ms": 0.09999999403953552,
+        "selected": 31357,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 325,
+        "ms": 0,
+        "selected": 31357,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 326,
+        "ms": 0,
+        "selected": 31357,
+        "interval": 32.5,
+        "callbackLag": 0.6999999999998181
+      },
+      {
+        "sample": 327,
+        "ms": 0.09999999403953552,
+        "selected": 31357,
+        "interval": 17.300000000000182,
+        "callbackLag": 0.3000000059601007
+      },
+      {
+        "sample": 328,
+        "ms": 0,
+        "selected": 31357,
+        "interval": 16.899999999999636,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 329,
+        "ms": 0.09999999403953552,
+        "selected": 31357,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000238420398
+      },
+      {
+        "sample": 330,
+        "ms": 0,
+        "selected": 31357,
+        "interval": 33.19999999999982,
+        "callbackLag": 1.0000000059608283
+      },
+      {
+        "sample": 331,
+        "ms": 0.09999999403953552,
+        "selected": 31357,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 332,
+        "ms": 0,
+        "selected": 31357,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 333,
+        "ms": 0.09999999403953552,
+        "selected": 32185,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 334,
+        "ms": 0.09999999403953552,
+        "selected": 16292,
+        "interval": 33.400000000000546,
+        "callbackLag": 0.6000000059602826
+      },
+      {
+        "sample": 335,
+        "ms": 0.6000000238418579,
+        "selected": 16292,
+        "interval": 16.399999999999636,
+        "callbackLag": 0.8000000000001819
+      },
+      {
+        "sample": 336,
+        "ms": 0,
+        "selected": 16292,
+        "interval": 17,
+        "callbackLag": 1.2000000059606464
+      },
+      {
+        "sample": 337,
+        "ms": 0.10000002384185791,
+        "selected": 16292,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.6999999999998181
+      },
+      {
+        "sample": 338,
+        "ms": 0.20000001788139343,
+        "selected": 16292,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.6000000000003638
+      },
+      {
+        "sample": 339,
+        "ms": 0.09999999403953552,
+        "selected": 16292,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 340,
+        "ms": 0.09999999403953552,
+        "selected": 16292,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 341,
+        "ms": 1.2999999821186066,
+        "selected": 16292,
+        "interval": 16.199999999999818,
+        "callbackLag": 2.100000023841858
+      },
+      {
+        "sample": 342,
+        "ms": 0,
+        "selected": 16292,
+        "interval": 17.100000000000364,
+        "callbackLag": 1.7000000119205652
+      },
+      {
+        "sample": 343,
+        "ms": 0,
+        "selected": 16292,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.9000000178812115
+      },
+      {
+        "sample": 344,
+        "ms": 0,
+        "selected": 16292,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 345,
+        "ms": 0.09999999403953552,
+        "selected": 38556,
+        "interval": 32.30000000000018,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 346,
+        "ms": 0.09999999403953552,
+        "selected": 23790,
+        "interval": 17.699999999999818,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 347,
+        "ms": 0.09999999403953552,
+        "selected": 45712,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.7000000119205652
+      },
+      {
+        "sample": 348,
+        "ms": 0.19999998807907104,
+        "selected": 42883,
+        "interval": 16.699999999999818,
+        "callbackLag": 1.000000011920747
+      },
+      {
+        "sample": 349,
+        "ms": 0.20000001788139343,
+        "selected": 42883,
+        "interval": 16.599999999999454,
+        "callbackLag": 1.0000000059608283
+      },
+      {
+        "sample": 350,
+        "ms": 0.09999999403953552,
+        "selected": 42883,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 351,
+        "ms": 0.20000001788139343,
+        "selected": 42883,
+        "interval": 33.399999999999636,
+        "callbackLag": 2.4000000059604645
+      },
+      {
+        "sample": 352,
+        "ms": 0.19999998807907104,
+        "selected": 2242,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 353,
+        "ms": 0.19999998807907104,
+        "selected": 48403,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 354,
+        "ms": 0.10000002384185791,
+        "selected": 48403,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 355,
+        "ms": 0.09999999403953552,
+        "selected": 48403,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.800000023841676
+      },
+      {
+        "sample": 356,
+        "ms": 0,
+        "selected": 48403,
+        "interval": 32.5,
+        "callbackLag": 0.1999999999998181
+      },
+      {
+        "sample": 357,
+        "ms": 0,
+        "selected": 11879,
+        "interval": 17.5,
+        "callbackLag": 0.6000000059602826
+      },
+      {
+        "sample": 358,
+        "ms": 0.09999999403953552,
+        "selected": 11879,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 359,
+        "ms": 0.09999999403953552,
+        "selected": 11879,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.6000000059602826
+      },
+      {
+        "sample": 360,
+        "ms": 0,
+        "selected": 11879,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 361,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 362,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.6000000000003638
+      },
+      {
+        "sample": 363,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 364,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 365,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.7000000238422217
+      },
+      {
+        "sample": 366,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.800000000000182,
+        "callbackLag": 0.3000000000001819
+      },
+      {
+        "sample": 367,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.6999999999998181
+      },
+      {
+        "sample": 368,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.6000000000003638
+      },
+      {
+        "sample": 369,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.800000000000182,
+        "callbackLag": 0.6000000119211109
+      },
+      {
+        "sample": 370,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 33.19999999999982,
+        "callbackLag": 0.6000000000003638
+      },
+      {
+        "sample": 371,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.400000000000546,
+        "callbackLag": 0.800000023841676
+      },
+      {
+        "sample": 372,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.8000000178817572
+      },
+      {
+        "sample": 373,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.400000000000546,
+        "callbackLag": 0.9000000178812115
+      },
+      {
+        "sample": 374,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 17,
+        "callbackLag": 0.1999999999998181
+      },
+      {
+        "sample": 375,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 1.4000000178812115
+      },
+      {
+        "sample": 376,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 0.6000000059602826
+      },
+      {
+        "sample": 377,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 33.69999999999982,
+        "callbackLag": 0.20000001788139343
+      },
+      {
+        "sample": 378,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 379,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 380,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.899999999999636,
+        "callbackLag": 0.30000001788175723
+      },
+      {
+        "sample": 381,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 382,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 383,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.30000001788175723
+      },
+      {
+        "sample": 384,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.800000000000182,
+        "callbackLag": 0.3000000000001819
+      },
+      {
+        "sample": 385,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.300000023841676
+      },
+      {
+        "sample": 386,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 387,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.7000000119205652
+      },
+      {
+        "sample": 388,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.6000000059602826
+      },
+      {
+        "sample": 389,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 390,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 391,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 392,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 33.400000000000546,
+        "callbackLag": 0.40000001788121153
+      },
+      {
+        "sample": 393,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.599999999999454,
+        "callbackLag": 0.7000000238422217
+      },
+      {
+        "sample": 394,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 1.1000000178810296
+      },
+      {
+        "sample": 395,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.399999999999636,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 396,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.199999999999818,
+        "callbackLag": 0.9000000238420398
+      },
+      {
+        "sample": 397,
+        "ms": 0,
+        "selected": -1,
+        "interval": 17.100000000000364,
+        "callbackLag": 0.6999999999998181
+      },
+      {
+        "sample": 398,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 399,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.3000000000001819
+      },
+      {
+        "sample": 400,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 16.300000000000182,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 401,
+        "ms": 0,
+        "selected": -1,
+        "interval": 17,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 402,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.6999999999998181
+      },
+      {
+        "sample": 403,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 404,
+        "ms": 0,
+        "selected": -1,
+        "interval": 32.30000000000018,
+        "callbackLag": 1.000000011920747
+      },
+      {
+        "sample": 405,
+        "ms": 0,
+        "selected": -1,
+        "interval": 17.699999999999818,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 406,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.30000000000018,
+        "callbackLag": 0.5000000119207471
+      },
+      {
+        "sample": 407,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.699999999999818,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 408,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 409,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.5000000119216566
+      },
+      {
+        "sample": 410,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.30000000000109,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 411,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 412,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.799999999999272,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 413,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 414,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5000000178806658
+      },
+      {
+        "sample": 415,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 0.7000000059597369
+      },
+      {
+        "sample": 416,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.899999999999636,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 417,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.40000001788212103
+      },
+      {
+        "sample": 418,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 1.2000000178813934
+      },
+      {
+        "sample": 419,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.40000001788212103
+      },
+      {
+        "sample": 420,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 421,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.20000000000073,
+        "callbackLag": 0.4000000238411303
+      },
+      {
+        "sample": 422,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.799999999999272,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 423,
+        "ms": 0,
+        "selected": -1,
+        "interval": 32.29999999999927,
+        "callbackLag": 0.6000000059611921
+      },
+      {
+        "sample": 424,
+        "ms": 0,
+        "selected": -1,
+        "interval": 17.700000000000728,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 425,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 426,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.5000000119216566
+      },
+      {
+        "sample": 427,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33,
+        "callbackLag": 0.900000017882121
+      },
+      {
+        "sample": 428,
+        "ms": 0,
+        "selected": -1,
+        "interval": 17,
+        "callbackLag": 0.5000000119216566
+      },
+      {
+        "sample": 429,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.6000000000003638
+      },
+      {
+        "sample": 430,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.7000000119205652
+      },
+      {
+        "sample": 431,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 432,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 433,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.6000000059611921
+      },
+      {
+        "sample": 434,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.30000000000109,
+        "callbackLag": 0.8000000059601007
+      },
+      {
+        "sample": 435,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.4000000238411303
+      },
+      {
+        "sample": 436,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.799999999999272,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 437,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 438,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000178806658
+      },
+      {
+        "sample": 439,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.799999999999272,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 440,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 1.0000000178806658
+      },
+      {
+        "sample": 441,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 0.7000000059597369
+      },
+      {
+        "sample": 442,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 443,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.7000000119205652
+      },
+      {
+        "sample": 444,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.7000000059597369
+      },
+      {
+        "sample": 445,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.799999999999272,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 446,
+        "ms": 0,
+        "selected": -1,
+        "interval": 32.399999999999636,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 447,
+        "ms": 0,
+        "selected": -1,
+        "interval": 17.600000000000364,
+        "callbackLag": 0.7000000178813934
+      },
+      {
+        "sample": 448,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 449,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 450,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 451,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.799999999999272,
+        "callbackLag": 0.6000000000003638
+      },
+      {
+        "sample": 452,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 453,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 454,
+        "ms": 0.8999999761581421,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 1.3000000238425855
+      },
+      {
+        "sample": 455,
+        "ms": 0,
+        "selected": -1,
+        "interval": 32.80000000000109,
+        "callbackLag": 0.8000000059601007
+      },
+      {
+        "sample": 456,
+        "ms": 0,
+        "selected": -1,
+        "interval": 17.19999999999891,
+        "callbackLag": 1.8000000238425855
+      },
+      {
+        "sample": 457,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.8000000178817572
+      },
+      {
+        "sample": 458,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.7000000119205652
+      },
+      {
+        "sample": 459,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.5000000119216566
+      },
+      {
+        "sample": 460,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 1.1000000000003638
+      },
+      {
+        "sample": 461,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.399999999999636,
+        "callbackLag": 0.7000000000007276
+      },
+      {
+        "sample": 462,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 463,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.40000001788212103
+      },
+      {
+        "sample": 464,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 465,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 466,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.899999999999636,
+        "callbackLag": 0.3000000238425855
+      },
+      {
+        "sample": 467,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.400000000001455,
+        "callbackLag": 0.7000000059597369
+      },
+      {
+        "sample": 468,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.599999999998545,
+        "callbackLag": 0.3000000238425855
+      },
+      {
+        "sample": 469,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 0.40000001788212103
+      },
+      {
+        "sample": 470,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 471,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.799999999999272,
+        "callbackLag": 0.40000001788212103
+      },
+      {
+        "sample": 472,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 0.7000000000007276
+      },
+      {
+        "sample": 473,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.80000000000109,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 474,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 1.0000000119216566
+      },
+      {
+        "sample": 475,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 476,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.5,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 477,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.399999999999636,
+        "callbackLag": 0.6000000000003638
+      },
+      {
+        "sample": 478,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.80000000000109,
+        "callbackLag": 0.4000000238411303
+      },
+      {
+        "sample": 479,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.29999999999927,
+        "callbackLag": 4.700000017881393
+      },
+      {
+        "sample": 480,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 481,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.4000000238411303
+      },
+      {
+        "sample": 482,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.799999999999272,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 483,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 484,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.8000000238425855
+      },
+      {
+        "sample": 485,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.20000001788139343
+      },
+      {
+        "sample": 486,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 487,
+        "ms": 0,
+        "selected": -1,
+        "interval": 32.79999999999927,
+        "callbackLag": 0.6000000000003638
+      },
+      {
+        "sample": 488,
+        "ms": 0,
+        "selected": -1,
+        "interval": 17.200000000000728,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 489,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.40000001788212103
+      },
+      {
+        "sample": 490,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 491,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.399999999999636,
+        "callbackLag": 0.6000000059611921
+      },
+      {
+        "sample": 492,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 493,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 494,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.7000000000007276
+      },
+      {
+        "sample": 495,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 496,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.5000000119216566
+      },
+      {
+        "sample": 497,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.6000000000003638
+      },
+      {
+        "sample": 498,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.7000000119205652
+      },
+      {
+        "sample": 499,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.5000000119216566
+      },
+      {
+        "sample": 500,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 501,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.399999999999636,
+        "callbackLag": 0.7000000000007276
+      },
+      {
+        "sample": 502,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 33.30000000000109,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 503,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.6000000059611921
+      },
+      {
+        "sample": 504,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 505,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.7000000119205652
+      },
+      {
+        "sample": 506,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.7000000238422217
+      },
+      {
+        "sample": 507,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.7000000178813934
+      },
+      {
+        "sample": 508,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5000000178806658
+      },
+      {
+        "sample": 509,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.399999999999636,
+        "callbackLag": 1.1000000178810296
+      },
+      {
+        "sample": 510,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.3000000238425855
+      },
+      {
+        "sample": 511,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 512,
+        "ms": 0,
+        "selected": -1,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.7000000000007276
+      },
+      {
+        "sample": 513,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 514,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 515,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.3000000238425855
+      },
+      {
+        "sample": 516,
+        "ms": 0.10000002384185791,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 517,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5000000178806658
+      },
+      {
+        "sample": 518,
+        "ms": 0.09999999403953552,
+        "selected": -1,
+        "interval": 16.599999999998545,
+        "callbackLag": 0.3000000238425855
+      },
+      {
+        "sample": 519,
+        "ms": 0,
+        "selected": -1,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 520,
+        "ms": 0.09999999403953552,
+        "selected": 8538,
+        "interval": 16.80000000000109,
+        "callbackLag": 0.9000000238411303
+      },
+      {
+        "sample": 521,
+        "ms": 0,
+        "selected": 8538,
+        "interval": 33.19999999999891,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 522,
+        "ms": 0.09999999403953552,
+        "selected": 8538,
+        "interval": 16.80000000000109,
+        "callbackLag": 0.4000000238411303
+      },
+      {
+        "sample": 523,
+        "ms": 0,
+        "selected": 47684,
+        "interval": 33.19999999999891,
+        "callbackLag": 0.8000000178817572
+      },
+      {
+        "sample": 524,
+        "ms": 0.09999999403953552,
+        "selected": 47684,
+        "interval": 33,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 525,
+        "ms": 0,
+        "selected": 32389,
+        "interval": 17,
+        "callbackLag": 0.6000000000003638
+      },
+      {
+        "sample": 526,
+        "ms": 0,
+        "selected": 36460,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.7000000119205652
+      },
+      {
+        "sample": 527,
+        "ms": 0,
+        "selected": 36460,
+        "interval": 32.399999999999636,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 528,
+        "ms": 0.09999999403953552,
+        "selected": 36460,
+        "interval": 17.600000000000364,
+        "callbackLag": 3.000000023841494
+      },
+      {
+        "sample": 529,
+        "ms": 0,
+        "selected": 36460,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.3000000238425855
+      },
+      {
+        "sample": 530,
+        "ms": 0,
+        "selected": 37656,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 531,
+        "ms": 0,
+        "selected": 37656,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.8000000059601007
+      },
+      {
+        "sample": 532,
+        "ms": 0,
+        "selected": 37656,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.5000000119216566
+      },
+      {
+        "sample": 533,
+        "ms": 0,
+        "selected": 13989,
+        "interval": 33.30000000000109,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 534,
+        "ms": 0.09999999403953552,
+        "selected": 13989,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.7000000059597369
+      },
+      {
+        "sample": 535,
+        "ms": 0,
+        "selected": 13989,
+        "interval": 16.799999999999272,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 536,
+        "ms": 0.09999999403953552,
+        "selected": 33194,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 537,
+        "ms": 0.09999999403953552,
+        "selected": 19739,
+        "interval": 33.29999999999927,
+        "callbackLag": 2.5000000059608283
+      },
+      {
+        "sample": 538,
+        "ms": 0.10000002384185791,
+        "selected": 19739,
+        "interval": 16.700000000000728,
+        "callbackLag": 1.3999999999996362
+      },
+      {
+        "sample": 539,
+        "ms": 0,
+        "selected": 19739,
+        "interval": 32.600000000000364,
+        "callbackLag": 0.5000000178806658
+      },
+      {
+        "sample": 540,
+        "ms": 0.09999999403953552,
+        "selected": 19739,
+        "interval": 17.399999999999636,
+        "callbackLag": 1.0000000238414941
+      },
+      {
+        "sample": 541,
+        "ms": 0,
+        "selected": 19739,
+        "interval": 33.19999999999891,
+        "callbackLag": 0.5000000119216566
+      },
+      {
+        "sample": 542,
+        "ms": 0,
+        "selected": 36920,
+        "interval": 16.80000000000109,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 543,
+        "ms": 0,
+        "selected": 36920,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.3000000238425855
+      },
+      {
+        "sample": 544,
+        "ms": 0,
+        "selected": 36920,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 545,
+        "ms": 0.09999999403953552,
+        "selected": 36920,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 546,
+        "ms": 0.19999998807907104,
+        "selected": 36920,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.40000001788212103
+      },
+      {
+        "sample": 547,
+        "ms": 0,
+        "selected": 33102,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.7000000238422217
+      },
+      {
+        "sample": 548,
+        "ms": 0.800000011920929,
+        "selected": 33102,
+        "interval": 16.700000000000728,
+        "callbackLag": 1.2000000119205652
+      },
+      {
+        "sample": 549,
+        "ms": 0.10000002384185791,
+        "selected": 39289,
+        "interval": 33.399999999999636,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 550,
+        "ms": 0.09999999403953552,
+        "selected": 39289,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.6000000059611921
+      },
+      {
+        "sample": 551,
+        "ms": 0.09999999403953552,
+        "selected": 7319,
+        "interval": 33.30000000000109,
+        "callbackLag": 1.6000000178810296
+      },
+      {
+        "sample": 552,
+        "ms": 0,
+        "selected": 7319,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.3000000238425855
+      },
+      {
+        "sample": 553,
+        "ms": 0.09999999403953552,
+        "selected": 7319,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 554,
+        "ms": 0.09999999403953552,
+        "selected": 3873,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 555,
+        "ms": 0.09999999403953552,
+        "selected": 12360,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 556,
+        "ms": 0,
+        "selected": 12360,
+        "interval": 32.80000000000109,
+        "callbackLag": 0.2999999999992724
+      },
+      {
+        "sample": 557,
+        "ms": 0.10000002384185791,
+        "selected": 36165,
+        "interval": 17.19999999999891,
+        "callbackLag": 0.6000000000003638
+      },
+      {
+        "sample": 558,
+        "ms": 0,
+        "selected": 36165,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 559,
+        "ms": 0,
+        "selected": 36763,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.40000001788212103
+      },
+      {
+        "sample": 560,
+        "ms": 0.09999999403953552,
+        "selected": 36763,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 561,
+        "ms": 0.09999999403953552,
+        "selected": 423,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.6000000178810296
+      },
+      {
+        "sample": 562,
+        "ms": 0.09999999403953552,
+        "selected": 423,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.5000000059608283
+      },
+      {
+        "sample": 563,
+        "ms": 0,
+        "selected": 20249,
+        "interval": 16.5,
+        "callbackLag": 0.9000000119212928
+      },
+      {
+        "sample": 564,
+        "ms": 0,
+        "selected": 20249,
+        "interval": 33.5,
+        "callbackLag": 16.00000000596083
+      },
+      {
+        "sample": 565,
+        "ms": 0,
+        "selected": 20249,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3000000059601007
+      },
+      {
+        "sample": 566,
+        "ms": 0,
+        "selected": 20249,
+        "interval": 33.399999999999636,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 567,
+        "ms": 0,
+        "selected": 20295,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 568,
+        "ms": 0.10000002384185791,
+        "selected": 24210,
+        "interval": 16.69999999999891,
+        "callbackLag": 7.200000000000728
+      },
+      {
+        "sample": 569,
+        "ms": 0.09999999403953552,
+        "selected": 12733,
+        "interval": 16.600000000000364,
+        "callbackLag": 3.4000000119212928
+      },
+      {
+        "sample": 570,
+        "ms": 0,
+        "selected": 12733,
+        "interval": 16.80000000000109,
+        "callbackLag": 0.4000000238411303
+      },
+      {
+        "sample": 571,
+        "ms": 0.09999999403953552,
+        "selected": 12733,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 572,
+        "ms": 0,
+        "selected": 12894,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 573,
+        "ms": 0,
+        "selected": 43323,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.2999999999992724
+      },
+      {
+        "sample": 574,
+        "ms": 0,
+        "selected": 43415,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.7000000238422217
+      },
+      {
+        "sample": 575,
+        "ms": 0,
+        "selected": 43415,
+        "interval": 32.899999999999636,
+        "callbackLag": 0.40000001788212103
+      },
+      {
+        "sample": 576,
+        "ms": 0,
+        "selected": 43415,
+        "interval": 17.100000000000364,
+        "callbackLag": 0.6000000000003638
+      },
+      {
+        "sample": 577,
+        "ms": 0.09999999403953552,
+        "selected": 43415,
+        "interval": 16.80000000000109,
+        "callbackLag": 0.20000000595973688
+      },
+      {
+        "sample": 578,
+        "ms": 0,
+        "selected": 35917,
+        "interval": 33.19999999999891,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 579,
+        "ms": 0,
+        "selected": 19288,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.5
+      },
+      {
+        "sample": 580,
+        "ms": 0,
+        "selected": 23014,
+        "interval": 16.799999999999272,
+        "callbackLag": 1.3000000238425855
+      },
+      {
+        "sample": 581,
+        "ms": 0,
+        "selected": 23014,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.40000001192129275
+      },
+      {
+        "sample": 582,
+        "ms": 0.09999999403953552,
+        "selected": 23014,
+        "interval": 16.80000000000109,
+        "callbackLag": 0.6000000119202014
+      },
+      {
+        "sample": 583,
+        "ms": 0.09999999403953552,
+        "selected": 23014,
+        "interval": 33.099999999998545,
+        "callbackLag": 0.40000001788212103
+      },
+      {
+        "sample": 584,
+        "ms": 0,
+        "selected": 23451,
+        "interval": 16.80000000000109,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 585,
+        "ms": 0,
+        "selected": 23451,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.5000000119216566
+      },
+      {
+        "sample": 586,
+        "ms": 0,
+        "selected": 23451,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 587,
+        "ms": 0.20000001788139343,
+        "selected": 26694,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 588,
+        "ms": 0.19999998807907104,
+        "selected": 47187,
+        "interval": 16.399999999999636,
+        "callbackLag": 0.6000000238418579
+      },
+      {
+        "sample": 589,
+        "ms": 0.09999999403953552,
+        "selected": 47187,
+        "interval": 17,
+        "callbackLag": 0.30000001192092896
+      },
+      {
+        "sample": 590,
+        "ms": 0,
+        "selected": 16919,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.40000001788212103
+      },
+      {
+        "sample": 591,
+        "ms": 0,
+        "selected": 16919,
+        "interval": 16.600000000000364,
+        "callbackLag": 0.9000000119212928
+      },
+      {
+        "sample": 592,
+        "ms": 0.10000002384185791,
+        "selected": 16919,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.3999999999996362
+      },
+      {
+        "sample": 593,
+        "ms": 0,
+        "selected": 29960,
+        "interval": 16.69999999999891,
+        "callbackLag": 0.5000000119216566
+      },
+      {
+        "sample": 594,
+        "ms": 0,
+        "selected": 198,
+        "interval": 16.700000000000728,
+        "callbackLag": 0.4000000059604645
+      },
+      {
+        "sample": 595,
+        "ms": 0,
+        "selected": 198,
+        "interval": 33.29999999999927,
+        "callbackLag": 0.6000000059611921
+      },
+      {
+        "sample": 596,
+        "ms": 0,
+        "selected": 24095,
+        "interval": 16.30000000000109,
+        "callbackLag": 0.8000000059601007
+      },
+      {
+        "sample": 597,
+        "ms": 0.19999998807907104,
+        "selected": 24095,
+        "interval": 17,
+        "callbackLag": 0.5000000238414941
+      },
+      {
+        "sample": 598,
+        "ms": 0,
+        "selected": 24095,
+        "interval": 16.19999999999891,
+        "callbackLag": 0.8000000238425855
+      },
+      {
+        "sample": 599,
+        "ms": 0,
+        "selected": 26142,
+        "interval": 17.200000000000728,
+        "callbackLag": 0.4000000059604645
+      }
+    ],
+    "work": [
+      {
+        "selected": 49142,
+        "branches": 81,
+        "leaves": 4,
+        "points": 84
+      },
+      {
+        "selected": 43622,
+        "branches": 93,
+        "leaves": 8,
+        "points": 158
+      },
+      {
+        "selected": 38079,
+        "branches": 93,
+        "leaves": 8,
+        "points": 158
+      },
+      {
+        "selected": 38079,
+        "branches": 89,
+        "leaves": 7,
+        "points": 146
+      },
+      {
+        "selected": 38079,
+        "branches": 89,
+        "leaves": 5,
+        "points": 109
+      },
+      {
+        "selected": 38079,
+        "branches": 87,
+        "leaves": 4,
+        "points": 85
+      },
+      {
+        "selected": 38976,
+        "branches": 93,
+        "leaves": 6,
+        "points": 98
+      },
+      {
+        "selected": 3602,
+        "branches": 87,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": 3602,
+        "branches": 83,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": 3602,
+        "branches": 81,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": 3602,
+        "branches": 81,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": 32789,
+        "branches": 95,
+        "leaves": 8,
+        "points": 158
+      },
+      {
+        "selected": 1969,
+        "branches": 113,
+        "leaves": 13,
+        "points": 232
+      },
+      {
+        "selected": 4154,
+        "branches": 87,
+        "leaves": 8,
+        "points": 147
+      },
+      {
+        "selected": 26832,
+        "branches": 103,
+        "leaves": 8,
+        "points": 135
+      },
+      {
+        "selected": 26832,
+        "branches": 101,
+        "leaves": 7,
+        "points": 111
+      },
+      {
+        "selected": 24877,
+        "branches": 79,
+        "leaves": 3,
+        "points": 39
+      },
+      {
+        "selected": 24877,
+        "branches": 77,
+        "leaves": 3,
+        "points": 39
+      },
+      {
+        "selected": 24877,
+        "branches": 75,
+        "leaves": 2,
+        "points": 26
+      },
+      {
+        "selected": 30627,
+        "branches": 91,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 30627,
+        "branches": 91,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 30627,
+        "branches": 91,
+        "leaves": 7,
+        "points": 112
+      },
+      {
+        "selected": 30627,
+        "branches": 87,
+        "leaves": 5,
+        "points": 87
+      },
+      {
+        "selected": 12161,
+        "branches": 93,
+        "leaves": 4,
+        "points": 74
+      },
+      {
+        "selected": 7673,
+        "branches": 93,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": 7673,
+        "branches": 93,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 29779,
+        "branches": 99,
+        "leaves": 7,
+        "points": 112
+      },
+      {
+        "selected": 27824,
+        "branches": 101,
+        "leaves": 7,
+        "points": 111
+      },
+      {
+        "selected": 15588,
+        "branches": 97,
+        "leaves": 6,
+        "points": 87
+      },
+      {
+        "selected": 15588,
+        "branches": 95,
+        "leaves": 6,
+        "points": 87
+      },
+      {
+        "selected": 15588,
+        "branches": 89,
+        "leaves": 5,
+        "points": 74
+      },
+      {
+        "selected": 15588,
+        "branches": 87,
+        "leaves": 5,
+        "points": 74
+      },
+      {
+        "selected": 15588,
+        "branches": 87,
+        "leaves": 4,
+        "points": 62
+      },
+      {
+        "selected": 16301,
+        "branches": 111,
+        "leaves": 8,
+        "points": 124
+      },
+      {
+        "selected": 9332,
+        "branches": 117,
+        "leaves": 8,
+        "points": 124
+      },
+      {
+        "selected": 9332,
+        "branches": 107,
+        "leaves": 7,
+        "points": 112
+      },
+      {
+        "selected": 9332,
+        "branches": 107,
+        "leaves": 8,
+        "points": 125
+      },
+      {
+        "selected": 41256,
+        "branches": 113,
+        "leaves": 11,
+        "points": 173
+      },
+      {
+        "selected": 5698,
+        "branches": 113,
+        "leaves": 8,
+        "points": 123
+      },
+      {
+        "selected": 23551,
+        "branches": 117,
+        "leaves": 11,
+        "points": 184
+      },
+      {
+        "selected": 23551,
+        "branches": 115,
+        "leaves": 11,
+        "points": 184
+      },
+      {
+        "selected": 23551,
+        "branches": 111,
+        "leaves": 10,
+        "points": 171
+      },
+      {
+        "selected": 23551,
+        "branches": 109,
+        "leaves": 9,
+        "points": 147
+      },
+      {
+        "selected": 23551,
+        "branches": 103,
+        "leaves": 7,
+        "points": 111
+      },
+      {
+        "selected": 23551,
+        "branches": 103,
+        "leaves": 6,
+        "points": 87
+      },
+      {
+        "selected": 8302,
+        "branches": 101,
+        "leaves": 7,
+        "points": 99
+      },
+      {
+        "selected": 8302,
+        "branches": 101,
+        "leaves": 6,
+        "points": 87
+      },
+      {
+        "selected": 8302,
+        "branches": 101,
+        "leaves": 6,
+        "points": 87
+      },
+      {
+        "selected": 8302,
+        "branches": 99,
+        "leaves": 6,
+        "points": 87
+      },
+      {
+        "selected": 6370,
+        "branches": 125,
+        "leaves": 10,
+        "points": 171
+      },
+      {
+        "selected": 16559,
+        "branches": 85,
+        "leaves": 4,
+        "points": 63
+      },
+      {
+        "selected": 16559,
+        "branches": 83,
+        "leaves": 3,
+        "points": 50
+      },
+      {
+        "selected": 6370,
+        "branches": 115,
+        "leaves": 8,
+        "points": 135
+      },
+      {
+        "selected": 20860,
+        "branches": 125,
+        "leaves": 10,
+        "points": 171
+      },
+      {
+        "selected": 20860,
+        "branches": 117,
+        "leaves": 9,
+        "points": 159
+      },
+      {
+        "selected": 42549,
+        "branches": 93,
+        "leaves": 4,
+        "points": 62
+      },
+      {
+        "selected": 42549,
+        "branches": 97,
+        "leaves": 3,
+        "points": 49
+      },
+      {
+        "selected": 42549,
+        "branches": 97,
+        "leaves": 3,
+        "points": 49
+      },
+      {
+        "selected": 22769,
+        "branches": 103,
+        "leaves": 5,
+        "points": 74
+      },
+      {
+        "selected": 22769,
+        "branches": 101,
+        "leaves": 5,
+        "points": 74
+      },
+      {
+        "selected": 22769,
+        "branches": 101,
+        "leaves": 4,
+        "points": 62
+      },
+      {
+        "selected": 22769,
+        "branches": 97,
+        "leaves": 4,
+        "points": 62
+      },
+      {
+        "selected": 22769,
+        "branches": 95,
+        "leaves": 4,
+        "points": 62
+      },
+      {
+        "selected": 30911,
+        "branches": 97,
+        "leaves": 4,
+        "points": 62
+      },
+      {
+        "selected": 34798,
+        "branches": 105,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 34798,
+        "branches": 103,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 34798,
+        "branches": 103,
+        "leaves": 4,
+        "points": 62
+      },
+      {
+        "selected": 34798,
+        "branches": 95,
+        "leaves": 4,
+        "points": 62
+      },
+      {
+        "selected": 34798,
+        "branches": 89,
+        "leaves": 4,
+        "points": 62
+      },
+      {
+        "selected": 8233,
+        "branches": 93,
+        "leaves": 7,
+        "points": 111
+      },
+      {
+        "selected": 8233,
+        "branches": 91,
+        "leaves": 7,
+        "points": 111
+      },
+      {
+        "selected": 8233,
+        "branches": 89,
+        "leaves": 6,
+        "points": 98
+      },
+      {
+        "selected": 8233,
+        "branches": 87,
+        "leaves": 6,
+        "points": 98
+      },
+      {
+        "selected": 8233,
+        "branches": 85,
+        "leaves": 7,
+        "points": 122
+      },
+      {
+        "selected": 26909,
+        "branches": 73,
+        "leaves": 5,
+        "points": 74
+      },
+      {
+        "selected": 3932,
+        "branches": 85,
+        "leaves": 8,
+        "points": 135
+      },
+      {
+        "selected": 3932,
+        "branches": 85,
+        "leaves": 6,
+        "points": 88
+      },
+      {
+        "selected": 3932,
+        "branches": 83,
+        "leaves": 6,
+        "points": 88
+      },
+      {
+        "selected": 505,
+        "branches": 115,
+        "leaves": 8,
+        "points": 113
+      },
+      {
+        "selected": 505,
+        "branches": 113,
+        "leaves": 9,
+        "points": 126
+      },
+      {
+        "selected": 7348,
+        "branches": 117,
+        "leaves": 10,
+        "points": 162
+      },
+      {
+        "selected": 7348,
+        "branches": 117,
+        "leaves": 10,
+        "points": 162
+      },
+      {
+        "selected": 7348,
+        "branches": 127,
+        "leaves": 9,
+        "points": 149
+      },
+      {
+        "selected": 7348,
+        "branches": 125,
+        "leaves": 9,
+        "points": 149
+      },
+      {
+        "selected": 7348,
+        "branches": 107,
+        "leaves": 10,
+        "points": 161
+      },
+      {
+        "selected": 7348,
+        "branches": 101,
+        "leaves": 10,
+        "points": 161
+      },
+      {
+        "selected": 7348,
+        "branches": 101,
+        "leaves": 10,
+        "points": 161
+      },
+      {
+        "selected": 29152,
+        "branches": 117,
+        "leaves": 13,
+        "points": 209
+      },
+      {
+        "selected": 29152,
+        "branches": 117,
+        "leaves": 13,
+        "points": 209
+      },
+      {
+        "selected": 32625,
+        "branches": 107,
+        "leaves": 10,
+        "points": 160
+      },
+      {
+        "selected": 32625,
+        "branches": 103,
+        "leaves": 10,
+        "points": 160
+      },
+      {
+        "selected": 29152,
+        "branches": 109,
+        "leaves": 11,
+        "points": 172
+      },
+      {
+        "selected": 25150,
+        "branches": 97,
+        "leaves": 8,
+        "points": 123
+      },
+      {
+        "selected": 25150,
+        "branches": 97,
+        "leaves": 9,
+        "points": 147
+      },
+      {
+        "selected": 25150,
+        "branches": 93,
+        "leaves": 8,
+        "points": 134
+      },
+      {
+        "selected": 25150,
+        "branches": 91,
+        "leaves": 8,
+        "points": 134
+      },
+      {
+        "selected": 25334,
+        "branches": 99,
+        "leaves": 8,
+        "points": 135
+      },
+      {
+        "selected": 25334,
+        "branches": 95,
+        "leaves": 7,
+        "points": 111
+      },
+      {
+        "selected": 25334,
+        "branches": 95,
+        "leaves": 6,
+        "points": 98
+      },
+      {
+        "selected": 25334,
+        "branches": 97,
+        "leaves": 6,
+        "points": 98
+      },
+      {
+        "selected": 25334,
+        "branches": 95,
+        "leaves": 6,
+        "points": 98
+      },
+      {
+        "selected": 25334,
+        "branches": 87,
+        "leaves": 6,
+        "points": 98
+      },
+      {
+        "selected": 25334,
+        "branches": 89,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": 15697,
+        "branches": 107,
+        "leaves": 11,
+        "points": 183
+      },
+      {
+        "selected": 15697,
+        "branches": 101,
+        "leaves": 11,
+        "points": 183
+      },
+      {
+        "selected": 15697,
+        "branches": 99,
+        "leaves": 11,
+        "points": 183
+      },
+      {
+        "selected": 13581,
+        "branches": 97,
+        "leaves": 10,
+        "points": 171
+      },
+      {
+        "selected": 15697,
+        "branches": 97,
+        "leaves": 9,
+        "points": 159
+      },
+      {
+        "selected": 16985,
+        "branches": 109,
+        "leaves": 8,
+        "points": 135
+      },
+      {
+        "selected": 16985,
+        "branches": 113,
+        "leaves": 7,
+        "points": 122
+      },
+      {
+        "selected": 16985,
+        "branches": 107,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 16985,
+        "branches": 101,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 16985,
+        "branches": 99,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 37340,
+        "branches": 113,
+        "leaves": 8,
+        "points": 134
+      },
+      {
+        "selected": 17951,
+        "branches": 119,
+        "leaves": 8,
+        "points": 134
+      },
+      {
+        "selected": 17951,
+        "branches": 121,
+        "leaves": 7,
+        "points": 110
+      },
+      {
+        "selected": 49852,
+        "branches": 127,
+        "leaves": 10,
+        "points": 160
+      },
+      {
+        "selected": -1,
+        "branches": 147,
+        "leaves": 11,
+        "points": 196
+      },
+      {
+        "selected": -1,
+        "branches": 147,
+        "leaves": 11,
+        "points": 196
+      },
+      {
+        "selected": -1,
+        "branches": 147,
+        "leaves": 11,
+        "points": 196
+      },
+      {
+        "selected": -1,
+        "branches": 149,
+        "leaves": 11,
+        "points": 196
+      },
+      {
+        "selected": -1,
+        "branches": 143,
+        "leaves": 9,
+        "points": 160
+      },
+      {
+        "selected": -1,
+        "branches": 143,
+        "leaves": 8,
+        "points": 136
+      },
+      {
+        "selected": -1,
+        "branches": 143,
+        "leaves": 7,
+        "points": 112
+      },
+      {
+        "selected": -1,
+        "branches": 143,
+        "leaves": 7,
+        "points": 112
+      },
+      {
+        "selected": -1,
+        "branches": 143,
+        "leaves": 7,
+        "points": 112
+      },
+      {
+        "selected": -1,
+        "branches": 139,
+        "leaves": 3,
+        "points": 61
+      },
+      {
+        "selected": -1,
+        "branches": 141,
+        "leaves": 3,
+        "points": 61
+      },
+      {
+        "selected": -1,
+        "branches": 133,
+        "leaves": 2,
+        "points": 48
+      },
+      {
+        "selected": -1,
+        "branches": 129,
+        "leaves": 2,
+        "points": 48
+      },
+      {
+        "selected": -1,
+        "branches": 129,
+        "leaves": 2,
+        "points": 48
+      },
+      {
+        "selected": -1,
+        "branches": 121,
+        "leaves": 2,
+        "points": 48
+      },
+      {
+        "selected": -1,
+        "branches": 119,
+        "leaves": 2,
+        "points": 48
+      },
+      {
+        "selected": -1,
+        "branches": 117,
+        "leaves": 2,
+        "points": 48
+      },
+      {
+        "selected": -1,
+        "branches": 113,
+        "leaves": 2,
+        "points": 48
+      },
+      {
+        "selected": -1,
+        "branches": 113,
+        "leaves": 2,
+        "points": 48
+      },
+      {
+        "selected": -1,
+        "branches": 105,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": -1,
+        "branches": 105,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": -1,
+        "branches": 113,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": -1,
+        "branches": 107,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": -1,
+        "branches": 105,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": -1,
+        "branches": 107,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": -1,
+        "branches": 105,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": -1,
+        "branches": 105,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": -1,
+        "branches": 107,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": -1,
+        "branches": 103,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": -1,
+        "branches": 101,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 101,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 99,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 101,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 101,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 105,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 105,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 101,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 101,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 103,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 103,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 115,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 117,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 117,
+        "leaves": 1,
+        "points": 12
+      },
+      {
+        "selected": -1,
+        "branches": 117,
+        "leaves": 1,
+        "points": 12
+      },
+      {
+        "selected": -1,
+        "branches": 117,
+        "leaves": 1,
+        "points": 12
+      },
+      {
+        "selected": -1,
+        "branches": 119,
+        "leaves": 2,
+        "points": 36
+      },
+      {
+        "selected": -1,
+        "branches": 119,
+        "leaves": 2,
+        "points": 36
+      },
+      {
+        "selected": -1,
+        "branches": 117,
+        "leaves": 2,
+        "points": 36
+      },
+      {
+        "selected": -1,
+        "branches": 115,
+        "leaves": 3,
+        "points": 49
+      },
+      {
+        "selected": -1,
+        "branches": 113,
+        "leaves": 3,
+        "points": 49
+      },
+      {
+        "selected": -1,
+        "branches": 117,
+        "leaves": 3,
+        "points": 49
+      },
+      {
+        "selected": -1,
+        "branches": 117,
+        "leaves": 3,
+        "points": 49
+      },
+      {
+        "selected": -1,
+        "branches": 119,
+        "leaves": 4,
+        "points": 62
+      },
+      {
+        "selected": -1,
+        "branches": 123,
+        "leaves": 4,
+        "points": 62
+      },
+      {
+        "selected": -1,
+        "branches": 119,
+        "leaves": 4,
+        "points": 62
+      },
+      {
+        "selected": -1,
+        "branches": 121,
+        "leaves": 4,
+        "points": 62
+      },
+      {
+        "selected": -1,
+        "branches": 121,
+        "leaves": 5,
+        "points": 74
+      },
+      {
+        "selected": -1,
+        "branches": 121,
+        "leaves": 5,
+        "points": 74
+      },
+      {
+        "selected": -1,
+        "branches": 121,
+        "leaves": 7,
+        "points": 111
+      },
+      {
+        "selected": -1,
+        "branches": 121,
+        "leaves": 7,
+        "points": 112
+      },
+      {
+        "selected": -1,
+        "branches": 131,
+        "leaves": 7,
+        "points": 112
+      },
+      {
+        "selected": -1,
+        "branches": 133,
+        "leaves": 8,
+        "points": 136
+      },
+      {
+        "selected": -1,
+        "branches": 135,
+        "leaves": 8,
+        "points": 136
+      },
+      {
+        "selected": -1,
+        "branches": 133,
+        "leaves": 9,
+        "points": 148
+      },
+      {
+        "selected": -1,
+        "branches": 133,
+        "leaves": 9,
+        "points": 148
+      },
+      {
+        "selected": -1,
+        "branches": 137,
+        "leaves": 9,
+        "points": 148
+      },
+      {
+        "selected": -1,
+        "branches": 137,
+        "leaves": 9,
+        "points": 148
+      },
+      {
+        "selected": -1,
+        "branches": 145,
+        "leaves": 9,
+        "points": 148
+      },
+      {
+        "selected": -1,
+        "branches": 149,
+        "leaves": 9,
+        "points": 148
+      },
+      {
+        "selected": 21352,
+        "branches": 113,
+        "leaves": 8,
+        "points": 124
+      },
+      {
+        "selected": 21352,
+        "branches": 111,
+        "leaves": 8,
+        "points": 124
+      },
+      {
+        "selected": 21352,
+        "branches": 111,
+        "leaves": 9,
+        "points": 136
+      },
+      {
+        "selected": 21352,
+        "branches": 111,
+        "leaves": 10,
+        "points": 160
+      },
+      {
+        "selected": 21352,
+        "branches": 109,
+        "leaves": 10,
+        "points": 160
+      },
+      {
+        "selected": 21352,
+        "branches": 111,
+        "leaves": 10,
+        "points": 160
+      },
+      {
+        "selected": 21352,
+        "branches": 111,
+        "leaves": 10,
+        "points": 160
+      },
+      {
+        "selected": 21352,
+        "branches": 113,
+        "leaves": 11,
+        "points": 184
+      },
+      {
+        "selected": 21352,
+        "branches": 111,
+        "leaves": 11,
+        "points": 172
+      },
+      {
+        "selected": 21352,
+        "branches": 111,
+        "leaves": 11,
+        "points": 172
+      },
+      {
+        "selected": 21352,
+        "branches": 111,
+        "leaves": 12,
+        "points": 185
+      },
+      {
+        "selected": 38211,
+        "branches": 107,
+        "leaves": 9,
+        "points": 137
+      },
+      {
+        "selected": 38211,
+        "branches": 107,
+        "leaves": 9,
+        "points": 136
+      },
+      {
+        "selected": 3251,
+        "branches": 103,
+        "leaves": 8,
+        "points": 124
+      },
+      {
+        "selected": 3251,
+        "branches": 103,
+        "leaves": 8,
+        "points": 124
+      },
+      {
+        "selected": 3251,
+        "branches": 101,
+        "leaves": 8,
+        "points": 124
+      },
+      {
+        "selected": 3251,
+        "branches": 103,
+        "leaves": 8,
+        "points": 124
+      },
+      {
+        "selected": 3251,
+        "branches": 103,
+        "leaves": 8,
+        "points": 124
+      },
+      {
+        "selected": 3251,
+        "branches": 103,
+        "leaves": 8,
+        "points": 124
+      },
+      {
+        "selected": 3251,
+        "branches": 103,
+        "leaves": 8,
+        "points": 124
+      },
+      {
+        "selected": 3251,
+        "branches": 101,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 3251,
+        "branches": 101,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 3251,
+        "branches": 97,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 3251,
+        "branches": 97,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 3251,
+        "branches": 99,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 3251,
+        "branches": 99,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 3251,
+        "branches": 99,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 3251,
+        "branches": 99,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 3251,
+        "branches": 99,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 3251,
+        "branches": 95,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": 44007,
+        "branches": 101,
+        "leaves": 6,
+        "points": 98
+      },
+      {
+        "selected": 44007,
+        "branches": 101,
+        "leaves": 6,
+        "points": 98
+      },
+      {
+        "selected": 30529,
+        "branches": 91,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": 30529,
+        "branches": 91,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": 29195,
+        "branches": 87,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 29195,
+        "branches": 85,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 29195,
+        "branches": 83,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 1687,
+        "branches": 93,
+        "leaves": 6,
+        "points": 110
+      },
+      {
+        "selected": 1687,
+        "branches": 93,
+        "leaves": 6,
+        "points": 110
+      },
+      {
+        "selected": 1687,
+        "branches": 93,
+        "leaves": 6,
+        "points": 110
+      },
+      {
+        "selected": 1687,
+        "branches": 93,
+        "leaves": 6,
+        "points": 110
+      },
+      {
+        "selected": 1687,
+        "branches": 93,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 1687,
+        "branches": 97,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 1687,
+        "branches": 97,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 1687,
+        "branches": 97,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 1687,
+        "branches": 97,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 1687,
+        "branches": 97,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 1687,
+        "branches": 101,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 1687,
+        "branches": 101,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 1687,
+        "branches": 101,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 1687,
+        "branches": 99,
+        "leaves": 5,
+        "points": 96
+      },
+      {
+        "selected": 1687,
+        "branches": 99,
+        "leaves": 5,
+        "points": 96
+      },
+      {
+        "selected": 1687,
+        "branches": 101,
+        "leaves": 5,
+        "points": 96
+      },
+      {
+        "selected": 28620,
+        "branches": 103,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 6563,
+        "branches": 103,
+        "leaves": 8,
+        "points": 168
+      },
+      {
+        "selected": 6563,
+        "branches": 105,
+        "leaves": 8,
+        "points": 168
+      },
+      {
+        "selected": 48331,
+        "branches": 101,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 48331,
+        "branches": 103,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 48331,
+        "branches": 103,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 48331,
+        "branches": 103,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 48331,
+        "branches": 105,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 48331,
+        "branches": 99,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 48331,
+        "branches": 101,
+        "leaves": 6,
+        "points": 132
+      },
+      {
+        "selected": 32967,
+        "branches": 87,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 87,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 87,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 83,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 83,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 81,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 83,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 83,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 83,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 83,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 81,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 81,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 83,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 83,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 85,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 87,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32967,
+        "branches": 89,
+        "leaves": 6,
+        "points": 132
+      },
+      {
+        "selected": 32967,
+        "branches": 89,
+        "leaves": 6,
+        "points": 132
+      },
+      {
+        "selected": 32967,
+        "branches": 89,
+        "leaves": 6,
+        "points": 132
+      },
+      {
+        "selected": 32967,
+        "branches": 87,
+        "leaves": 6,
+        "points": 132
+      },
+      {
+        "selected": 32967,
+        "branches": 87,
+        "leaves": 6,
+        "points": 132
+      },
+      {
+        "selected": 32967,
+        "branches": 91,
+        "leaves": 6,
+        "points": 132
+      },
+      {
+        "selected": 32967,
+        "branches": 91,
+        "leaves": 6,
+        "points": 132
+      },
+      {
+        "selected": 32967,
+        "branches": 89,
+        "leaves": 6,
+        "points": 132
+      },
+      {
+        "selected": 32967,
+        "branches": 89,
+        "leaves": 6,
+        "points": 132
+      },
+      {
+        "selected": 32967,
+        "branches": 89,
+        "leaves": 6,
+        "points": 132
+      },
+      {
+        "selected": 32967,
+        "branches": 89,
+        "leaves": 6,
+        "points": 132
+      },
+      {
+        "selected": 32967,
+        "branches": 89,
+        "leaves": 6,
+        "points": 132
+      },
+      {
+        "selected": 32967,
+        "branches": 89,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 89,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 91,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 91,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 91,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 91,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 91,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 93,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 93,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 97,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 93,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 93,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 95,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 97,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 97,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 97,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 97,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 99,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 97,
+        "leaves": 7,
+        "points": 144
+      },
+      {
+        "selected": 32967,
+        "branches": 93,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 32967,
+        "branches": 91,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 32967,
+        "branches": 91,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 32967,
+        "branches": 95,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 32967,
+        "branches": 95,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 32967,
+        "branches": 97,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 32967,
+        "branches": 97,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 32967,
+        "branches": 97,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 32967,
+        "branches": 99,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 32967,
+        "branches": 99,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 32967,
+        "branches": 99,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 19305,
+        "branches": 103,
+        "leaves": 7,
+        "points": 133
+      },
+      {
+        "selected": 19305,
+        "branches": 99,
+        "leaves": 7,
+        "points": 133
+      },
+      {
+        "selected": 19305,
+        "branches": 99,
+        "leaves": 7,
+        "points": 133
+      },
+      {
+        "selected": 19305,
+        "branches": 97,
+        "leaves": 7,
+        "points": 133
+      },
+      {
+        "selected": 19305,
+        "branches": 97,
+        "leaves": 8,
+        "points": 146
+      },
+      {
+        "selected": 19305,
+        "branches": 97,
+        "leaves": 8,
+        "points": 146
+      },
+      {
+        "selected": 19305,
+        "branches": 99,
+        "leaves": 8,
+        "points": 146
+      },
+      {
+        "selected": 19305,
+        "branches": 99,
+        "leaves": 9,
+        "points": 158
+      },
+      {
+        "selected": 11278,
+        "branches": 107,
+        "leaves": 10,
+        "points": 182
+      },
+      {
+        "selected": 11278,
+        "branches": 105,
+        "leaves": 10,
+        "points": 182
+      },
+      {
+        "selected": 17534,
+        "branches": 101,
+        "leaves": 9,
+        "points": 158
+      },
+      {
+        "selected": 31357,
+        "branches": 101,
+        "leaves": 9,
+        "points": 158
+      },
+      {
+        "selected": 31357,
+        "branches": 101,
+        "leaves": 9,
+        "points": 158
+      },
+      {
+        "selected": 31357,
+        "branches": 99,
+        "leaves": 9,
+        "points": 158
+      },
+      {
+        "selected": 31357,
+        "branches": 99,
+        "leaves": 9,
+        "points": 158
+      },
+      {
+        "selected": 31357,
+        "branches": 95,
+        "leaves": 9,
+        "points": 158
+      },
+      {
+        "selected": 31357,
+        "branches": 95,
+        "leaves": 7,
+        "points": 122
+      },
+      {
+        "selected": 31357,
+        "branches": 97,
+        "leaves": 7,
+        "points": 122
+      },
+      {
+        "selected": 31357,
+        "branches": 97,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 31357,
+        "branches": 97,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 31357,
+        "branches": 97,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 31357,
+        "branches": 93,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 31357,
+        "branches": 93,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 31357,
+        "branches": 93,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 31357,
+        "branches": 91,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 31357,
+        "branches": 91,
+        "leaves": 5,
+        "points": 85
+      },
+      {
+        "selected": 32185,
+        "branches": 107,
+        "leaves": 8,
+        "points": 146
+      },
+      {
+        "selected": 16292,
+        "branches": 103,
+        "leaves": 7,
+        "points": 133
+      },
+      {
+        "selected": 16292,
+        "branches": 105,
+        "leaves": 7,
+        "points": 133
+      },
+      {
+        "selected": 16292,
+        "branches": 103,
+        "leaves": 7,
+        "points": 133
+      },
+      {
+        "selected": 16292,
+        "branches": 103,
+        "leaves": 7,
+        "points": 133
+      },
+      {
+        "selected": 16292,
+        "branches": 101,
+        "leaves": 7,
+        "points": 133
+      },
+      {
+        "selected": 16292,
+        "branches": 99,
+        "leaves": 6,
+        "points": 97
+      },
+      {
+        "selected": 16292,
+        "branches": 99,
+        "leaves": 6,
+        "points": 97
+      },
+      {
+        "selected": 16292,
+        "branches": 99,
+        "leaves": 6,
+        "points": 86
+      },
+      {
+        "selected": 16292,
+        "branches": 97,
+        "leaves": 6,
+        "points": 86
+      },
+      {
+        "selected": 16292,
+        "branches": 95,
+        "leaves": 6,
+        "points": 86
+      },
+      {
+        "selected": 16292,
+        "branches": 95,
+        "leaves": 6,
+        "points": 86
+      },
+      {
+        "selected": 38556,
+        "branches": 109,
+        "leaves": 7,
+        "points": 122
+      },
+      {
+        "selected": 23790,
+        "branches": 119,
+        "leaves": 8,
+        "points": 135
+      },
+      {
+        "selected": 45712,
+        "branches": 141,
+        "leaves": 12,
+        "points": 220
+      },
+      {
+        "selected": 42883,
+        "branches": 147,
+        "leaves": 14,
+        "points": 256
+      },
+      {
+        "selected": 42883,
+        "branches": 145,
+        "leaves": 13,
+        "points": 232
+      },
+      {
+        "selected": 42883,
+        "branches": 143,
+        "leaves": 13,
+        "points": 232
+      },
+      {
+        "selected": 42883,
+        "branches": 139,
+        "leaves": 11,
+        "points": 207
+      },
+      {
+        "selected": 2242,
+        "branches": 145,
+        "leaves": 11,
+        "points": 218
+      },
+      {
+        "selected": 48403,
+        "branches": 147,
+        "leaves": 10,
+        "points": 194
+      },
+      {
+        "selected": 48403,
+        "branches": 145,
+        "leaves": 7,
+        "points": 145
+      },
+      {
+        "selected": 48403,
+        "branches": 147,
+        "leaves": 7,
+        "points": 145
+      },
+      {
+        "selected": 48403,
+        "branches": 135,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 11879,
+        "branches": 145,
+        "leaves": 6,
+        "points": 110
+      },
+      {
+        "selected": 11879,
+        "branches": 143,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": 11879,
+        "branches": 135,
+        "leaves": 4,
+        "points": 74
+      },
+      {
+        "selected": 11879,
+        "branches": 133,
+        "leaves": 4,
+        "points": 74
+      },
+      {
+        "selected": -1,
+        "branches": 139,
+        "leaves": 7,
+        "points": 112
+      },
+      {
+        "selected": -1,
+        "branches": 125,
+        "leaves": 7,
+        "points": 112
+      },
+      {
+        "selected": -1,
+        "branches": 115,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": -1,
+        "branches": 103,
+        "leaves": 2,
+        "points": 48
+      },
+      {
+        "selected": -1,
+        "branches": 91,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": -1,
+        "branches": 87,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": -1,
+        "branches": 83,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": -1,
+        "branches": 71,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 67,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 65,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 61,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 61,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 57,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 45,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 37,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 37,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 37,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 35,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 35,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 31,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 31,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 29,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 29,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 29,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 29,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 29,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 29,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 29,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 29,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 29,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 27,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 25,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 25,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 25,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 25,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 25,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 25,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 25,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 25,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 23,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 21,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 21,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 21,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 21,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 21,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 21,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 21,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 17,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 17,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 17,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 17,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 17,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 17,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 17,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 17,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 13,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 13,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 13,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 13,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 13,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 13,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 13,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 13,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 13,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 13,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 13,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 13,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 11,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 15,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 19,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 19,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 21,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 21,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 21,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 21,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 23,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 23,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 23,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 23,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 23,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 23,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 25,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 25,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 29,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 33,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 35,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 35,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 35,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 35,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 35,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 39,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 43,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 47,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 49,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 53,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 57,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 55,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 57,
+        "leaves": 0,
+        "points": 0
+      },
+      {
+        "selected": -1,
+        "branches": 67,
+        "leaves": 2,
+        "points": 48
+      },
+      {
+        "selected": -1,
+        "branches": 71,
+        "leaves": 4,
+        "points": 96
+      },
+      {
+        "selected": -1,
+        "branches": 75,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": -1,
+        "branches": 77,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": -1,
+        "branches": 79,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": -1,
+        "branches": 87,
+        "leaves": 7,
+        "points": 145
+      },
+      {
+        "selected": -1,
+        "branches": 91,
+        "leaves": 7,
+        "points": 145
+      },
+      {
+        "selected": 8538,
+        "branches": 71,
+        "leaves": 7,
+        "points": 145
+      },
+      {
+        "selected": 8538,
+        "branches": 75,
+        "leaves": 7,
+        "points": 145
+      },
+      {
+        "selected": 8538,
+        "branches": 79,
+        "leaves": 7,
+        "points": 145
+      },
+      {
+        "selected": 47684,
+        "branches": 73,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 47684,
+        "branches": 73,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 32389,
+        "branches": 73,
+        "leaves": 6,
+        "points": 121
+      },
+      {
+        "selected": 36460,
+        "branches": 69,
+        "leaves": 1,
+        "points": 24
+      },
+      {
+        "selected": 36460,
+        "branches": 75,
+        "leaves": 2,
+        "points": 48
+      },
+      {
+        "selected": 36460,
+        "branches": 77,
+        "leaves": 2,
+        "points": 48
+      },
+      {
+        "selected": 36460,
+        "branches": 81,
+        "leaves": 2,
+        "points": 48
+      },
+      {
+        "selected": 37656,
+        "branches": 77,
+        "leaves": 3,
+        "points": 72
+      },
+      {
+        "selected": 37656,
+        "branches": 79,
+        "leaves": 3,
+        "points": 72
+      },
+      {
+        "selected": 37656,
+        "branches": 85,
+        "leaves": 3,
+        "points": 72
+      },
+      {
+        "selected": 13989,
+        "branches": 85,
+        "leaves": 4,
+        "points": 96
+      },
+      {
+        "selected": 13989,
+        "branches": 87,
+        "leaves": 5,
+        "points": 120
+      },
+      {
+        "selected": 13989,
+        "branches": 91,
+        "leaves": 5,
+        "points": 120
+      },
+      {
+        "selected": 33194,
+        "branches": 93,
+        "leaves": 5,
+        "points": 120
+      },
+      {
+        "selected": 19739,
+        "branches": 75,
+        "leaves": 2,
+        "points": 36
+      },
+      {
+        "selected": 19739,
+        "branches": 77,
+        "leaves": 3,
+        "points": 60
+      },
+      {
+        "selected": 19739,
+        "branches": 77,
+        "leaves": 3,
+        "points": 60
+      },
+      {
+        "selected": 19739,
+        "branches": 81,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 19739,
+        "branches": 81,
+        "leaves": 5,
+        "points": 108
+      },
+      {
+        "selected": 36920,
+        "branches": 79,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 36920,
+        "branches": 79,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 36920,
+        "branches": 87,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 36920,
+        "branches": 91,
+        "leaves": 6,
+        "points": 110
+      },
+      {
+        "selected": 36920,
+        "branches": 97,
+        "leaves": 7,
+        "points": 134
+      },
+      {
+        "selected": 33102,
+        "branches": 95,
+        "leaves": 7,
+        "points": 134
+      },
+      {
+        "selected": 33102,
+        "branches": 97,
+        "leaves": 8,
+        "points": 158
+      },
+      {
+        "selected": 39289,
+        "branches": 101,
+        "leaves": 8,
+        "points": 158
+      },
+      {
+        "selected": 39289,
+        "branches": 107,
+        "leaves": 8,
+        "points": 158
+      },
+      {
+        "selected": 7319,
+        "branches": 97,
+        "leaves": 4,
+        "points": 85
+      },
+      {
+        "selected": 7319,
+        "branches": 101,
+        "leaves": 5,
+        "points": 109
+      },
+      {
+        "selected": 7319,
+        "branches": 103,
+        "leaves": 5,
+        "points": 109
+      },
+      {
+        "selected": 3873,
+        "branches": 123,
+        "leaves": 8,
+        "points": 158
+      },
+      {
+        "selected": 12360,
+        "branches": 93,
+        "leaves": 4,
+        "points": 96
+      },
+      {
+        "selected": 12360,
+        "branches": 95,
+        "leaves": 4,
+        "points": 96
+      },
+      {
+        "selected": 36165,
+        "branches": 97,
+        "leaves": 4,
+        "points": 96
+      },
+      {
+        "selected": 36165,
+        "branches": 101,
+        "leaves": 4,
+        "points": 96
+      },
+      {
+        "selected": 36763,
+        "branches": 93,
+        "leaves": 4,
+        "points": 96
+      },
+      {
+        "selected": 36763,
+        "branches": 99,
+        "leaves": 4,
+        "points": 96
+      },
+      {
+        "selected": 423,
+        "branches": 101,
+        "leaves": 5,
+        "points": 120
+      },
+      {
+        "selected": 423,
+        "branches": 99,
+        "leaves": 5,
+        "points": 120
+      },
+      {
+        "selected": 20249,
+        "branches": 89,
+        "leaves": 3,
+        "points": 72
+      },
+      {
+        "selected": 20249,
+        "branches": 93,
+        "leaves": 4,
+        "points": 96
+      },
+      {
+        "selected": 20249,
+        "branches": 99,
+        "leaves": 5,
+        "points": 120
+      },
+      {
+        "selected": 20249,
+        "branches": 113,
+        "leaves": 9,
+        "points": 193
+      },
+      {
+        "selected": 20295,
+        "branches": 125,
+        "leaves": 12,
+        "points": 265
+      },
+      {
+        "selected": 24210,
+        "branches": 95,
+        "leaves": 9,
+        "points": 193
+      },
+      {
+        "selected": 12733,
+        "branches": 81,
+        "leaves": 4,
+        "points": 84
+      },
+      {
+        "selected": 12733,
+        "branches": 91,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 12733,
+        "branches": 101,
+        "leaves": 7,
+        "points": 133
+      },
+      {
+        "selected": 12894,
+        "branches": 109,
+        "leaves": 8,
+        "points": 157
+      },
+      {
+        "selected": 43323,
+        "branches": 89,
+        "leaves": 6,
+        "points": 120
+      },
+      {
+        "selected": 43415,
+        "branches": 85,
+        "leaves": 5,
+        "points": 97
+      },
+      {
+        "selected": 43415,
+        "branches": 91,
+        "leaves": 6,
+        "points": 121
+      },
+      {
+        "selected": 43415,
+        "branches": 93,
+        "leaves": 6,
+        "points": 121
+      },
+      {
+        "selected": 43415,
+        "branches": 95,
+        "leaves": 6,
+        "points": 121
+      },
+      {
+        "selected": 35917,
+        "branches": 97,
+        "leaves": 6,
+        "points": 121
+      },
+      {
+        "selected": 19288,
+        "branches": 95,
+        "leaves": 7,
+        "points": 133
+      },
+      {
+        "selected": 23014,
+        "branches": 81,
+        "leaves": 6,
+        "points": 109
+      },
+      {
+        "selected": 23014,
+        "branches": 77,
+        "leaves": 4,
+        "points": 74
+      },
+      {
+        "selected": 23014,
+        "branches": 103,
+        "leaves": 12,
+        "points": 208
+      },
+      {
+        "selected": 23014,
+        "branches": 103,
+        "leaves": 11,
+        "points": 184
+      },
+      {
+        "selected": 23451,
+        "branches": 81,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": 23451,
+        "branches": 83,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": 23451,
+        "branches": 85,
+        "leaves": 5,
+        "points": 86
+      },
+      {
+        "selected": 26694,
+        "branches": 95,
+        "leaves": 8,
+        "points": 135
+      },
+      {
+        "selected": 47187,
+        "branches": 103,
+        "leaves": 10,
+        "points": 172
+      },
+      {
+        "selected": 47187,
+        "branches": 105,
+        "leaves": 9,
+        "points": 148
+      },
+      {
+        "selected": 16919,
+        "branches": 103,
+        "leaves": 10,
+        "points": 160
+      },
+      {
+        "selected": 16919,
+        "branches": 101,
+        "leaves": 8,
+        "points": 136
+      },
+      {
+        "selected": 16919,
+        "branches": 99,
+        "leaves": 7,
+        "points": 112
+      },
+      {
+        "selected": 29960,
+        "branches": 107,
+        "leaves": 6,
+        "points": 88
+      },
+      {
+        "selected": 198,
+        "branches": 101,
+        "leaves": 6,
+        "points": 99
+      },
+      {
+        "selected": 198,
+        "branches": 99,
+        "leaves": 5,
+        "points": 75
+      },
+      {
+        "selected": 24095,
+        "branches": 117,
+        "leaves": 9,
+        "points": 136
+      },
+      {
+        "selected": 24095,
+        "branches": 109,
+        "leaves": 10,
+        "points": 149
+      },
+      {
+        "selected": 24095,
+        "branches": 119,
+        "leaves": 10,
+        "points": 150
+      },
+      {
+        "selected": 26142,
+        "branches": 113,
+        "leaves": 8,
+        "points": 124
+      }
+    ]
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "source": "38f2622 plus temporary worst-pick recorder; same build for battery and AC",
+  "graphCssPixels": [
+    898.5078125,
+    516
+  ],
+  "dpr": 2,
+  "labels": true,
+  "framesPerRun": 600,
+  "battery2k": {
+    "frameP95Ms": 17.599999999998545,
+    "frameP50Ms": 16.69999999999709,
+    "cpuP95Ms": 2.0999999940395355,
+    "pickP95Ms": 0.20000001788139343,
+    "pickMaxMs": 3,
+    "maxLoadOrLayoutTaskMs": 135
+  },
+  "battery50k": {
+    "frameP95Ms": 17.60000000000582,
+    "cpuP95Ms": 1.800000011920929,
+    "pickMaxMs": 3.5,
+    "maxLoadOrLayoutTaskMs": 83
+  },
+  "ac2k": {
+    "frameP95Ms": 17.600000000000364,
+    "frameP50Ms": 16.700000000000728,
+    "cpuP95Ms": 2.300000011920929,
+    "pickP95Ms": 0.20000001788139343,
+    "pickMaxMs": 4,
+    "maxLoadOrLayoutTaskMs": 98
+  },
+  "acScheduling2k": {
+    "frameP95Ms": 17.60000000000582,
+    "frameP50Ms": 16.69999999999709,
+    "cpuP95Ms": 0,
+    "pickMaxMs": 0
+  },
+  "note": "Selected metrics transcribed from complete visible JSON. Diagnostic recorder can perturb timing; these are not clean acceptance runs. Chrome Energy Saver setting is unknown. AC source was independently confirmed.",
+  "powerVerification": "AC power independently confirmed; battery identifier omitted."
+}

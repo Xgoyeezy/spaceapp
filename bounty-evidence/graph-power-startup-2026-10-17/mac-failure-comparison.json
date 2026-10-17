@@ -1,0 +1,16 @@
+{
+  "previousFailures": 121,
+  "currentFailures": 120,
+  "shared": 119,
+  "newlyObserved": [
+    "FAIL  tests/asteroids-engine.test.ts > Asteroids simulation > spawns a firing Sentinel every fifth sector and wraps collisions across edges"
+  ],
+  "notRepeated": [
+    "FAIL  tests/mail-copilot-run.test.ts > mail copilot run loop > under Rules the agent acts alone only with an approved matching rule, the operator's own actions become learn items, and proposals wait for the operator",
+    "FAIL  tests/shared-chat-dispatch.test.ts > pickSharedChatDispatchTarget > picks the most recently updated eligible pane for the requested runtime"
+  ],
+  "comparison": "Final completed local macOS logs; named FAIL entries, not a claim that every repeated failure has one cause.",
+  "previousSource": "38f2622b2cdb15e2587f4b8bd437ead7ebf57bc3",
+  "currentSource": "f0a2078918870b0abb0ed6cf7c02d6dea8b07e7f",
+  "currentLogNote": "Full local run preceded the deterministic Sentinel fixture correction; the corrected final fixture passed the focused run."
+}

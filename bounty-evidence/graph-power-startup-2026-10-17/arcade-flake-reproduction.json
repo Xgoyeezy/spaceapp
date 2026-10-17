@@ -1,0 +1,33 @@
+{
+  "seeds": "101..2100",
+  "finalFrameFailures": [
+    {
+      "seed": 424,
+      "fired": true,
+      "final": false,
+      "phase": "playing",
+      "lives": 3
+    },
+    {
+      "seed": 678,
+      "fired": false,
+      "final": false,
+      "phase": "playing",
+      "lives": 3
+    },
+    {
+      "seed": 1157,
+      "fired": false,
+      "final": false,
+      "phase": "playing",
+      "lives": 3
+    },
+    {
+      "seed": 2098,
+      "fired": true,
+      "final": false,
+      "phase": "playing",
+      "lives": 3
+    }
+  ]
+}

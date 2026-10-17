@@ -1,0 +1,85 @@
+{
+  "rootCheck": "passed",
+  "rootBuild": "passed",
+  "hygiene": "passed",
+  "fullMacTest": "failed",
+  "fullMacTestSeconds": 899.9,
+  "webBeforeFixtureFix": {
+    "filesPassed": 328,
+    "filesFailed": 1,
+    "testsPassed": 3200,
+    "testsFailed": 1
+  },
+  "baselineFailingTestsRepeated": 119,
+  "newlyObserved": [
+    "FAIL  tests/asteroids-engine.test.ts > Asteroids simulation > spawns a firing Sentinel every fifth sector and wraps collisions across edges"
+  ],
+  "focusedAfterFixtureFix": {
+    "filesPassed": 2,
+    "testsPassed": 15
+  },
+  "note": "The Sentinel failure was reproduced with deterministic seed 424: firing occurred but no enemy shot remained at frame 140. The fixture now uses that seed and checks for firing during the observed interval. Production arcade code was not changed. The final full Linux web suite passed.",
+  "source": "f0a2078918870b0abb0ed6cf7c02d6dea8b07e7f",
+  "baselineSource": "38f2622b2cdb15e2587f4b8bd437ead7ebf57bc3",
+  "macFailComparison": "mac-failure-comparison.json",
+  "fullMacTestNote": "The complete run preceded the deterministic Sentinel fixture correction; its corrected final version passed the focused run. Repeated named failures are not all attributed to one cause.",
+  "localCommands": [
+    {
+      "command": "npm run check",
+      "exitCode": 0,
+      "seconds": 51.1
+    },
+    {
+      "command": "npm test",
+      "exitCode": 1,
+      "seconds": 899.9
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "seconds": 138.3
+    }
+  ],
+  "browserChecks": {
+    "contextLossFallback": "passed",
+    "contextRestoration": "passed",
+    "keyboardRotation": "passed",
+    "titlesToggle": "passed",
+    "displayScaling": "not run; System Settings access denied including approved retry",
+    "renderingAcceptance": "not passed; 2k frame p95 17.5 ms and 50k load/layout task 167 ms; intermittent picking stalls remain unresolved"
+  },
+  "linux": {
+    "source": "f0a2078918870b0abb0ed6cf7c02d6dea8b07e7f",
+    "workflowCommit": "83203960d454d431ef1a4ad946e631e5c7ca2485",
+    "url": "https://github.com/Xgoyeezy/spaceapp/actions/runs/39002886966",
+    "status": "completed",
+    "conclusion": "success",
+    "scope": [
+      "npm run check",
+      "npm test -w @space/web",
+      "npm run build"
+    ],
+    "fullWorkspaceSuiteAtNewSource": false,
+    "filesPassed": 329,
+    "testsPassed": 3201,
+    "verifiedAt": "2026-10-17T04:43:56.196811+00:00",
+    "steps": [
+      {
+        "name": "Run npm run check",
+        "conclusion": "success"
+      },
+      {
+        "name": "All web regression tests",
+        "conclusion": "success"
+      },
+      {
+        "name": "Production build",
+        "conclusion": "success"
+      },
+      {
+        "name": "Summarize",
+        "conclusion": "success"
+      }
+    ]
+  }
+}

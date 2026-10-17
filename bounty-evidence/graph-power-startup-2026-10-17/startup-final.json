@@ -1,0 +1,302 @@
+[
+  {
+    "power": "AC",
+    "status": "complete",
+    "valid": true,
+    "visibility": "visible",
+    "mode": "render",
+    "frames": 600,
+    "observerSupport": {
+      "longTasks": true,
+      "longAnimationFrames": true
+    },
+    "width": 898.5078125,
+    "height": 516,
+    "dpr": 2,
+    "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "source": "f0a2078918870b0abb0ed6cf7c02d6dea8b07e7f",
+    "nodes": 2000,
+    "edges": 6000,
+    "frameMinMs": 15.599999999998545,
+    "frameP50Ms": 16.69999999999709,
+    "frameP95Ms": 17.5,
+    "cpuP95Ms": 2.0999999940395355,
+    "pickP95Ms": 0.20000001788139343,
+    "pickMaxMs": 4.100000023841858,
+    "maxLoadOrLayoutTaskMs": 0,
+    "maxPageTaskMs": 177,
+    "longestMemoryTask": null,
+    "loadStartedAt": 1550.300000011921,
+    "benchmarkStartedAt": 36475.19999998808,
+    "longFrames": [],
+    "pickWorstFrame": 0,
+    "maxWorkMs": {
+      "layout volume": 0.30000001192092896,
+      "GPU graph upload": 0.19999998807907104,
+      "GPU positions and pick index": 0.19999998807907104,
+      "create WebGL context": 37.099999994039536,
+      "initialize GPU programs": 21.5,
+      "send nodes": 0.5999999940395355,
+      "send edges": 1.0999999940395355,
+      "send run": 0,
+      "draw GPU frame": 2.0999999940395355,
+      "draw labels": 5.5,
+      "receive layout": 6.800000011920929
+    }
+  },
+  {
+    "source": "f0a2078918870b0abb0ed6cf7c02d6dea8b07e7f",
+    "power": "AC",
+    "status": "complete",
+    "valid": true,
+    "visibility": "visible",
+    "mode": "render",
+    "frames": 600,
+    "observerSupport": {
+      "longTasks": true,
+      "longAnimationFrames": true
+    },
+    "width": 898.5078125,
+    "height": 516,
+    "dpr": 2,
+    "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "nodes": 10000,
+    "edges": 30000,
+    "frameMinMs": 15.599999999998545,
+    "frameP50Ms": 16.69999999999709,
+    "frameP95Ms": 17.700000000000728,
+    "cpuP95Ms": 3,
+    "pickP95Ms": 0.20000001788139343,
+    "pickMaxMs": 9.900000005960464,
+    "maxLoadOrLayoutTaskMs": 72,
+    "maxPageTaskMs": 129,
+    "longestMemoryTask": {
+      "startTime": 1210.300000011921,
+      "duration": 72
+    },
+    "loadStartedAt": 1116.9000000059605,
+    "benchmarkStartedAt": 28908.600000023842,
+    "longFrames": [
+      {
+        "startTime": 1184.5,
+        "duration": 102.30000001192093,
+        "scripts": [
+          {
+            "duration": 10.599999994039536,
+            "invoker": "TimerHandler:setTimeout",
+            "source": "http://127.0.0.1:4922/assets/MemoryWorkspace-Bg-WGXbN.js",
+            "function": "",
+            "position": 23862
+          },
+          {
+            "duration": 72.09999999403954,
+            "invoker": "MessagePort.onmessage",
+            "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+            "function": "rt",
+            "position": 10089
+          }
+        ]
+      }
+    ],
+    "pickWorstFrame": 517,
+    "maxWorkMs": {
+      "layout volume": 0,
+      "GPU graph upload": 8.900000005960464,
+      "GPU positions and pick index": 1.5,
+      "create WebGL context": 10.5,
+      "send nodes": 1.699999988079071,
+      "send edges": 0.6000000238418579,
+      "send run": 0,
+      "initialize GPU programs": 7.5999999940395355,
+      "draw GPU frame": 14.200000017881393,
+      "draw labels": 19.099999994039536,
+      "receive layout": 5
+    }
+  },
+  {
+    "source": "f0a2078918870b0abb0ed6cf7c02d6dea8b07e7f",
+    "power": "AC",
+    "status": "complete",
+    "valid": true,
+    "visibility": "visible",
+    "mode": "render",
+    "frames": 600,
+    "observerSupport": {
+      "longTasks": true,
+      "longAnimationFrames": true
+    },
+    "width": 898.5078125,
+    "height": 516,
+    "dpr": 2,
+    "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "nodes": 50000,
+    "edges": 150000,
+    "frameMinMs": 14.60000000000582,
+    "frameP50Ms": 16.699999999982538,
+    "frameP95Ms": 17.699999999982538,
+    "cpuP95Ms": 2.0999999940395355,
+    "pickP95Ms": 0.20000001788139343,
+    "pickMaxMs": 1.2999999821186066,
+    "maxLoadOrLayoutTaskMs": 167,
+    "maxPageTaskMs": 167,
+    "longestMemoryTask": {
+      "startTime": 117918.69999998808,
+      "duration": 167
+    },
+    "loadStartedAt": 1198.4000000059605,
+    "benchmarkStartedAt": 129595.5,
+    "longFrames": [
+      {
+        "startTime": 1265.199999988079,
+        "duration": 105.30000001192093,
+        "scripts": [
+          {
+            "duration": 28,
+            "invoker": "MessagePort.onmessage",
+            "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+            "function": "rt",
+            "position": 10089
+          },
+          {
+            "duration": 5.4000000059604645,
+            "invoker": "Scheduler.yield.then",
+            "source": "http://127.0.0.1:4922/assets/memory-yield-DriqnFX7.js",
+            "function": "",
+            "position": 60
+          },
+          {
+            "duration": 6.5999999940395355,
+            "invoker": "Scheduler.yield.then",
+            "source": "http://127.0.0.1:4922/assets/memory-yield-DriqnFX7.js",
+            "function": "",
+            "position": 60
+          },
+          {
+            "duration": 5.300000011920929,
+            "invoker": "Scheduler.yield.then",
+            "source": "http://127.0.0.1:4922/assets/memory-yield-DriqnFX7.js",
+            "function": "",
+            "position": 60
+          }
+        ]
+      },
+      {
+        "startTime": 1371.5999999940395,
+        "duration": 101.59999999403954,
+        "scripts": [
+          {
+            "duration": 8.299999982118607,
+            "invoker": "Scheduler.yield.then",
+            "source": "http://127.0.0.1:4922/assets/memory-yield-DriqnFX7.js",
+            "function": "",
+            "position": 60
+          },
+          {
+            "duration": 14.399999976158142,
+            "invoker": "Scheduler.yield.then",
+            "source": "http://127.0.0.1:4922/assets/memory-yield-DriqnFX7.js",
+            "function": "",
+            "position": 60
+          },
+          {
+            "duration": 6.699999988079071,
+            "invoker": "TimerHandler:setTimeout",
+            "source": "http://127.0.0.1:4922/assets/MemoryWorkspace-Bg-WGXbN.js",
+            "function": "",
+            "position": 23862
+          },
+          {
+            "duration": 15.5,
+            "invoker": "MessagePort.onmessage",
+            "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+            "function": "rt",
+            "position": 10089
+          },
+          {
+            "duration": 6.4000000059604645,
+            "invoker": "Scheduler.yield.then",
+            "source": "http://127.0.0.1:4922/assets/memory-yield-DriqnFX7.js",
+            "function": "",
+            "position": 60
+          }
+        ]
+      },
+      {
+        "startTime": 6478.800000011921,
+        "duration": 119.7999999821186,
+        "scripts": [
+          {
+            "duration": 46,
+            "invoker": "MessagePort.onmessage",
+            "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+            "function": "rt",
+            "position": 10089
+          },
+          {
+            "duration": 10.300000011920929,
+            "invoker": "MessagePort.onmessage",
+            "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+            "function": "rt",
+            "position": 10089
+          },
+          {
+            "duration": 16.599999994039536,
+            "invoker": "FrameRequestCallback",
+            "source": "http://127.0.0.1:4922/assets/MemoryWorkspace-Bg-WGXbN.js",
+            "function": "oe",
+            "position": 26983
+          }
+        ]
+      },
+      {
+        "startTime": 100295.69999998808,
+        "duration": 134.40000000596046,
+        "scripts": []
+      },
+      {
+        "startTime": 117834.40000000596,
+        "duration": 167.5,
+        "scripts": [
+          {
+            "duration": 33.5,
+            "invoker": "MessagePort.onmessage",
+            "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+            "function": "rt",
+            "position": 10089
+          },
+          {
+            "duration": 50.599999994039536,
+            "invoker": "MessagePort.onmessage",
+            "source": "http://127.0.0.1:4922/assets/vendor-react-D8SuotAj.js",
+            "function": "rt",
+            "position": 10089
+          },
+          {
+            "duration": 18.200000017881393,
+            "invoker": "FrameRequestCallback",
+            "source": "http://127.0.0.1:4922/assets/MemoryWorkspace-Bg-WGXbN.js",
+            "function": "oe",
+            "position": 26983
+          }
+        ]
+      }
+    ],
+    "pickWorstFrame": 0,
+    "maxWorkMs": {
+      "layout volume": 0,
+      "GPU graph upload": 8.800000011920929,
+      "GPU positions and pick index": 34.30000001192093,
+      "create WebGL context": 6.5999999940395355,
+      "send nodes": 6.4000000059604645,
+      "send edges": 1.300000011920929,
+      "send run": 0,
+      "initialize GPU programs": 5.9000000059604645,
+      "draw GPU frame": 7.600000023841858,
+      "draw labels": 24.600000023841858,
+      "receive layout": 21.799999982118607
+    }
+  }
+]

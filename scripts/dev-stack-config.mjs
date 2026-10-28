@@ -43,7 +43,7 @@ export function pinnedDevImages(template) {
 }
 
 export function pinnedOpenCode(dockerfile) {
-  const versions = [...dockerfile.matchAll(/\bopencode-ai@(\d+\.\d+\.\d+)\b/g)].map(match => match[1]);
+  const versions = [...dockerfile.matchAll(/@opencode\/cli@(\d+\.\d+\.\d+)\b/g)].map(match => match[1]);
   if (new Set(versions).size !== 1) throw new Error("Dockerfile must specify exactly one OpenCode version.");
   return versions[0];
 }

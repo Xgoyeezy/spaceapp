@@ -1,5 +1,6 @@
 import type { Pane, Room, RoomAgentEvent, RoomAgentEventKind, RoomAgentPaneActivity } from "@space/contracts";
 import type { RoomAgentMonitorRepository, RoomPaneActivityRecord } from "@space/db";
+import { SpaceNotFoundError } from "@space/runtime";
 import type { DashboardActivityDetail } from "./agents-dashboard.js";
 import { roomAgentSnapshotPane } from "./room-agent-snapshot.js";
 
@@ -14,6 +15,12 @@ const SWEEP_EVERY_MS = 30_000;
 export const ROOM_MONITOR_OVERLAP_MS = 60_000;
 const OVERLAP_STATUSES: RoomAgentEvent["status"][] = ["OPEN", "ESCALATED", "HANDLED", "ACKED"];
 
+/** Item 29a: a text Nous or the Room Agent sent this long before a wait opened still answered it (Alex/Jack 27/10: 7 s before). */
+export const ROOM_MONITOR_ANSWER_LEAD_MS = 30_000;
+const reachedPanes = new Map<string, number>();
+/** Space typed a text from Nous or the Room Agent into this pane (room-agent-tools; a queued one only once typed); a wait it ends counts as answered. */
+export function notePaneReached(paneId: string, at = Date.now()): void { reachedPanes.set(paneId, at); }
+
 export interface RoomMonitorObservation { activity: RoomAgentPaneActivity; reason: string | null }
 
 export interface RoomMonitorTransition { kind: RoomAgentEventKind; severity: RoomAgentEvent["severity"] }
@@ -23,6 +30,7 @@ function attentionKind(reason: string | null): RoomAgentEventKind {
   if (reason === "Sign-in required") return "SIGN_IN";
   if (reason === "CLI error" || reason === "Run failed") return "ERROR";
   if (reason === "API error") return "STUCK";
+  if (reason === "Question for you") return "QUESTION";
   return "WAITING";
 }
 
@@ -49,7 +57,8 @@ export function roomMonitorEventText(kind: RoomAgentEventKind, name: string, rea
       : kind === "SIGN_IN" ? `${name} needs sign-in`
         : kind === "ERROR" ? (reason === "Not running" ? `${name} stopped` : `${name} stopped with an error`)
           : kind === "STUCK" ? (reason === "API error" ? `${name} stopped on an API error` : `${name} seems stuck`)
-            : `${name} is waiting: ${reason ?? "Needs input"}`;
+            : kind === "QUESTION" ? `${name} has a question for you`
+              : `${name} is waiting: ${reason ?? "Needs input"}`;
   const detail = [task.title, task.summary].filter(Boolean).join(" — ") || null;
   return { title, detail };
 }
@@ -86,6 +95,8 @@ export function createRoomAgentMonitor(options: RoomAgentMonitorOptions) {
   let lastSweep = 0;
   let lastWarning = 0;
 
+  function forget(roomId: string) { known.delete(roomId); nextDue.delete(roomId); overlapDue.delete(roomId); overlapEvents.delete(roomId); }
+
   async function previousActivity(roomId: string) {
     let room = known.get(roomId);
     if (!room) {
@@ -97,9 +108,13 @@ export function createRoomAgentMonitor(options: RoomAgentMonitorOptions) {
 
   async function resolveWaiting(roomId: string, paneId: string) {
     const pending = await options.repository.listEvents(roomId, { paneId, statuses: ["OPEN", "ESCALATED"], limit: 20 });
+    const reached = reachedPanes.get(paneId);
     for (const event of pending) {
       if (event.kind === "FINISHED") continue;
-      const resolved = await options.repository.updateEvent(event.eventId, { status: "RESOLVED", decision: event.decision ?? "The pane moved on." }, ["OPEN", "ESCALATED"]);
+      const answered = (event.kind === "WAITING" || event.kind === "STUCK") && event.status === "OPEN" && reached !== undefined
+        && reached >= Date.parse(event.createdAt) - ROOM_MONITOR_ANSWER_LEAD_MS;
+      const resolved = await options.repository.updateEvent(event.eventId, answered ? { status: "HANDLED", decision: "A text Space sent for Nous or the Room Agent reached the pane and it moved on." }
+        : { status: "RESOLVED", decision: event.decision ?? "The pane moved on." }, ["OPEN", "ESCALATED"]);
       if (resolved) await options.onEvent?.(resolved);
     }
   }
@@ -172,7 +187,9 @@ export function createRoomAgentMonitor(options: RoomAgentMonitorOptions) {
       await options.repository.savePaneActivity(changed);
       await options.onActivity?.(roomId);
     }
-    await syncOverlaps(roomId).catch((error) => options.log?.warn({ err: error, roomId }, "Room Agent monitor could not read the room's overlaps."));
+    await syncOverlaps(roomId).catch((error) => {
+      if (!(error instanceof SpaceNotFoundError)) options.log?.warn({ err: error, roomId }, "Room Agent monitor could not read the room's overlaps.");
+    });
     return busy ? ROOM_MONITOR_ACTIVE_MS : agents ? ROOM_MONITOR_QUIET_MS : ROOM_MONITOR_EMPTY_MS;
   }
 
@@ -182,6 +199,9 @@ export function createRoomAgentMonitor(options: RoomAgentMonitorOptions) {
     try {
       const at = now();
       const [rooms, disabled] = await Promise.all([options.listRooms(), options.repository.disabledRooms()]);
+      // A deleted room (an Agent Proof room torn down) leaves no state behind.
+      const listed = new Set(rooms.map((room) => room.id));
+      for (const roomId of nextDue.keys()) if (!listed.has(roomId)) forget(roomId);
       for (const room of rooms) {
         if (room.archivedAt || room.kind === "CLI_RECOVERY" || disabled.has(room.id)) { known.delete(room.id); nextDue.delete(room.id); continue; }
         if ((nextDue.get(room.id) ?? 0) > at) continue;
@@ -189,6 +209,8 @@ export function createRoomAgentMonitor(options: RoomAgentMonitorOptions) {
           nextDue.set(room.id, at + await scanRoom(room.id));
         } catch (error) {
           nextDue.set(room.id, at + ROOM_MONITOR_QUIET_MS);
+          // A room deleted while it was read is dropped on the next tick; only real failures warn.
+          if (error instanceof SpaceNotFoundError) continue;
           if (at - lastWarning > 60_000) { lastWarning = at; options.log?.warn({ err: error, roomId: room.id }, "Room Agent monitor could not read a room."); }
         }
       }
@@ -216,7 +238,7 @@ export function createRoomAgentMonitor(options: RoomAgentMonitorOptions) {
     },
     stop() { if (timer) clearInterval(timer); timer = null; },
     /** A room switched off forgets its state, so switching it on does not replay old changes. */
-    forget(roomId: string) { known.delete(roomId); nextDue.delete(roomId); overlapDue.delete(roomId); overlapEvents.delete(roomId); }
+    forget,
   };
 }
 export type RoomAgentMonitor = ReturnType<typeof createRoomAgentMonitor>;

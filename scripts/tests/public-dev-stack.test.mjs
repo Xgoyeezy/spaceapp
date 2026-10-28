@@ -43,8 +43,10 @@ test("image and provider versions come from the distribution's current sources",
   assert.match(images.temporal, /^temporalio\/auto-setup:.+@sha256:[0-9a-f]{64}$/);
   assert.match(pinnedOpenCode(dockerfile), /^\d+\.\d+\.\d+$/);
   assert.throws(() => pinnedDevImages(template.replace(/@sha256:[0-9a-f]{64}/g, "")), /pin/);
-  assert.throws(() => pinnedOpenCode("opencode-ai@latest"));
-  assert.throws(() => pinnedOpenCode("opencode-ai@1.2.3 opencode-ai@1.2.4"));
+  assert.equal(pinnedOpenCode("npm install --global @opencode/cli@2.0.32"), "2.0.32");
+  assert.throws(() => pinnedOpenCode("@opencode/cli@latest"));
+  assert.throws(() => pinnedOpenCode("@opencode/cli@2.0.31 @opencode/cli@2.0.32"));
+  assert.throws(() => pinnedOpenCode("opencode-ai@1.2.3"));
 });
 
 test("child processes cannot inherit installed services or provider credentials", () => {

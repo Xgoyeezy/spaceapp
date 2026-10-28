@@ -222,7 +222,7 @@ try {
         } catch (error) { if (error.code !== "ENOENT") throw error; }
       }
     }
-    await command("npm", ["install", "--prefix", join(state, "vendor"), "--no-audit", "--no-fund", "--save-exact", `opencode-ai@${config.opencode}`], { env });
+    await command("npm", ["install", "--prefix", join(state, "vendor"), "--no-audit", "--no-fund", "--save-exact", `@opencode/cli@${config.opencode}`], { env });
     await copyFile(join(root, "scripts/dev-stack-opencode.mjs"), join(state, "bin/opencode-vscode-parity"));
     await chmod(join(state, "bin/opencode-vscode-parity"), 0o700);
     await writeFile(join(state, "bin/package.json"), '{"type":"module"}\n', { mode: 0o600 });

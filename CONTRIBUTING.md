@@ -42,7 +42,7 @@ This starts the same digest-pinned pgvector PostgreSQL and Temporal images used
 by the launcher, builds this checkout, applies migrations, and starts the API,
 Vite, Temporal worker and CLI host. Open the printed loopback URL, enter the
 printed one-time setup token, create an owner and sign in. The Getting Started
-room includes an OpenCode pane. The Dockerfile's pinned `opencode-ai` version is
+room includes an OpenCode pane. The Dockerfile's pinned `@opencode/cli` version is
 installed locally in `.dev-stack/vendor`; reaching its native terminal UI does
 not require a provider account. The dev wrapper checks that the CLI starts; it
 does not claim a model response or run a provider task.
@@ -178,3 +178,24 @@ attachment, room retention, control, readiness, polling or deployment.
 Keep changes reviewable and include the exact commands and limitations of your
 verification. Never include credentials, private transcripts or local runtime
 state in a contribution.
+
+## License of contributions
+
+SpaceApp is licensed under the [MIT License](LICENSE). Contributions are
+accepted under the same license (inbound = outbound): by submitting a
+contribution you license it to everyone under the MIT License. You keep the
+copyright of your contribution.
+
+Every commit must carry a `Signed-off-by:` line with your real name and email,
+which certifies the [Developer Certificate of Origin 1.1](https://developercertificate.org/):
+that you wrote the contribution or have the right to submit it under the MIT
+License. `git commit -s` adds the line. There is no separate contributor
+license agreement.
+
+## Reviews and payment
+
+Pull requests are reviewed and merged by the maintainers named in the public repository's `MAINTAINERS`
+file. A merged pull request stays in every later release with its author.
+
+Contributions are voluntary; payment applies only to issues labelled 💎 Bounty, under the terms posted on
+that issue.

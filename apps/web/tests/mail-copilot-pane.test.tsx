@@ -188,7 +188,7 @@ describe("MailCopilotPane", () => {
     fireEvent.click(screen.getByRole("button", { name: /Autonomy$/ }));
     fireEvent.click(screen.getByRole("radio", { name: "Rules" }));
     await waitFor(() => expect(apiMock.updateMailCopilotSettings).toHaveBeenLastCalledWith(pane.id, expect.objectContaining({ settings: expect.objectContaining({ autonomy: "RULES" }) })));
-    expect(screen.getByText(/Acts alone only under rules you approved/)).toBeTruthy();
+    expect(screen.getByText(/replies alone only under rules you approved/)).toBeTruthy();
     fireEvent.click(screen.getByRole("switch", { name: "Telegram" }));
     await waitFor(() => expect(apiMock.updateMailCopilotSettings).toHaveBeenLastCalledWith(pane.id, expect.objectContaining({ settings: expect.objectContaining({ notifications: expect.objectContaining({ telegram: true }) }) })));
     // The pane row never carries the CLI account (the Browser Host parses pane rows with its start-up contracts).
@@ -371,15 +371,14 @@ describe("copilot kit for Mail Copilot", () => {
     expect(copilotLaunchDecision(null, options)).toEqual({ open: false, preselect: null, notice: null });
   });
 
-  it("opens the Mail Copilot launch dialog on Claude Code with the gateway pool first, remembers under settings.mailCopilot and creates the pane", async () => {
+  it("opens the Mail Copilot launch dialog on Claude Code and the gateway pool, remembers under settings.mailCopilot and creates the pane", async () => {
     const onCreate = vi.fn(async () => undefined);
     render(<CopilotLaunchDialog kind={MAIL_COPILOT_KIND} onClose={() => undefined} onCreate={onCreate} />);
     expect(screen.getByRole("dialog", { name: "New Mail Copilot" })).toBeTruthy();
     expect(screen.getByText("Choose the agent that handles your mail")).toBeTruthy();
     await waitFor(() => expect(screen.getByRole("radio", { name: /Claude Code CLI/ }).getAttribute("aria-checked")).toBe("true"));
-    const select = await screen.findByRole("combobox", { name: "Claude Code account" }) as HTMLSelectElement;
-    expect(Array.from(select.options).map((option) => option.value)).toEqual(["space-gateway", "main"]);
-    expect(select.value).toBe("space-gateway");
+    expect(screen.queryByRole("combobox", { name: "Claude Code account" })).toBeNull();
+    await waitFor(() => expect((screen.getByRole("button", { name: "Open with Claude Code" }) as HTMLButtonElement).disabled).toBe(false));
     await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Open with Claude Code" })); });
     await waitFor(() => expect(onCreate).toHaveBeenCalledWith({ terminalRuntimeId: "cli:claude", accountProfileId: "space-gateway" }));
     expect(apiMock.updateUserSettings).toHaveBeenCalledWith({ mailCopilot: { runtimeId: "cli:claude", accountProfileId: "space-gateway", askOnLaunch: false } });

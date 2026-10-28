@@ -2,44 +2,126 @@ import { execFile } from "./safe-child-process.js";
 import { createConnection } from "node:net";
 import { basename, dirname, join } from "node:path";
 import { promisify } from "node:util";
-import type { AgentRuntime, ImportConfigResult } from "@space/contracts";
+import { createNousTurnReader, type AgentRuntime, type ImportConfigResult, type NousTurnEvent, type NousTurnResult } from "@space/contracts";
 import type { CliAuthCapture } from "@space/runtime";
-import { parseCredentialStatus, type CliCredentialStatusReader } from "./cli-runtimes.js";
+import { parseCredentialStatus, type CliCredentialCommandExecutor, type CliCredentialStatusReader } from "./cli-runtimes.js";
 import type { SpaceApiConfig } from "./config.js";
+import { openCodeRunAnswer } from "./room-agent-model-resolver.js";
 
 const execFileAsync = promisify(execFile);
 const maxFileBytes = 64 * 1024;
 
-type CredentialAction = "credential-status" | "credential-install";
+// inspect-env lists a wrapper's operations; select-free-model applies an owner's free OpenCode model pick (1.1.8).
+type CredentialAction = "credential-status" | "credential-install" | "credential-smoke" | "credential-observation" | "opencode-text" | "opencode-models" |
+  "inspect-env" | "select-free-model" | "check-free-model" | "agent-tools" | "agent-chat";
 interface CredentialActionResult { exitCode: number; stdout: string }
+// argument: the one checked value of select-free-model (the agent refuses it on every other action).
+interface CredentialRequestOptions { timeoutMs?: number; signal?: AbortSignal; argument?: string }
+// The public core image has no OpenCode (decision B, 1.1.7): these run the CLI container's `opencode --standalone`.
+const openCodeWrapper = "opencode-vscode-parity";
+// Nor Claude Code: Nous's turns run the CLI container's, on the owner's own login (operator decision 2026-10-27, B+C3).
+export const CLAUDE_CLI_WRAPPER = "claude-vscode-parity";
+const NOUS_AGENT_TURN_MS = 21 * 60_000;
+
+/** One Nous turn for the CLI container's Claude Code (deploy/docker/claude-agent.mjs checks it again). */
+export interface NousAgentRequest {
+  model: string;
+  effort: string;
+  system: string;
+  prompt: string;
+  mcpUrl: string;
+  mcpToken: string;
+  maxTurns: number;
+  shell: boolean;
+  stream: boolean;
+  fallbackModel?: string | null;
+}
 
 /** Runs a wrapper's fixed credential action where the CLIs and their logins live. */
 export interface CredentialHost {
-  run(commandPath: string, action: CredentialAction, input?: string): Promise<CredentialActionResult>;
+  run(commandPath: string, action: CredentialAction, input?: string, options?: CredentialRequestOptions): Promise<CredentialActionResult>;
   /** The badge probe: the wrapper's `credential-status`, read in the CLI container. */
   status: CliCredentialStatusReader;
+  /** The wrapper's `credential-smoke` or `credential-observation` in the CLI container, shaped like the local executor. */
+  execute: CliCredentialCommandExecutor;
+  /** `runOpenCodeText` in the CLI container (throwaway home, never the panes' store). */
+  openCodeText(modelId: string, prompt: string, timeoutMs: number, signal?: AbortSignal): Promise<string | null>;
+  /** OpenCode 2's `/api/model` answer for one provider, read in the CLI container. */
+  openCodeModels(provider: string): Promise<string>;
+  /** One Nous turn: headless Claude Code with Nous's tools only, its draft streamed to `onEvent` (the wrapper's `agent-tools`). */
+  claudeAgentTools(request: NousAgentRequest, signal: AbortSignal, onEvent?: (event: NousTurnEvent) => void): Promise<NousTurnResult>;
+  /** One answer with no tool (the pane board; the wrapper's `agent-chat`). */
+  claudeAgentChat(input: { model: string; effort: string; prompt: string }, signal?: AbortSignal): Promise<string>;
   close(): Promise<void>;
 }
 
 /** One request per connection: a JSON line in, a JSON line out. */
-function credentialAgentRequest(socketPath: string, body: Record<string, string>): Promise<CredentialActionResult> {
+function credentialAgentRequest(socketPath: string, body: Record<string, string>, options: CredentialRequestOptions = {}): Promise<CredentialActionResult> {
   return new Promise((resolve, reject) => {
     let answer = "";
     const socket = createConnection(socketPath, () => socket.end(`${JSON.stringify(body)}\n`));
+    const onAbort = () => socket.destroy(new Error("The CLI credential agent request was aborted."));
+    if (options.signal?.aborted) onAbort();
+    options.signal?.addEventListener("abort", onAbort, { once: true });
     socket.setEncoding("utf8");
-    socket.setTimeout(130_000, () => socket.destroy(new Error("The CLI credential agent did not answer.")));
+    socket.setTimeout(options.timeoutMs ?? 130_000, () => socket.destroy(new Error("The CLI credential agent did not answer.")));
     socket.on("data", (chunk: string) => {
       answer += chunk;
-      if (answer.length > 64 * 1024) socket.destroy(new Error("The CLI credential agent answer is too large."));
+      // A model list or an OpenCode answer is larger than a credential line.
+      if (answer.length > 4 * 1024 * 1024) socket.destroy(new Error("The CLI credential agent answer is too large."));
     });
     socket.on("error", reject);
     socket.on("close", () => {
+      options.signal?.removeEventListener("abort", onAbort);
       try {
         const result = JSON.parse(answer) as CredentialActionResult;
         if (typeof result.exitCode === "number" && typeof result.stdout === "string") resolve(result);
         else reject(new Error("The CLI credential agent answer is invalid."));
       } catch (error) {
         reject(error);
+      }
+    });
+  });
+}
+
+/**
+ * A streamed action: the request line goes out and our side stays open (ending it stops the action); the wrapper's stdout comes
+ * back as it is written, then RS (\x1e) and the end record {exitCode, stderr}. `onChunk` returns an error that ends the action.
+ */
+function credentialAgentStream(socketPath: string, body: Record<string, string>, options: { timeoutMs: number; signal: AbortSignal },
+  onChunk: (chunk: string) => string | null): Promise<{ exitCode: number; stderr: string }> {
+  return new Promise((resolve, reject) => {
+    let trailer: string | null = null;
+    let head = "";
+    let failure: Error | null = null;
+    const socket = createConnection(socketPath, () => socket.write(`${JSON.stringify(body)}\n`));
+    const fail = (error: Error) => { failure ??= error; socket.destroy(); };
+    const onAbort = () => fail(new Error("The turn was stopped."));
+    if (options.signal.aborted) onAbort();
+    options.signal.addEventListener("abort", onAbort, { once: true });
+    socket.setEncoding("utf8");
+    socket.setTimeout(options.timeoutMs, () => fail(new Error("The CLI container gave no answer in time.")));
+    socket.on("data", (chunk: string) => {
+      if (trailer !== null) { trailer += chunk; return; }
+      if (head.length < 512) head += chunk.slice(0, 512 - head.length);
+      // The wrapper's stdout is JSON lines: a raw RS starts the end record.
+      const end = chunk.indexOf("\x1e");
+      const error = onChunk(end < 0 ? chunk : chunk.slice(0, end));
+      if (error) fail(new Error(error));
+      else if (end >= 0) trailer = chunk.slice(end + 1);
+    });
+    socket.on("error", (error) => { failure ??= error; });
+    socket.on("close", () => {
+      options.signal.removeEventListener("abort", onAbort);
+      if (failure) { reject(failure); return; }
+      try {
+        const record = JSON.parse(trailer ?? head) as { exitCode?: unknown; stderr?: unknown; stdout?: unknown };
+        if (typeof record.exitCode !== "number") throw new Error("invalid");
+        // No end record: the agent refused the request (busy, bad request) before it started.
+        if (trailer === null) reject(new Error(`The CLI container could not start the turn (${String(record.stdout ?? "").trim() || `exit ${record.exitCode}`}).`));
+        else resolve({ exitCode: record.exitCode, stderr: typeof record.stderr === "string" ? record.stderr : "" });
+      } catch {
+        reject(new Error("The CLI credential agent answer is invalid."));
       }
     });
   });
@@ -53,13 +135,43 @@ function credentialAgentRequest(socketPath: string, body: Record<string, string>
 export function createPublicCredentialHost(config: Pick<SpaceApiConfig, "publicDistribution" | "cliEnabled" | "cliHostSocketPath">): CredentialHost | null {
   if (!config.publicDistribution || !config.cliEnabled) return null;
   const socketPath = join(dirname(config.cliHostSocketPath), "credentials.sock");
-  const run = (commandPath: string, action: CredentialAction, input?: string) =>
-    credentialAgentRequest(socketPath, { command: basename(commandPath), action, ...(input === undefined ? {} : { input }) });
+  const run = (commandPath: string, action: CredentialAction, input?: string, options?: CredentialRequestOptions) =>
+    credentialAgentRequest(socketPath, { command: basename(commandPath), action, ...(input === undefined ? {} : { input }),
+      ...(options?.argument === undefined ? {} : { argument: options.argument }) }, options);
   return {
     run,
     status: async (commandPath) => {
       const answer = await run(commandPath, "credential-status").catch(() => null);
       return answer?.exitCode === 0 ? parseCredentialStatus(answer.stdout) : null;
+    },
+    execute: async (commandPath, args, options) => {
+      const action = args.length === 1 && (args[0] === "credential-smoke" || args[0] === "credential-observation") ? args[0] : null;
+      if (!action) throw new Error("Only credential-smoke and credential-observation run through the CLI credential agent.");
+      // The agent's own limit stops the wrapper; ours only has to outlast it.
+      const answer = await run(commandPath, action, undefined, { timeoutMs: options.timeout + 10_000 });
+      if (answer.exitCode !== 0) throw Object.assign(new Error(`${action} failed in the CLI container.`), { code: answer.exitCode });
+      return { stdout: answer.stdout.slice(0, options.maxBuffer) };
+    },
+    openCodeText: async (modelId, prompt, timeoutMs, signal) => {
+      const answer = await run(openCodeWrapper, "opencode-text", JSON.stringify({ modelId, prompt, timeoutMs }), { timeoutMs: timeoutMs + 10_000, signal }).catch(() => null);
+      return answer ? openCodeRunAnswer(answer.stdout) : null;
+    },
+    openCodeModels: async (provider) => {
+      const answer = await run(openCodeWrapper, "opencode-models", JSON.stringify({ provider }));
+      if (answer.exitCode !== 0) throw new Error("The CLI container could not list OpenCode models.");
+      return answer.stdout;
+    },
+    claudeAgentTools: async (request, signal, onEvent) => {
+      const reader = createNousTurnReader(request.stream, onEvent);
+      const { fallbackModel, ...rest } = request;
+      const input = JSON.stringify({ ...rest, ...(fallbackModel ? { fallbackModel } : {}) });
+      const end = await credentialAgentStream(socketPath, { command: CLAUDE_CLI_WRAPPER, action: "agent-tools", input }, { timeoutMs: NOUS_AGENT_TURN_MS + 30_000, signal }, (chunk) => reader.push(chunk));
+      return reader.finish(end.exitCode, end.stderr);
+    },
+    claudeAgentChat: async (input, signal) => {
+      const answer = await run(CLAUDE_CLI_WRAPPER, "agent-chat", JSON.stringify(input), { timeoutMs: 620_000, signal });
+      if (answer.exitCode !== 0 || !answer.stdout.trim()) throw new Error("Claude Code in the CLI container gave no answer.");
+      return answer.stdout.trim();
     },
     close: async () => undefined
   };
@@ -110,7 +222,7 @@ export function createCliAuthTransfer(options: {
   readRuntimes(): Promise<AgentRuntime[]>;
   invalidateRuntimes(): void;
   warn(message: string): void;
-  credentialHost?: CredentialHost | null;
+  credentialHost?: Pick<CredentialHost, "run"> | null;
   /** Operator hosts: runs `<wrapper> credential-export` and returns its stdout. */
   exportThroughWrapper?(commandPath: string): Promise<string>;
 }) {

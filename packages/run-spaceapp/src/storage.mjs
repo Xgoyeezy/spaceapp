@@ -1,7 +1,8 @@
 import { Writable } from "node:stream";
-import { readdir, stat } from "node:fs/promises";
+import { readdir, readFile, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { composeCommand, profileRuntimeSettings, PROFILE_REQUIREMENTS } from "./index.mjs";
+import { localImageRefs } from "./image-lock.mjs";
 
 const GiB = 1024 ** 3;
 const MiB = 1024 ** 2;
@@ -84,31 +85,50 @@ async function registryLayers(image, arch, fetch) {
   return { layers: manifest.layers, diffIds: config.rootfs?.diff_ids };
 }
 
+// The digests the existing installation pinned (its runtime.env), so its by-digest images count as cached.
+async function installedImageDigests(root, version) {
+  let text = "";
+  try { text = await readFile(join(root, "runtime.env"), "utf8"); } catch { return {}; }
+  if (!text.split("\n").includes(`SPACEAPP_IMAGE_TAG=${version}`)) return {};
+  const digests = {};
+  for (const [, type, digest] of text.matchAll(/^SPACEAPP_(CORE|CLI|BROWSER)_IMAGE_DIGEST=@(sha256:[a-f0-9]{64})$/gm)) digests[type.toLowerCase()] = digest;
+  return digests;
+}
+
 export async function inspectStoragePlan({ root, config, existingConfig, resources, execute, operation, fetch = globalThis.fetch }) {
   const dockerInfo = await captureProbe(execute, { command: "docker", args: ["info", "--format", "{{json .}}"] });
   let engine = null;
   try { engine = JSON.parse(dockerInfo); } catch { /* Conservative reserve when the engine is unavailable. */ }
   const cachedLayers = new Set();
   if (engine && existingConfig) {
+    const existingDigests = await installedImageDigests(root, existingConfig.version);
     for (const type of ["core", "cli", "browser"]) {
-      const output = await captureProbe(execute, { command: "docker", args: ["image", "inspect", "--format", "{{json .RootFS.Layers}}", `ghcr.io/oll4com/spaceapp-${type}:${existingConfig.version}`] });
-      try { for (const layer of JSON.parse(output)) cachedLayers.add(layer); } catch {}
+      for (const ref of localImageRefs(type, existingConfig.version, existingDigests[type])) {
+        const output = await captureProbe(execute, { command: "docker", args: ["image", "inspect", "--format", "{{json .RootFS.Layers}}", ref] });
+        try { for (const layer of JSON.parse(output)) cachedLayers.add(layer); break; } catch {}
+      }
     }
   }
   const settings = profileRuntimeSettings(config.profile);
   const images = [
     ["core", `ghcr.io/oll4com/spaceapp-core:${config.version}`],
     ["cli", `ghcr.io/oll4com/spaceapp-cli:${config.version}`],
-    ["postgres", "pgvector/pgvector:0.8.3-pg17-trixie@sha256:3a3147ccd9a0aee952bb69e1acea1eb3cc7183544185b87a662f872cfa47ae3b"],
+    ["postgres", "pgvector/pgvector:0.8.7-pg17-trixie@sha256:7a7e9f22015b67edb4bef5c59daeebcd7e74bfa570df6ce60ae01237c8648a84"],
     ...(settings.browserEnabled ? [["browser", `ghcr.io/oll4com/spaceapp-browser:${config.version}`]] : []),
-    ...(settings.temporalEnabled ? [["temporal", "temporalio/auto-setup:1.29.1@sha256:5b3502a3b685f9eff1b925af90c57c9e3dbeccbef367cc28a2a9712c63379312"]] : []),
+    ...(settings.temporalEnabled ? [["temporal", "temporalio/auto-setup:1.29.7@sha256:f14912b699cf73015ad5c4fc18d522d4b014db90e794039214dfb7c022c2644f"]] : []),
     ...(config.companionsEnabled ? [["companion", "ghcr.io/soju06/codex-lb:1.22.0@sha256:3010b3c5567522fbb6e7225bdbe963fa1038c2584641fcec69094875e40e36e5"], ["companion", "ghcr.io/oll4com/headroom-codex-lb:code-5b15319@sha256:491c856a8bd8205d45e980370c3ffe7ffe438b6444216c36ac7c60ad24308aa2"]] : [])
   ];
   let missingImageBytes = 0;
   const missingImages = [];
   let sharedLayersEstimated = false;
   for (const [type, image] of images) {
-    const cached = await captureProbe(execute, { command: "docker", args: ["image", "inspect", "--format", "{{.Id}}", image] });
+    // SpaceApp images pulled by digest have no local version tag: look them up by their pinned digest as well.
+    const refs = ["core", "cli", "browser"].includes(type) ? localImageRefs(type, config.version) : [image];
+    let cached = null;
+    for (const ref of refs) {
+      cached = await captureProbe(execute, { command: "docker", args: ["image", "inspect", "--format", "{{.Id}}", ref] });
+      if (/^sha256:[a-f0-9]{64}$/.test(cached ?? "")) break;
+    }
     if (!/^sha256:[a-f0-9]{64}$/.test(cached ?? "")) {
       missingImages.push(image);
       let reserve = imageReserve[type] ?? GiB;

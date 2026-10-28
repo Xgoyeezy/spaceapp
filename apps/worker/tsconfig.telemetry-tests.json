@@ -1,5 +1,5 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": { "rootDir": "../..", "noEmit": true },
-  "include": ["tests/worker-telemetry.test.ts", "tests/support/telemetry-workflows.ts"]
+  "include": ["tests/worker-telemetry.test.ts", "tests/memory-worker-lifecycle.test.ts", "tests/support/telemetry-workflows.ts"]
 }

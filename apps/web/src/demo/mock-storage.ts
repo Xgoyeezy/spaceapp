@@ -82,12 +82,17 @@ export function installMockStorage(): void {
     "space.uiTheme.v1": "modern", "space.modern.appearance.mode.v1": "dark",
     "space.room.theme": "graphite", "space.roomFocusMode": "false", "space.roomsRailHidden": "false",
     "space.roomToolbar.hidden.v1": "true",
+    // Nous runs only on the maker's own instance; its dock starts hidden in the public demo.
+    "space:docks-hidden:v1": JSON.stringify(["nous"]),
     "space.dateTime.settings": JSON.stringify({ timeZone: "UTC", timeFormat: "24h", dateFormat: "DD/MM/YYYY" })
   };
-  if (new URLSearchParams(location.search).get("showcase") === "1") { defaults["space.room.theme"] = "motion"; defaults["space.uiTheme.v1"] = "motion"; }
+  const showcase = new URLSearchParams(location.search).get("showcase") === "1";
+  if (showcase) { defaults["space.room.theme"] = "motion"; defaults["space.uiTheme.v1"] = "motion"; }
   for (const [key, value] of Object.entries(defaults)) if (local.getItem(key) === null) local.setItem(key, value);
-  session.setItem("space.selectedRoomId", "room:demo-launch");
-  session.setItem("space.selectedRoomId.user:demo-user", "room:demo-launch");
+  // The public demo opens on Research Lab (operator request 2026-10-27); the guided showcase keeps its first room.
+  const firstRoom = showcase ? "room:demo-launch" : "room:demo-research";
+  session.setItem("space.selectedRoomId", firstRoom);
+  session.setItem("space.selectedRoomId.user:demo-user", firstRoom);
   session.setItem("space.dismissedStorageWarning", "DEMO MODE — Everything is simulated locally. No production service is connected.");
   session.removeItem("space.selectedPaneId");
   const deny = () => { throw new TypeError("This demo uses local simulated services."); };

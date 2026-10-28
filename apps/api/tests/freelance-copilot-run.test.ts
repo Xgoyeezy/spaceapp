@@ -3,12 +3,16 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { InMemorySpaceStore, SpaceEventBus } from "@space/runtime";
+import { InMemoryFreelanceCopilotRepository } from "@space/db";
 import type { Event, FreelanceRun, Pane } from "@space/contracts";
 import { buildCliAgentBootstrapMarkdown, buildFreelanceCopilotPersonaMarkdown } from "../src/agent-bootstrap.js";
 import { createApp } from "../src/app.js";
 import { cliBrowserBridgeTokenHeader, issueCliBrowserBridgeToken } from "../src/cli-browser-bridge.js";
 import { isCliBridgeRoutePath } from "../src/cli-bridge-paths.js";
 import { getApiConfig } from "../src/config.js";
+import { createCopilotRunKick } from "../src/copilot-run-kick.js";
+import { createFreelanceCopilotService } from "../src/freelance-copilot/service.js";
+import type { RoomPaneObservation } from "../src/room-pane-control.js";
 import type { MailboxFactory } from "../src/job-apply/mailbox.js";
 
 vi.setConfig({ testTimeout: 30_000 });
@@ -29,8 +33,10 @@ async function fixture() {
   await chmod(wrapper, 0o755);
   const config = getApiConfig({
     SPACE_CLI_ENABLED: "true", SPACE_CLI_COMMAND_PATH: root, SPACE_CLI_HOST_SOCKET: join(root, "pane-host.sock"), SPACE_CLI_CODEX_CREDENTIAL_SMOKE: "true",
-    SPACE_CLI_WORKSPACE_ROOT: join(root, "workspaces"), SPACE_BROWSER_TOOL_BRIDGE_ENABLED: "true", SPACE_INTERNAL_API_TOKEN: "internal-token-for-freelance-copilot-tests", SPACE_ARTIFACT_ROOT: root
+    SPACE_CLI_WORKSPACE_ROOT: join(root, "workspaces"), SPACE_BROWSER_TOOL_BRIDGE_ENABLED: "true", SPACE_INTERNAL_API_TOKEN: "internal-token-for-freelance-copilot-tests", SPACE_ARTIFACT_ROOT: root,
+    SPACE_CONNECTOR_KEY_FILE: join(root, "connector.key")
   });
+  await writeFile(join(root, "connector.key"), "synthetic-connector-key-with-enough-length-0123456789\n");
   const store = new InMemorySpaceStore();
   const eventBus = new SpaceEventBus();
   const roomEvents: Event[] = [];
@@ -80,7 +86,8 @@ describe("freelance copilot run loop", () => {
       expect(started.json()).toMatchObject({ status: "RUNNING", kickoffSent: true, backlog: 1 });
       expect(kickoffs).toEqual([{ paneId: pane.id, runId: started.json().run.id }]);
       const state = (await app.inject({ method: "GET", url: `${cli}/state`, headers: agent })).json();
-      expect(state.channels.UPWORK).toMatchObject({ effectiveAutonomy: "FULL", alias: "upwork@example.invalid" });
+      expect(state.channels.UPWORK).toMatchObject({ effectiveAutonomy: "FULL", signIn: "GOOGLE", alias: null });
+      expect(state.channels.CONTRA).toMatchObject({ signIn: "EMAIL", alias: "contra@example.invalid" });
       expect(state.accounts.map((account: { channel: string }) => account.channel)).toEqual(["UPWORK", "CONTRA", "FIVERR", "TOPTAL", "ARC", "BRAINTRUST"]);
 
       const brief = (await app.inject({ method: "POST", url: `${cli}/next`, headers: agent, payload: { waitMs: 0 } })).json();
@@ -117,6 +124,55 @@ describe("freelance copilot run loop", () => {
     }
   });
 
+  it("types the kickoff again into a RUNNING run's idle CLI while a brief waits, never into a draft, a busy CLI or a usage limit (daily upgrade 2026-10-27 round 2)", async () => {
+    const store = new InMemorySpaceStore();
+    const room = store.createRoom({ name: "Freelance", initialPaneCount: 0 }, "trace:t", "user:owner");
+    const pane = store.createPane({ roomId: room.id, title: "Freelance Copilot", mode: "FREELANCE_COPILOT", terminalRuntimeId: "cli:claude" });
+    const service = createFreelanceCopilotService({ repository: new InMemoryFreelanceCopilotRepository(), crypto: {} as never, mailboxes });
+    const { run } = await service.startRun("user:owner", pane.id);
+    let screen: Partial<RoomPaneObservation> = { sessionId: "cli_session:1", promptFingerprint: "f", state: "IDLE", usageLimited: false, text: "✻ Done.\n────\n❯ \n────" };
+    let clock = 1_000_000;
+    const kickoffs: string[] = [];
+    const kick = createCopilotRunKick({ mode: "FREELANCE_COPILOT", store, log: { warn: () => undefined }, now: () => clock, paused: (candidate) => service.settingsOf(candidate).paused,
+      runView: (owner, candidate) => service.runView(owner, candidate), inspect: async () => screen as RoomPaneObservation, kickoff: async (_pane, kicked) => { kickoffs.push(kicked.id); } });
+    expect(await kick.tick()).toBe(0);
+    await service.createBrief("user:owner", pane, { text: "Find two React leads on Upwork." });
+    expect(await kick.tick()).toBe(1);
+    expect(kickoffs).toEqual([run.id]);
+    clock += 61_000;
+    expect(await kick.tick()).toBe(0);
+    await service.createBrief("user:owner", pane, { text: "And one on Contra." });
+    for (const busy of [{ text: "✻ Done.\n────\n❯ half a sentence\n────" }, { state: "RUNNING" as const }, { usageLimited: true }]) {
+      screen = { ...screen, ...busy };
+      expect(await kick.tick()).toBe(0);
+      screen = { sessionId: "cli_session:1", promptFingerprint: "f", state: "IDLE", usageLimited: false, text: "✻ Done.\n────\n❯ \n────" };
+    }
+    expect(await kick.tick()).toBe(1);
+    await service.pauseRun("user:owner", pane.id);
+    clock += 11 * 60_000;
+    expect(await kick.tick()).toBe(0);
+    expect(kickoffs).toEqual([run.id, run.id]);
+  });
+
+  it("shares the operator's bookmarks with the agent, saved in the pane's own account", async () => {
+    const { app, pane, headers, agent, outsider } = await fixture();
+    try {
+      const saved = await app.inject({ method: "POST", url: `${cli}/bookmarks`, headers: agent, payload: { url: "https://www.upwork.com/freelancers/~01", title: "Upwork profile" } });
+      expect(saved.json().bookmark, saved.body).toMatchObject({ title: "Upwork profile", profileId: null, accountLabel: null });
+      // One list per owner: the Marketing Copilot's Bookmarks tab shows the same bookmark.
+      expect((await app.inject({ method: "GET", url: "/api/marketing-copilot/bookmarks", headers })).json().bookmarks).toEqual([expect.objectContaining({ id: saved.json().bookmark.id })]);
+      expect((await app.inject({ method: "GET", url: `${cli}/bookmarks`, headers: agent })).json().bookmarks).toHaveLength(1);
+      expect((await app.inject({ method: "GET", url: `${cli}/bookmarks`, headers: outsider })).statusCode).toBe(409);
+      expect((await app.inject({ method: "POST", url: `${cli}/bookmarks/mktbm:missing000/open`, headers: agent, payload: {} })).statusCode).toBe(404);
+      expect((await app.inject({ method: "DELETE", url: `${cli}/bookmarks/mktbm:missing000`, headers: agent, payload: {} })).json()).toEqual({ deleted: false });
+      // The operator's Bookmarks tab opens it in a Freelance pane too: past the pane check, this runtime has no browser session.
+      const opened = await app.inject({ method: "POST", url: `/api/panes/${encodeURIComponent(pane.id)}/marketing-copilot/bookmarks/${encodeURIComponent(saved.json().bookmark.id)}/open`, headers, payload: {} });
+      expect(opened.json().error.message, opened.body).toContain("Active browser session");
+    } finally {
+      await app.close();
+    }
+  });
+
   it("skips session authentication only for the bridge routes, and gives the agent its persona and skill", async () => {
     expect(isCliBridgeRoutePath("/api/cli/freelance-copilot/send/begin")).toBe(true);
     expect(isCliBridgeRoutePath("/api/cli/freelance-copilotx/state")).toBe(false);
@@ -129,6 +185,8 @@ describe("freelance copilot run loop", () => {
     expect(bootstrap).toContain("space_freelance_client_ready");
     const skill = await readFile(new URL("../../../agent-skills/space-freelance-copilot/SKILL.md", import.meta.url), "utf8");
     expect(skill).toContain("name: space-freelance-copilot");
+    expect(skill).toContain("## Demo-first proposals (score 70+)");
+    expect(persona).toContain("demo-first proposal");
     await expect(readFile(new URL("../../../agent-skills/space-freelance-copilot/references/channels.md", import.meta.url), "utf8")).resolves.toContain("## Upwork");
   });
 });

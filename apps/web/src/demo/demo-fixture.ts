@@ -577,7 +577,7 @@ export function createDemoFixture(): DemoFixture {
     pane({ id: "pane:demo-browser", roomId: rooms[0]!.id, title: "Preview Browser", mode: "BROWSER", order: 2 }),
     pane({ id: "pane:demo-review", roomId: rooms[0]!.id, title: "Release Review", mode: "REVIEW", order: 3 }),
     pane({ id: "pane:demo-swarm", roomId: rooms[0]!.id, title: "Launch Swarm", mode: "SWARM", order: 4 }),
-    pane({ id: "pane:demo-design", roomId: rooms[0]!.id, title: "Design Notes", mode: "DESIGN", order: 5 }),
+    pane({ id: "pane:demo-design", roomId: rooms[0]!.id, title: "Design Notes", mode: "CODE", order: 5 }),
     pane({ id: "pane:demo-root", roomId: rooms[0]!.id, title: "Root CLI", mode: "TERMINAL", order: 6, terminalRuntimeId: "cli:root", isMinimized: true }),
     pane({ id: "pane:demo-research-chat", roomId: rooms[1]!.id, title: "Research Brief", mode: "CHAT", order: 0 }),
     pane({ id: "pane:demo-research-browser", roomId: rooms[1]!.id, title: "Sources", mode: "BROWSER", order: 1 }),
@@ -698,7 +698,7 @@ export function createDemoFixture(): DemoFixture {
       roomId: rooms[0]!.id,
       paneId: "pane:demo-chat",
       paneTitle: "Product Copilot",
-      occurrenceCount: 1,
+      dependsOn: [], dueAt: null, waitsOn: null, occurrenceCount: 1,
       characterCount: Array.from(clipboardSafetyText).length,
       createdAt: DEMO_FIXED_AT,
       lastUsedAt: DEMO_FIXED_AT
@@ -754,7 +754,7 @@ export function createDemoFixture(): DemoFixture {
       roomId: rooms[0]!.id,
       paneId: "pane:demo-chat",
       paneTitle: "Product Copilot",
-      occurrenceCount: 1,
+      dependsOn: [], dueAt: null, waitsOn: null, occurrenceCount: 1,
       characterCount: 98,
       createdAt: DEMO_FIXED_AT,
       lastUsedAt: DEMO_FIXED_AT

@@ -105,3 +105,24 @@ attachment, room retention, control, readiness, polling or deployment.
 Keep changes reviewable and include the exact commands and limitations of your
 verification. Never include credentials, private transcripts or local runtime
 state in a contribution.
+
+## License of contributions
+
+SpaceApp is licensed under the [MIT License](LICENSE). Contributions are
+accepted under the same license (inbound = outbound): by submitting a
+contribution you license it to everyone under the MIT License. You keep the
+copyright of your contribution.
+
+Every commit must carry a `Signed-off-by:` line with your real name and email,
+which certifies the [Developer Certificate of Origin 1.1](https://developercertificate.org/):
+that you wrote the contribution or have the right to submit it under the MIT
+License. `git commit -s` adds the line. There is no separate contributor
+license agreement.
+
+## Reviews and payment
+
+Pull requests are reviewed and merged by the maintainers named in the public repository's `MAINTAINERS`
+file. A merged pull request stays in every later release with its author.
+
+Contributions are voluntary; payment applies only to issues labelled 💎 Bounty, under the terms posted on
+that issue.

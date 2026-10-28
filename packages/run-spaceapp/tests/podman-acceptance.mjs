@@ -94,7 +94,7 @@ try {
     assert.equal(bundle.engine.rootless, true); assert.equal(bundle.engine.cgroupVersion, "v2");
     console.log(JSON.stringify({ workspaceOwnership: true, readonlyMount: true, providerInstall: true, repair: true, restart: true, restore: true, uninstallRetainsData: true, supportBundle: true }));
   }
-  await cli("uninstall", "--purge-data", "--non-interactive", "--answers", '{"confirm":true,"purge":"DELETE"}');
+  await cli("uninstall", "--purge-data", "--non-interactive", "--answers", '{"confirm":true,"purgeConfirm":"DELETE"}');
   console.log(JSON.stringify({ platform: process.platform, profile, engine: "podman", runtimeVersion: upgradeVersion ?? runtimeVersion ?? "launcher-default", ready: true, backup: true, purge: true }));
 } finally {
   // The install may have failed before committing config. Remove only resources

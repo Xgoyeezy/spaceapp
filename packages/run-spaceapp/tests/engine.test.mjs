@@ -99,4 +99,66 @@ test("answers select Podman on install and every later lifecycle command uses it
   const before = calls.length;
   await assert.rejects(run(["install", "--engine", "docker"], { ...options, stdin: Readable.from([]) }), /Switching engines is refused/);
   assert.equal(calls.length, before);
+  assert.equal(await run(["uninstall", "--purge-data", "--non-interactive", "--answers", '{"confirm":true,"purgeConfirm":"DELETE"}'], { ...options, stdin: Readable.from([]) }), 0, output);
+  assert.ok(calls.at(-1).args.includes("--volumes"));
+});
+
+test("Podman accounts retain isolated workspaces, host ownership and SELinux labels", () => {
+  for (const engine of ["docker", "podman"]) {
+    const config = createDefaultConfig({ version: "1.1.9", profile: "small", engine });
+    config.users = [{ id: "user:Bob12345", workspaces: [
+      { id: "rw-abcdef12", hostPath: "/tmp/bob-rw", containerPath: "/workspaces/bob-rw", readOnly: false },
+      { id: "ro-abcdef12", hostPath: "/tmp/bob-ro", containerPath: "/workspaces/bob-ro", readOnly: true }
+    ] }];
+    const compose = renderWorkspaceCompose(config);
+    const service = compose.slice(compose.indexOf("  spaceapp-cli-bob12345-"), compose.indexOf("\nvolumes:"));
+    assert.match(service, /read_only: false/);
+    assert.match(service, /read_only: true/);
+    assert.doesNotMatch(service, /- spaceapp-cli-state:|\.\/secrets\/providers:|chown|:U|label=disable/);
+    if (engine === "podman") {
+      assert.match(service, /user: "0:0"\n    userns_mode: "keep-id:uid=10001,gid=10001"/);
+      assert.equal((service.match(/selinux: z/g) ?? []).length, 2);
+      assert.equal((service.match(/create_host_path: true/g) ?? []).length, 2);
+      assert.match(service, /\.\/secrets\/users\/[^/]+\/providers:\/run\/spaceapp-secrets\/providers:ro,z/);
+      assert.match(compose, /\.\/cli-hosts.json:\/etc\/spaceapp\/cli-hosts.json:ro,z/);
+      const init = renderHostAccessCompose(config).split("  codex-sessions-init:")[1];
+      assert.ok(init, "the session initializer must share the app's UID mapping");
+      assert.match(init, /userns_mode: "keep-id:uid=10001,gid=10001"/);
+      assert.doesNotMatch(init, /volumes:/, "retain the initializer's existing named-volume mounts");
+    } else {
+      assert.doesNotMatch(compose, /keep-id|selinux: z|:ro,z/);
+    }
+  }
+});
+
+test("Podman validates each account's workspace before up/run but still permits down", async t => {
+  const root = await mkdtemp(join(tmpdir(), "spaceapp-user-workspace-"));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const path = join(root, "missing");
+  const config = { workspaces: [], users: [{ workspaces: [{ hostPath: path }] }] };
+  const calls = [];
+  const execute = executeWithContainerEngine(async spec => { calls.push(spec); return 0; }, "podman", { workspaceConfig: async () => config });
+  for (const action of ["up", "run"]) {
+    await assert.rejects(execute({ command: "docker", args: ["compose", action] }), /Registered workspace must be an existing directory/);
+  }
+  assert.equal(calls.length, 0);
+  await writeFile(path, "not a directory");
+  await assert.rejects(execute({ command: "podman", args: ["compose", "up"] }), /Registered workspace must be an existing directory/);
+  assert.equal(await execute({ command: "docker", args: ["compose", "down"] }), 0);
+  await rm(path);
+  await mkdir(path);
+  assert.equal(await execute({ command: "docker", args: ["compose", "up"] }), 0);
+  assert.ok(calls.every(spec => spec.command === "podman"));
+});
+
+test("bundled and optional providers target the requested account with either engine", () => {
+  for (const engine of ["docker", "podman"]) {
+    const options = { engine, service: "spaceapp-cli-bob12345-test" };
+    const bundled = composeCommand("installProvider", "/tmp/spaceapp-engine-unit", { ...options, provider: "opencode" });
+    assert.equal(bundled.command, engine);
+    assert.deepEqual(bundled.args.slice(-7), ["exec", "-T", "--user", "10001:10001", options.service, "opencode", "--version"]);
+    const optional = composeCommand("installProvider", "/tmp/spaceapp-engine-unit", { ...options, provider: "codex" });
+    assert.equal(optional.command, engine);
+    assert.deepEqual(optional.args.slice(-8), ["exec", "-T", "--user", "10001:10001", options.service, "node", "/app/deploy/docker/provider-install.mjs", "codex"]);
+  }
 });

@@ -42,7 +42,9 @@ export function executeWithContainerEngine(execute, engine, { workspaceConfig = 
   const adapted = async (spec, io) => {
     if (adapted.engine === "podman" && ["docker", "podman"].includes(spec.command)) {
       if (spec.args[0] === "compose" && (spec.args.includes("up") || spec.args.includes("run"))) {
-        for (const workspace of (await workspaceConfig())?.workspaces ?? []) {
+        const config = await workspaceConfig();
+        const workspaces = [...(config?.workspaces ?? []), ...(config?.users ?? []).flatMap(user => user.workspaces ?? [])];
+        for (const workspace of workspaces) {
           let exists = false;
           try { exists = (await stat(workspace.hostPath)).isDirectory(); }
           catch (error) { if (error.code !== "ENOENT" && error.code !== "ENOTDIR") throw error; }

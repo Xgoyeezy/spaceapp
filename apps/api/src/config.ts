@@ -84,6 +84,8 @@ export interface SpaceApiConfig {
   cliMaxRunningSessions: number | null;
   cliRootEnabled: boolean;
   cliAdminHostSocketPath: string;
+  /** Multi-user: JSON map of user id to that user's pane host socket (cli-user-hosts.ts). */
+  cliHostSocketsFile: string | null;
   cliCodexDefaultModel: string | null;
   cliCodexDefaultReasoningEffort: string | null;
   cliRuntimeCommands: Record<CliRuntimeKey, string>;
@@ -110,6 +112,17 @@ export interface SpaceApiConfig {
   memoryEmbeddingDimensions: number;
   memoryEmbeddingBaseUrl: string;
   memoryEmbeddingKeyFile: string | null;
+  /** The Design pane's Space Gateway key (`space-admin-action design-key`): image models only, a daily cost cap. */
+  designGatewayKeyFile: string;
+  /** The monitoring collector's scrape token for GET /api/metrics/scrape (root-provisioned; missing: the scrape is refused). */
+  metricsTokenFile: string;
+  /** The Video pane's engine files (one folder per pane; never /tmp) and its pinned tools (venv, models, auto-editor). */
+  videoWorkRoot: string;
+  videoToolsDir: string;
+  /** The Studio's source upload cap; nginx allows 500 MB. */
+  videoSourceMaxBytes: number;
+  /** The dedicated key that seals connector tokens and copilot mailbox passwords (hardening plan step 9). */
+  connectorKeyFile: string;
   memoryEmbeddingKeyName: string | null;
   memoryEmbeddingTimeoutMs: number;
   memoryGraphEnabled: boolean;
@@ -125,6 +138,8 @@ export interface SpaceApiConfig {
   voiceTranscriptionTimeoutMs: number;
   voiceTranscriptionMaxDurationMs: number;
   googleVoiceKeyFile: string | null;
+  /** Firebase service account key (JSON) for FCM pushes to the Android app; null keeps push off (dev). */
+  fcmServiceAccountFile: string | null;
   googleVoiceApiKey: string | null;
   googleVoiceBaseUrl: string;
   awsVoiceKeyFile: string | null;
@@ -146,6 +161,8 @@ export interface SpaceApiConfig {
   browserEvidenceChromePath: string;
   browserEvidenceArtifactRoot: string;
   browserEvidenceTargetOrigin: string;
+  /** Where a CLI container reaches this API (SPACE_CLI_API_BASE_URL, public compose: http://spaceapp-core:4911); null: the local one. */
+  cliApiBaseUrl: string | null;
   browserEvidenceTimeoutMs: number;
   appDiagnosticsRoot: string;
   maintenanceAutopilotStateFile: string;
@@ -159,6 +176,7 @@ export interface SpaceApiConfig {
   jobApplyRoot: string;
   browserSessionsDefaultUrl: string;
   browserSessionsTokenTtlMs: number;
+  browserStreamHostWatchMs: number;
   browserSessionsAudioEnabled: boolean;
   browserSessionsPulseServer: string;
   browserSessionsPulseSink: string;
@@ -172,6 +190,10 @@ export interface SpaceApiConfig {
   browserHostSocketPath: string;
   swarmExecutionEnabled: boolean;
   internalApiToken: string | null;
+  /** Signs the agents' bridge, Agent Files and control tokens; falls back to the internal token until it is set. */
+  agentTokenSecret?: string | null;
+  /** Space Gateway's admin credential; falls back to the internal token until both sides set it. */
+  gatewayAdminToken?: string | null;
   apiRateLimitMax: number;
   telegramSecretRoot: string;
   streamingSecretRoot: string;
@@ -256,8 +278,19 @@ function parseGatewayUrl(raw: string | undefined): string {
   return url.origin;
 }
 
+/** A public install's CLI container is another host on the compose network: Nous's MCP server is reached at this origin. */
+function parseCliApiBaseUrl(raw: string | undefined): string | null {
+  const value = raw?.trim();
+  if (!value) return null;
+  const url = new URL(value);
+  if ((url.protocol !== "http:" && url.protocol !== "https:") || url.username || url.password || url.pathname !== "/" || url.search || url.hash) {
+    throw new Error("SPACE_CLI_API_BASE_URL must be an http(s) origin.");
+  }
+  return url.origin;
+}
+
 export const optionalModuleIds = [
-  "games", "job-copilot", "mail-copilot", "marketing-copilot", "freelance-copilot", "channels", "telegram", "waitlist", "desktop-updates"
+  "games", "job-copilot", "mail-copilot", "marketing-copilot", "freelance-copilot", "design", "app-studio", "video", "security-copilot", "monitoring-copilot", "channels", "telegram", "waitlist", "desktop-updates"
 ] as const;
 export type OptionalModuleId = (typeof optionalModuleIds)[number];
 
@@ -332,6 +365,7 @@ export function getApiConfig(env: NodeJS.ProcessEnv): SpaceApiConfig {
     cliMaxRunningSessions: valid.SPACE_CLI_MAX_RUNNING_SESSIONS ?? null,
     cliRootEnabled: valid.SPACE_CLI_ROOT_ENABLED === "true",
     cliAdminHostSocketPath: valid.SPACE_CLI_ADMIN_HOST_SOCKET ?? "/run/space-admin-pane-host/pane-host.sock",
+    cliHostSocketsFile: env.SPACE_CLI_HOST_SOCKETS_FILE || null,
     cliCodexDefaultModel: env.SPACE_CLI_CODEX_DEFAULT_MODEL || null,
     cliCodexDefaultReasoningEffort: env.SPACE_CLI_CODEX_DEFAULT_REASONING_EFFORT || null,
     cliRuntimeCommands: configuredCliRuntimeCommands(env),
@@ -356,10 +390,22 @@ export function getApiConfig(env: NodeJS.ProcessEnv): SpaceApiConfig {
     mcpToolExecutionTimeoutMs: Number.parseInt(env.SPACE_MCP_TOOL_EXECUTION_TIMEOUT_MS ?? "10000", 10),
     memoryEmbeddingSmokeEnabled: env.SPACE_MEMORY_EMBEDDING_SMOKE_ENABLED === "true",
     memoryEmbeddingProvider: env.SPACE_MEMORY_EMBEDDING_PROVIDER || null,
-    memoryEmbeddingModel: env.SPACE_MEMORY_EMBEDDING_MODEL || null,
+    // Space Gateway's default is the local bge-m3 (on this server's CPU: no key, nothing leaves it; plan clipboard:o7SATwaOHqca).
+    // .env.example's text-embedding-3-small reads as that default there, so the switch needs no .env edit; other models override.
+    // shortcut: text-embedding-3-small through Space Gateway cannot be picked in .env any more; add an explicit override if wanted.
+    memoryEmbeddingModel: env.SPACE_MEMORY_EMBEDDING_PROVIDER === "codex-lb" && [undefined, "", "text-embedding-3-small"].includes(env.SPACE_MEMORY_EMBEDDING_MODEL)
+      ? "bge-m3" : env.SPACE_MEMORY_EMBEDDING_MODEL || null,
     memoryEmbeddingDimensions: Math.min(parsePositiveInt(env.SPACE_MEMORY_EMBEDDING_DIMENSIONS, 1536), 4096),
     memoryEmbeddingBaseUrl: env.SPACE_MEMORY_EMBEDDING_BASE_URL || "https://api.openai.com/v1",
     memoryEmbeddingKeyFile: env.SPACE_MEMORY_EMBEDDING_KEY_FILE || null,
+    designGatewayKeyFile: env.SPACE_DESIGN_GATEWAY_KEY_FILE || "/opt/spaceapp/secrets/space-design.key",
+    metricsTokenFile: env.SPACE_METRICS_TOKEN_FILE || "/opt/spaceapp/secrets/space-metrics.token",
+    // Next to the artifact root (stable /opt/spaceapp/var/video, dev /opt/spaceapp-dev/var/video): the dev API may write only under its own var.
+    videoWorkRoot: env.SPACE_VIDEO_WORK_ROOT || join(dirname(artifactRoot), "video"),
+    videoToolsDir: env.SPACE_VIDEO_TOOLS_DIR || "/opt/spaceapp/var/models/video",
+    videoSourceMaxBytes: Number.parseInt(env.SPACE_VIDEO_SOURCE_MAX_BYTES || "", 10) || 480 * 1024 * 1024,
+    // Dev never reads stable's key: it has its own under its var directory.
+    connectorKeyFile: env.SPACE_CONNECTOR_KEY_FILE || (env.SPACE_INSTANCE === "dev" ? "/opt/spaceapp-dev/var/connector/space-connector.key" : "/opt/spaceapp/secrets/space-connector.key"),
     memoryEmbeddingKeyName: env.SPACE_MEMORY_EMBEDDING_KEY_NAME || null,
     memoryEmbeddingTimeoutMs: Math.min(parsePositiveInt(env.SPACE_MEMORY_EMBEDDING_TIMEOUT_MS, 10000), 30000),
     memoryGraphEnabled: env.SPACE_MEMORY_GRAPH_ENABLED === "true",
@@ -375,6 +421,7 @@ export function getApiConfig(env: NodeJS.ProcessEnv): SpaceApiConfig {
     voiceTranscriptionTimeoutMs: Math.min(parsePositiveInt(env.SPACE_VOICE_TRANSCRIPTION_TIMEOUT_MS, 15000), 60000),
     voiceTranscriptionMaxDurationMs: Math.min(parsePositiveInt(env.SPACE_VOICE_TRANSCRIPTION_MAX_DURATION_MS, 60000), 5 * 60 * 1000),
     googleVoiceKeyFile: env.SPACE_GOOGLE_VOICE_KEY_FILE || env.SPACE_GEMINI_VOICE_KEY_FILE || null,
+    fcmServiceAccountFile: env.SPACE_FCM_SERVICE_ACCOUNT_FILE || null,
     googleVoiceApiKey: env.GEMINI_API_KEY || env.GOOGLE_API_KEY || null,
     googleVoiceBaseUrl: env.SPACE_GOOGLE_VOICE_BASE_URL || "https://generativelanguage.googleapis.com",
     awsVoiceKeyFile: env.SPACE_AWS_VOICE_KEY_FILE || null,
@@ -396,6 +443,7 @@ export function getApiConfig(env: NodeJS.ProcessEnv): SpaceApiConfig {
     browserEvidenceChromePath: env.SPACE_BROWSER_CHROME_PATH || "/usr/bin/google-chrome",
     browserEvidenceArtifactRoot: artifactRoot,
     browserEvidenceTargetOrigin: env.SPACE_BROWSER_EVIDENCE_TARGET_ORIGIN || "http://127.0.0.1:4911",
+    cliApiBaseUrl: parseCliApiBaseUrl(env.SPACE_CLI_API_BASE_URL),
     browserEvidenceTimeoutMs: Number.parseInt(env.SPACE_BROWSER_EVIDENCE_TIMEOUT_MS ?? "20000", 10),
     appDiagnosticsRoot: env.SPACE_APP_DIAGNOSTICS_ROOT || "/opt/spaceapp/var/app-diagnostics",
     maintenanceAutopilotStateFile: env.SPACE_MAINTENANCE_AUTOPILOT_STATE_FILE || "/opt/spaceapp/var/maintenance-autopilot/state.json",
@@ -407,8 +455,9 @@ export function getApiConfig(env: NodeJS.ProcessEnv): SpaceApiConfig {
     browserSessionsXvfbEnabled: env.SPACE_BROWSER_SESSIONS_XVFB_ENABLED !== "false",
     browserSessionsProfileRoot: env.SPACE_BROWSER_SESSIONS_PROFILE_ROOT || join(artifactRoot, "browser-profiles"),
     jobApplyRoot: env.SPACE_JOB_APPLY_ROOT || join(artifactRoot, "job-apply"),
-    browserSessionsDefaultUrl: env.SPACE_BROWSER_SESSIONS_DEFAULT_URL || "https://www.example.invalid/",
+    browserSessionsDefaultUrl: env.SPACE_BROWSER_SESSIONS_DEFAULT_URL || "https://www.google.com/",
     browserSessionsTokenTtlMs: Math.min(parsePositiveInt(env.SPACE_BROWSER_SESSIONS_TOKEN_TTL_MS, 60000), 5 * 60 * 1000),
+    browserStreamHostWatchMs: Math.min(Math.max(parsePositiveInt(env.SPACE_BROWSER_STREAM_HOST_WATCH_MS, 5000), 50), 60_000),
     browserSessionsAudioEnabled: env.SPACE_BROWSER_SESSIONS_AUDIO_ENABLED !== "false",
     browserSessionsPulseServer: env.SPACE_BROWSER_SESSIONS_PULSE_SERVER || "unix:/run/pulse/native",
     browserSessionsPulseSink: env.SPACE_BROWSER_SESSIONS_PULSE_SINK || "space_audio",
@@ -420,6 +469,9 @@ export function getApiConfig(env: NodeJS.ProcessEnv): SpaceApiConfig {
     browserHostSocketPath: env.SPACE_BROWSER_HOST_SOCKET || "/run/space-browser-host/browser-host.sock",
     swarmExecutionEnabled: env.SPACE_SWARM_EXECUTION_ENABLED === "true",
     internalApiToken: env.SPACE_INTERNAL_API_TOKEN || null,
+    // One secret per purpose (security addendum step 9); unset, each falls back to the internal token, so nothing changes.
+    agentTokenSecret: env.SPACE_AGENT_TOKEN_SECRET || null,
+    gatewayAdminToken: env.SPACE_GATEWAY_ADMIN_TOKEN || null,
     apiRateLimitMax: Math.min(parsePositiveInt(env.SPACE_API_RATE_LIMIT_MAX, 3000), 20000),
     telegramSecretRoot: env.SPACE_TELEGRAM_SECRET_ROOT || "/opt/spaceapp/secrets/telegram",
     streamingSecretRoot: env.SPACE_STREAMING_SECRET_ROOT || "/opt/spaceapp/var/streaming-secrets",

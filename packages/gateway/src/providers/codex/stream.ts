@@ -4,6 +4,8 @@
  * and to read the token usage the terminal event reports. Ported behavior from codex-lb `app/core/clients/proxy.py`
  * (MIT, Soju06/codex-lb).
  */
+import { codexLoneWeek } from "./usage.js";
+
 export interface ResponseUsage {
   inputTokens: number | null;
   cachedInputTokens: number | null;
@@ -151,15 +153,28 @@ export function readCodexRateLimitEvent(payload: JsonObject, nowSeconds: number)
   const window = (raw: unknown) => {
     const entry = obj(raw);
     const resetAt = number(entry?.reset_at) ?? number(entry?.resets_at);
+    if (number(entry?.window_minutes) === 0) return { used: null, minutes: null, resetAfter: null };
     return { used: number(entry?.used_percent), minutes: number(entry?.window_minutes), resetAfter: resetAt === null ? null : Math.max(0, resetAt - nowSeconds) };
   };
   const primary = window(limits.primary);
   const secondary = window(limits.secondary);
-  return { primaryUsedPercent: primary.used, secondaryUsedPercent: secondary.used, primaryResetAfterSeconds: primary.resetAfter,
-    secondaryResetAfterSeconds: secondary.resetAfter, primaryWindowMinutes: primary.minutes, secondaryWindowMinutes: secondary.minutes };
+  return inWeeklySlot({ primaryUsedPercent: primary.used, secondaryUsedPercent: secondary.used, primaryResetAfterSeconds: primary.resetAfter,
+    secondaryResetAfterSeconds: secondary.resetAfter, primaryWindowMinutes: primary.minutes, secondaryWindowMinutes: secondary.minutes });
 }
 
-/** Passive usage from `x-codex-*` response headers (percent used and reset seconds per window). */
+type PassiveWindows = { primaryUsedPercent: number | null; secondaryUsedPercent: number | null; primaryResetAfterSeconds: number | null;
+  secondaryResetAfterSeconds: number | null; primaryWindowMinutes: number | null; secondaryWindowMinutes: number | null };
+/** A weekly-only plan's week, reported as the primary window, moves to the weekly slot (see `codexLoneWeek`). */
+function inWeeklySlot(read: PassiveWindows): PassiveWindows {
+  if (!codexLoneWeek(read.primaryWindowMinutes, read.secondaryUsedPercent !== null)) return read;
+  return { primaryUsedPercent: null, secondaryUsedPercent: read.primaryUsedPercent, primaryResetAfterSeconds: null,
+    secondaryResetAfterSeconds: read.primaryResetAfterSeconds, primaryWindowMinutes: null, secondaryWindowMinutes: read.primaryWindowMinutes };
+}
+
+/**
+ * Passive usage from `x-codex-*` response headers (percent used and reset seconds per window). Codex reports a window the
+ * plan lacks (Prolite's 5-hour one, 2026-10-18) as 0 minutes, 0% and reset 0; it is read as absent, as in the WebSocket event.
+ */
 export function readCodexRateLimitHeaders(headers: Headers): { primaryUsedPercent: number | null; secondaryUsedPercent: number | null;
   primaryResetAfterSeconds: number | null; secondaryResetAfterSeconds: number | null; primaryWindowMinutes: number | null; secondaryWindowMinutes: number | null } {
   const read = (name: string) => {
@@ -168,12 +183,14 @@ export function readCodexRateLimitHeaders(headers: Headers): { primaryUsedPercen
     const value = Number(raw);
     return Number.isFinite(value) ? value : null;
   };
-  return {
-    primaryUsedPercent: read("x-codex-primary-used-percent"),
-    secondaryUsedPercent: read("x-codex-secondary-used-percent"),
-    primaryResetAfterSeconds: read("x-codex-primary-reset-after-seconds"),
-    secondaryResetAfterSeconds: read("x-codex-secondary-reset-after-seconds"),
-    primaryWindowMinutes: read("x-codex-primary-window-minutes"),
-    secondaryWindowMinutes: read("x-codex-secondary-window-minutes")
-  };
+  const windowRead = (window: "primary" | "secondary", name: string) =>
+    (read(`x-codex-${window}-window-minutes`) === 0 ? null : read(`x-codex-${window}-${name}`));
+  return inWeeklySlot({
+    primaryUsedPercent: windowRead("primary", "used-percent"),
+    secondaryUsedPercent: windowRead("secondary", "used-percent"),
+    primaryResetAfterSeconds: windowRead("primary", "reset-after-seconds"),
+    secondaryResetAfterSeconds: windowRead("secondary", "reset-after-seconds"),
+    primaryWindowMinutes: windowRead("primary", "window-minutes"),
+    secondaryWindowMinutes: windowRead("secondary", "window-minutes")
+  });
 }

@@ -1,4 +1,5 @@
 import type { MemoryGraphEdge, MemoryGraphNode } from "@space/contracts";
+import type { MemoryWorkerDiagnostics } from "./memory-worker-diagnostics.js";
 import { isMemoryCoreLabel } from "./memory-graph-visuals.js";
 export type MemoryPoint3D = { x: number; y: number; z: number };
 export type MemoryCamera3D = { yaw: number; pitch: number; zoom: number };
@@ -21,7 +22,8 @@ export function layoutMemoryNetwork3D(nodes: MemoryGraphNode[], edges: MemoryGra
 }
 
 /** Snapshots are independent, deterministic and usable before convergence. */
-export function* streamMemoryNetwork3D(nodes: MemoryGraphNode[], edges: MemoryGraphEdge[], interval = 12) {
+export function* streamMemoryNetwork3D(nodes: MemoryGraphNode[], edges: MemoryGraphEdge[], interval = 12, diagnostics?: MemoryWorkerDiagnostics) {
+  let phaseStart = diagnostics?.start() ?? 0;
   const ordered = [...nodes].sort((a, b) => a.id.localeCompare(b.id));
   const index = new Map(ordered.map((node, i) => [node.id, i]));
   const root = ordered.findIndex(node => node.type === "SOURCE" && isMemoryCoreLabel(node.label));
@@ -49,12 +51,23 @@ export function* streamMemoryNetwork3D(nodes: MemoryGraphNode[], edges: MemoryGr
       y: parent.y + (unit(`${id}:dy`) - 0.5) * 70, z: parent.z + (unit(`${id}:dz`) - 0.5) * 70 };
   }
   const fx = new Float64Array(count), fy = new Float64Array(count), fz = new Float64Array(count);
-  const snapshot = (iteration: number) => ({ iteration, done: iteration === 180,
-    positions: new Map(ordered.map((node, i) => [node.id, { ...points[i]! }] as const)) });
+  diagnostics?.end("initialize", phaseStart);
+  const snapshot = (iteration: number) => {
+    if (diagnostics) diagnostics.iteration = iteration;
+    const start = diagnostics?.start() ?? 0;
+    const frame = { iteration, done: iteration === 180,
+      positions: new Map(ordered.map((node, i) => [node.id, { ...points[i]! }] as const)) };
+    diagnostics?.end("snapshot.copy", start);
+    return frame;
+  };
   yield snapshot(0);
   // Bounded spatial-grid repulsion and link springs act equally on all three axes.
   for (let step = 0; step < 180; step++) {
+    if (diagnostics) diagnostics.iteration = step + 1;
+    phaseStart = diagnostics?.start() ?? 0;
     fx.fill(0); fy.fill(0); fz.fill(0);
+    diagnostics?.end("forces.clear", phaseStart);
+    phaseStart = diagnostics?.start() ?? 0;
     const grid = new Map<number, { members: number[]; x: number; y: number; z: number }>();
     // The 50k-node initial volume plus 180 capped steps stays inside +/-16k.
     // A 30-bit key avoids allocating a boxed double for every neighbor lookup.
@@ -65,6 +78,8 @@ export function* streamMemoryNetwork3D(nodes: MemoryGraphNode[], edges: MemoryGr
       if (!cell) { cell = { members: [], x: 0, y: 0, z: 0 }; grid.set(key, cell); }
       cell.members.push(i); cell.x += p.x; cell.y += p.y; cell.z += p.z;
     }
+    diagnostics?.end("grid.build", phaseStart);
+    phaseStart = diagnostics?.start() ?? 0;
     for (let i = 0; i < count; i++) {
       const p = points[i]!, gx = Math.floor(p.x / 32), gy = Math.floor(p.y / 32), gz = Math.floor(p.z / 32);
       for (let x = gx - 1; x <= gx + 1; x++) for (let y = gy - 1; y <= gy + 1; y++) for (let z = gz - 1; z <= gz + 1; z++) {
@@ -92,6 +107,8 @@ export function* streamMemoryNetwork3D(nodes: MemoryGraphNode[], edges: MemoryGr
         }
       }
     }
+    diagnostics?.end("forces.repulsion", phaseStart);
+    phaseStart = diagnostics?.start() ?? 0;
     for (const link of links) {
       const a = points[link.a]!, b = points[link.b]!;
       const dx = b.x - a.x, dy = b.y - a.y, dz = b.z - a.z, distance = Math.max(0.01, Math.hypot(dx, dy, dz));
@@ -99,6 +116,8 @@ export function* streamMemoryNetwork3D(nodes: MemoryGraphNode[], edges: MemoryGr
       fx[link.a]! += dx * spring; fy[link.a]! += dy * spring; fz[link.a]! += dz * spring;
       fx[link.b]! -= dx * spring; fy[link.b]! -= dy * spring; fz[link.b]! -= dz * spring;
     }
+    diagnostics?.end("forces.springs", phaseStart);
+    phaseStart = diagnostics?.start() ?? 0;
     const cooling = 1 - step / 230;
     for (let i = 0; i < count; i++) {
       if (i === root) continue;
@@ -107,6 +126,7 @@ export function* streamMemoryNetwork3D(nodes: MemoryGraphNode[], edges: MemoryGr
       const stepScale = Math.min(1, 4 / Math.max(0.01, Math.hypot(dx, dy, dz))) * cooling;
       p.x += dx * stepScale; p.y += dy * stepScale; p.z += dz * stepScale;
     }
+    diagnostics?.end("integrate", phaseStart);
     if ((step + 1) % Math.max(1, interval) === 0 || step === 179) yield snapshot(step + 1);
   }
 }

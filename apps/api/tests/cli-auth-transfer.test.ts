@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { describe, expect, it, vi } from "vitest";
 import type { AgentRuntime } from "@space/contracts";
 import { createCliAuthTransfer, createPublicCredentialHost, type CredentialHost } from "../src/cli-auth-transfer.js";
+import { observeCliRuntimeCredential } from "../src/cli-runtimes.js";
 
 const login = JSON.stringify({ tokens: { refresh_token: "synthetic-refresh-token" } });
 const b64 = (text: string) => Buffer.from(text).toString("base64");
@@ -15,7 +16,7 @@ function transfer(options: { publicDistribution?: boolean; answer?: string; expo
   const warn = vi.fn();
   const invalidateRuntimes = vi.fn();
   const run = vi.fn(async () => ({ exitCode: 0, stdout: options.answer ?? "IMPORTED\n" }));
-  const credentialHost: CredentialHost = { run, status: async () => null, close: async () => undefined };
+  const credentialHost: Pick<CredentialHost, "run"> = { run };
   const instance = createCliAuthTransfer({
     publicDistribution: options.publicDistribution ?? true,
     readRuntimes: async () => [runtime("cli:codex"), runtime("cli:claude"), runtime("cli:gemini", "LOGIN_REQUIRED")],
@@ -91,7 +92,14 @@ describe("CLI login transfer", () => {
       socket.setEncoding("utf8").on("data", (chunk) => { body += chunk; }).on("end", () => {
         const request = JSON.parse(body) as Record<string, string>;
         requests.push(request);
-        socket.end(JSON.stringify({ exitCode: 0, stdout: request.action === "credential-status" ? "READY\n" : "IMPORTED\n" }));
+        const stdout: Record<string, string> = {
+          "credential-status": "READY\n",
+          "credential-smoke": "SPACE_CODEX_OK\n",
+          "credential-observation": `OBSERVATION:${"a".repeat(64)}\n`,
+          "opencode-text": `${JSON.stringify({ type: "step_start" })}\n${JSON.stringify({ type: "text", part: { text: "Agent answer" } })}\n`,
+          "opencode-models": JSON.stringify({ data: [{ id: "big-pickle", providerID: "opencode" }] })
+        };
+        socket.end(JSON.stringify({ exitCode: 0, stdout: stdout[request.action!] ?? "IMPORTED\n" }));
       });
     });
     await new Promise<void>((resolve) => agent.listen(join(root, "credentials.sock"), resolve));
@@ -108,9 +116,87 @@ describe("CLI login transfer", () => {
         { command: "codex-vscode-parity", action: "credential-status" },
         { command: "codex-vscode-parity", action: "credential-install", input: JSON.stringify({ files: { "auth.json": b64(login) }, conflict: "backup-and-replace" }) }
       ]);
+      // Decision B (1.1.7): the core image has no CLIs, so the smoke, the Room Agent's OpenCode tier and the
+      // model bench run in the CLI container through the same agent.
+      requests.length = 0;
+      expect(await host.execute("/usr/local/bin/codex-vscode-parity", ["credential-smoke"], { encoding: "utf8", env: {}, timeout: 1_000, maxBuffer: 1_024 }))
+        .toEqual({ stdout: "SPACE_CODEX_OK\n" });
+      expect(await observeCliRuntimeCredential(runtime("cli:opencode"), host.execute)).toBe("a".repeat(64));
+      await expect(host.execute("/usr/local/bin/codex-vscode-parity", ["login"], { encoding: "utf8", env: {}, timeout: 1_000, maxBuffer: 1_024 })).rejects.toThrow();
+      expect(await host.openCodeText("opencode/big-pickle", "Hello", 5_000)).toBe("Agent answer");
+      expect(JSON.parse(await host.openCodeModels("opencode")).data[0].id).toBe("big-pickle");
+      expect(requests).toEqual([
+        { command: "codex-vscode-parity", action: "credential-smoke" },
+        { command: "opencode-vscode-parity", action: "credential-observation" },
+        { command: "opencode-vscode-parity", action: "opencode-text", input: JSON.stringify({ modelId: "opencode/big-pickle", prompt: "Hello", timeoutMs: 5_000 }) },
+        { command: "opencode-vscode-parity", action: "opencode-models", input: JSON.stringify({ provider: "opencode" }) }
+      ]);
+      const aborted = new AbortController();
+      aborted.abort();
+      expect(await host.openCodeText("opencode/big-pickle", "Hello", 5_000, aborted.signal)).toBeNull();
       agent.close();
       // No agent (an older public image): the badge stays unverified and imports report it, never write elsewhere.
       expect(await host.status("/usr/local/bin/codex-vscode-parity")).toBeNull();
+    } finally {
+      agent.close();
+    }
+  });
+});
+
+describe("Nous on a public install (operator decision 2026-10-27, B+C3)", () => {
+  it("streams a Nous turn from the CLI container's Claude Code, stops it with the turn, and reads the pane board's answer", async () => {
+    const root = await mkdtemp("/tmp/space-public-nous-");
+    const requests: Array<Record<string, unknown>> = [];
+    let left = 0;
+    let mode: "answer" | "hold" | "busy" = "answer";
+    const lines = [
+      JSON.stringify({ type: "stream_event", event: { type: "message_start" } }),
+      JSON.stringify({ type: "stream_event", event: { type: "content_block_delta", delta: { type: "text_delta", text: "All " } } }),
+      JSON.stringify({ type: "stream_event", event: { type: "content_block_delta", delta: { type: "text_delta", text: "moving." } } }),
+      JSON.stringify({ type: "result", subtype: "success", result: "All moving.", num_turns: 2, total_cost_usd: 0.12 })
+    ];
+    const agent = createServer({ allowHalfOpen: true }, (socket) => {
+      let body = "";
+      let started = false;
+      const start = () => {
+        if (started) return;
+        started = true;
+        const request = JSON.parse(body.split("\n")[0]!) as Record<string, unknown>;
+        requests.push(request);
+        if (request.action === "agent-chat") { socket.end(`${JSON.stringify({ exitCode: 0, stdout: "One line.\n" })}\n`); return; }
+        if (mode === "busy") { socket.end(`${JSON.stringify({ exitCode: 75, stdout: "FAILED busy\n" })}\n`); return; }
+        if (mode === "hold") { socket.write(`${lines[0]}\n`); socket.once("end", () => { left += 1; socket.end(); }); return; }
+        // The answer arrives in pieces, and the end record splits across writes.
+        const out = `${lines.join("\n")}\n\n\x1e${JSON.stringify({ exitCode: 0, stderr: "" })}\n`;
+        for (const piece of [out.slice(0, 50), out.slice(50, out.length - 9), out.slice(out.length - 9)]) socket.write(piece);
+        socket.end();
+      };
+      socket.setEncoding("utf8").on("data", (chunk) => { body += chunk; if (body.includes("\n")) start(); }).on("end", start);
+    });
+    await new Promise<void>((resolve) => agent.listen(join(root, "credentials.sock"), resolve));
+    const host = createPublicCredentialHost({ publicDistribution: true, cliEnabled: true, cliHostSocketPath: join(root, "host.sock") })!;
+    const request = { model: "claude-sonnet-5-5", effort: "medium", system: "You are Nous.", prompt: "What waits?", mcpUrl: "http://spaceapp-core:4911/api/cli/nous/mcp",
+      mcpToken: "tok_0123456789abcdefghij", maxTurns: 40, shell: false, stream: true, fallbackModel: null };
+    try {
+      const events: unknown[] = [];
+      expect(await host.claudeAgentTools(request, new AbortController().signal, (event) => events.push(event)))
+        .toEqual({ text: "All moving.", isError: false, turns: 2, costUsd: 0.12, tokens: null });
+      expect(events).toEqual([{ start: true }, { text: "All " }, { text: "moving." }]);
+      // The request names the wrapper and its action; a null fallback model is left out (the CLI container refuses an empty one).
+      expect(requests[0]).toEqual({ command: "claude-vscode-parity", action: "agent-tools", input: JSON.stringify({ model: "claude-sonnet-5-5", effort: "medium", system: "You are Nous.",
+        prompt: "What waits?", mcpUrl: "http://spaceapp-core:4911/api/cli/nous/mcp", mcpToken: "tok_0123456789abcdefghij", maxTurns: 40, shell: false, stream: true }) });
+      // The operator's Stop: the connection ends, so the CLI container stops the turn.
+      mode = "hold";
+      const stop = new AbortController();
+      const held = host.claudeAgentTools(request, stop.signal);
+      await vi.waitFor(() => expect(requests).toHaveLength(2));
+      stop.abort();
+      await expect(held).rejects.toThrow("The turn was stopped.");
+      await vi.waitFor(() => expect(left).toBe(1));
+      mode = "busy";
+      await expect(host.claudeAgentTools(request, new AbortController().signal)).rejects.toThrow("The CLI container could not start the turn (FAILED busy).");
+      expect(await host.claudeAgentChat({ model: "claude-haiku-5-5", effort: "low", prompt: "Summarize." })).toBe("One line.");
+      expect(requests.at(-1)).toEqual({ command: "claude-vscode-parity", action: "agent-chat", input: JSON.stringify({ model: "claude-haiku-5-5", effort: "low", prompt: "Summarize." }) });
     } finally {
       agent.close();
     }

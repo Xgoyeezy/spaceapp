@@ -218,9 +218,20 @@ export const gatewaySettingsSchema = z.object({
   importWithoutOverwrite: z.boolean(),
   /**
    * Claude API key fallback: when every pooled Claude account is out of quota, requests go through a Claude API-key
-   * account (paid per token); the accounts take over again at their next reset. Off: the key is never used.
+   * account (paid per token); the accounts take over again at their next reset. Off: the key is never used. Claude Code never
+   * uses it (operator rule 2026-10-27).
    */
   claudeApiKeyFallback: z.boolean(),
+  /**
+   * What the operator may spend on the Anthropic API each month (operator request 2026-10-24); the Claude API-key account
+   * shows this month's Anthropic bill as a share of it. Null: not set.
+   */
+  anthropicMonthlyBudgetUsd: z.number().positive().max(10_000_000).nullable(),
+  /**
+   * The organization's Claude Console credit grants in total (operator request 2026-10-24); the API providers tab shows
+   * them minus Anthropic's recorded bill, as the Console's remaining balance. Null: not set.
+   */
+  anthropicCreditsUsd: z.number().positive().max(10_000_000).nullable(),
   /** Limit warm-up: one tiny request right after a confirmed window reset, so the next window starts counting at once. */
   warmupEnabled: z.boolean(),
   warmupWindows: gatewayWindowChoiceSchema,
@@ -369,6 +380,77 @@ export const gatewayClaudeApiKeyUseSchema = z.object({
   checkedAt: isoSchema
 }).strict();
 
+/** An Anthropic API key behind a Claude API-key account, as the Admin API names it. */
+export const gatewayAnthropicUpstreamKeySchema = z.object({
+  accountId: gatewayIdSchema,
+  apiKeyId: z.string().max(120),
+  keyName: z.string().max(200),
+  /** Empty for the organization's default workspace (the reports' `workspace_id: null`). */
+  workspaceId: z.string().max(120)
+}).strict();
+
+/**
+ * The operator's Anthropic Admin API key (operator request 2026-10-18): sealed by Space Gateway, never returned; only
+ * its hint and the last sync of the organization's cost and usage reports.
+ */
+export const gatewayAnthropicAdminStatusSchema = z.object({
+  configured: z.boolean(),
+  keyHint: z.string().max(40).nullable(),
+  savedAt: isoSchema.nullable(),
+  lastSyncAt: isoSchema.nullable(),
+  lastError: z.string().max(300).nullable(),
+  upstream: z.array(gatewayAnthropicUpstreamKeySchema).max(20)
+}).strict();
+
+export const gatewayAnthropicAdminKeySaveRequestSchema = z.object({
+  adminKey: z.string().trim().regex(/^sk-ant-admin01-[A-Za-z0-9_-]{20,300}$/, "This does not look like an Anthropic Admin API key (sk-ant-admin01-...).")
+}).strict();
+
+const gatewayAnthropicBillingModelSchema = z.object({
+  model: z.string().max(160),
+  /** Anthropic's token charge for the model in the gateway keys' workspaces. */
+  billedUsd: z.number().min(0),
+  /** The same tokens (Anthropic's counts) at Space Gateway's list prices. */
+  listUsd: z.number().min(0),
+  /** billed / list over the 7 days ending this day (what the caps use); null while too little was used to tell. */
+  factor: z.number().min(0).nullable(),
+  gatewayEstimateUsd: z.number().min(0),
+  gatewayBilledUsd: z.number().min(0)
+}).strict();
+
+/** One UTC day of the Anthropic bill next to Space Gateway's estimate for its Claude API-key accounts. */
+export const gatewayAnthropicBillingDaySchema = z.object({
+  day: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  /** Anthropic has posted this day's cost; until then its charges read 0 and the caps use the last 7 days' factor. */
+  reported: z.boolean(),
+  /** Every workspace and cost type of the organization. */
+  organizationUsd: z.number().min(0),
+  /** Charges of the workspaces the gateway's Claude API keys belong to (their other users included). */
+  workspaceUsd: z.number().min(0),
+  /** What Space Gateway estimated at list prices for its Claude API-key accounts. */
+  gatewayEstimateUsd: z.number().min(0),
+  /** The estimate times each model's factor: what the daily COST_USD caps count. */
+  gatewayBilledUsd: z.number().min(0),
+  models: z.array(gatewayAnthropicBillingModelSchema).max(50)
+}).strict();
+
+export const gatewayAnthropicBillingReportSchema = z.object({
+  status: gatewayAnthropicAdminStatusSchema,
+  days: z.array(gatewayAnthropicBillingDaySchema).max(31)
+}).strict();
+
+/** The Claude API-key account's pace to the monthly budget (Space Gateway, plan clipboard:nUloPOH3blDT step 6). */
+export const gatewayApiBudgetPaceSchema = z.object({
+  budgetUsd: z.number().min(0),
+  monthSpentUsd: z.number().min(0),
+  remainingUsd: z.number(),
+  daysLeft: z.number().int().min(1).max(31),
+  allowanceTodayUsd: z.number().min(0),
+  todaySpentUsd: z.number().min(0),
+  stop: z.enum(["MONTHLY_BUDGET_REACHED", "DAILY_ALLOWANCE_REACHED"]).nullable()
+}).strict();
+export type GatewayApiBudgetPace = z.infer<typeof gatewayApiBudgetPaceSchema>;
+
 export const gatewayStatusSchema = z.object({
   service: z.object({
     state: gatewayServiceStateSchema,
@@ -393,6 +475,8 @@ export const gatewayStatusSchema = z.object({
     compressionTokensSaved: z.number().int().min(0)
   }).strict(),
   settings: gatewaySettingsSchema,
+  /** Null without a monthly budget or without Anthropic billing; absent from older gateways. */
+  apiBudget: gatewayApiBudgetPaceSchema.nullable().optional(),
   checkedAt: isoSchema
 }).strict();
 
@@ -743,6 +827,23 @@ export type GatewayLimitType = z.infer<typeof gatewayLimitTypeSchema>;
 export type GatewayLimitWindow = z.infer<typeof gatewayLimitWindowSchema>;
 export type GatewayReasoningEffort = z.infer<typeof gatewayReasoningEffortSchema>;
 export type GatewayUsageWindow = z.infer<typeof gatewayUsageWindowSchema>;
+
+export const GATEWAY_PACE_BAND = 5;
+export interface GatewayWeekPace { usedPercent: number | null; passedPercent: number; points: number | null; resetAt: string; pace: "AHEAD" | "ON" | "UNDER" | null }
+/**
+ * A subscription account's weekly pace (operator rule 2026-10-27, plan clipboard:nUloPOH3blDT: every account's week used, none run
+ * out before its reset): `points` = 7-day used % minus the share of the week passed; AHEAD past +5 runs out early, UNDER past -5
+ * leaves tokens unused. The week is the 7-day window that holds data, whichever slot it sits in. Null without a live week.
+ */
+export function gatewayWeekPace(account: { primaryWindow: GatewayUsageWindow; secondaryWindow: GatewayUsageWindow }, at: number): GatewayWeekPace | null {
+  const week = [account.secondaryWindow, account.primaryWindow].find((window) => window.windowMinutes === 10_080 && (window.usedPercent !== null || window.resetAt !== null));
+  const reset = Date.parse(week?.resetAt ?? "");
+  if (!week?.resetAt || !Number.isFinite(reset) || reset <= at) return null;
+  const passedPercent = Math.round(Math.min(100, Math.max(0, 100 * (1 - (reset - at) / (10_080 * 60_000)))));
+  const points = week.usedPercent === null ? null : Math.round(week.usedPercent - passedPercent);
+  return { usedPercent: week.usedPercent, passedPercent, points, resetAt: week.resetAt,
+    pace: points === null ? null : points > GATEWAY_PACE_BAND ? "AHEAD" : points < -GATEWAY_PACE_BAND ? "UNDER" : "ON" };
+}
 export type GatewayAccount = z.infer<typeof gatewayAccountSchema>;
 export type GatewayApiKeyLimit = z.infer<typeof gatewayApiKeyLimitSchema>;
 export type GatewayApiKey = z.infer<typeof gatewayApiKeySchema>;
@@ -782,6 +883,10 @@ export type GatewayApiKeyDetail = z.infer<typeof gatewayApiKeyDetailSchema>;
 export type GatewayServiceState = z.infer<typeof gatewayServiceStateSchema>;
 export type GatewayStatus = z.infer<typeof gatewayStatusSchema>;
 export type GatewayClaudeApiKeyUse = z.infer<typeof gatewayClaudeApiKeyUseSchema>;
+export type GatewayAnthropicUpstreamKey = z.infer<typeof gatewayAnthropicUpstreamKeySchema>;
+export type GatewayAnthropicAdminStatus = z.infer<typeof gatewayAnthropicAdminStatusSchema>;
+export type GatewayAnthropicBillingDay = z.infer<typeof gatewayAnthropicBillingDaySchema>;
+export type GatewayAnthropicBillingReport = z.infer<typeof gatewayAnthropicBillingReportSchema>;
 export type GatewayAccountList = z.infer<typeof gatewayAccountListSchema>;
 export type GatewayApiKeyList = z.infer<typeof gatewayApiKeyListSchema>;
 export type GatewayReportRow = z.infer<typeof gatewayReportRowSchema>;

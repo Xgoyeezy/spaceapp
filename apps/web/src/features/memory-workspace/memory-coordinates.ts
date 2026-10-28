@@ -11,6 +11,14 @@ export type MemoryCoordinates = {
 export class IndexedMemoryCoordinates implements MemoryCoordinates {
   constructor(private readonly index: ReadonlyMap<string, number>, private readonly points: Float32Array) {}
   get size() { return this.points.length / 3; }
+  /** Internal scratch path. The public getter still returns an independent value. */
+  readInto(id: string, point: MemoryPoint3D): boolean {
+    const index = this.index.get(id);
+    if (index === undefined) return false;
+    const offset = index * 3;
+    point.x = this.points[offset]!; point.y = this.points[offset + 1]!; point.z = this.points[offset + 2]!;
+    return true;
+  }
   get(id: string): MemoryPoint3D | undefined {
     const index = this.index.get(id);
     if (index === undefined) return undefined;

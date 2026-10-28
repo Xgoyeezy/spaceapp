@@ -422,7 +422,12 @@ describe("Memory graph API", () => {
     try {
       expect((await app.inject({ method: "GET", url: "/api/admin/memory/graph/overview?limit=50000" })).statusCode).toBe(401);
       const userToken = signSession({ id: "user:reader", email: "reader@space.test", role: "USER" }, sessionSecret);
-      expect((await app.inject({ method: "GET", url: "/api/admin/memory/graph/overview?limit=50000", headers: { cookie: `space_session=${userToken}` } })).statusCode).toBe(403);
+      const refused = await app.inject({ method: "GET", url: "/api/admin/memory/graph/overview?limit=50000", headers: { cookie: `space_session=${userToken}` } });
+      // The shared ownership guard conceals administrator-only resources from
+      // USER sessions before the route's own administrator check runs.
+      expect(refused.statusCode).toBe(404);
+      expect(refused.json().error.code).toBe("NOT_FOUND");
+      expect(refused.body).not.toContain("raw-large-secret");
       for (const limit of ["0", "50001", "NaN", "2.5", "-1"]) {
         expect((await app.inject({ method: "GET", url: `/api/admin/memory/graph/overview?limit=${limit}`, headers: { cookie } })).statusCode).toBe(422);
       }

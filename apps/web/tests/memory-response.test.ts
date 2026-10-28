@@ -1,13 +1,15 @@
 import { afterEach, expect, it, vi } from "vitest";
+import type { MemoryResponseRequest } from "../src/features/memory-workspace/memory-response.worker.js";
 
 afterEach(() => { vi.unstubAllGlobals(); vi.resetModules(); });
 
-async function decode(raw: string) {
+async function decode(raw: string, diagnostic = false) {
   const messages: Array<Record<string, any>> = [];
-  const scope = { onmessage: null as unknown as (event: MessageEvent<ArrayBuffer>) => Promise<void>, postMessage: (value: Record<string, any>) => messages.push(value) };
+  const scope = { onmessage: null as unknown as (event: MessageEvent<MemoryResponseRequest>) => Promise<void>, postMessage: (value: Record<string, any>) => messages.push(value) };
   vi.stubGlobal("self", scope);
   await import("../src/features/memory-workspace/memory-response.worker.js");
-  await scope.onmessage({ data: new TextEncoder().encode(raw).buffer } as MessageEvent<ArrayBuffer>);
+  const bytes = new TextEncoder().encode(raw).buffer;
+  await scope.onmessage({ data: diagnostic ? { bytes, diagnosticGeneration: 3 } : bytes } as MessageEvent<MemoryResponseRequest>);
   return messages;
 }
 
@@ -28,4 +30,12 @@ it("preserves JSON error bodies for the existing request error handling", async 
 
 it("preserves non-JSON bodies instead of returning a partial graph", async () => {
   expect(await decode("<html>Proxy unavailable</html>")).toEqual([{ value: "<html>Proxy unavailable</html>" }]);
+});
+
+it("records parsing separately from yielded delivery only when explicitly requested", async () => {
+  const messages = await decode(JSON.stringify({ data: { nodes: [{ id: "n" }], edges: [] } }), true);
+  const phases = messages.flatMap(message => message.workerTrace?.spans ?? []);
+  expect(phases.map(phase => phase.name)).toEqual(expect.arrayContaining(["text.decode", "json.parse", "nodes.batch", "yield.wait", "post.call"]));
+  expect(messages.at(-1)!.workerTrace).toMatchObject({ role: "response", generation: 3, complete: true, dropped: 0 });
+  expect(messages.flatMap(message => message.nodes ?? [])).toEqual([{ id: "n" }]);
 });

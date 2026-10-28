@@ -2,12 +2,13 @@
 
 Caps, autonomy and the Connects budget come from `space_freelance_state`, never from here. Every send is reported
 with the sent proposal's or conversation's own https URL on the platform (`space_freelance_send_done`).
-Identity checks, phone, payout, tax forms, CAPTCHAs and live interviews are the operator's: account
+Identity checks, phone, payout, tax forms, CAPTCHAs (after the single matching browser challenge attempt in SKILL.md) and live interviews are the operator's: account
 `NEEDS_OPERATOR` + `space_browser_request_handoff`.
 
 ## Upwork (upwork.com) — kinds PROPOSAL, MESSAGE, FOLLOW_UP
-- Account: freelancer profile of the operator (oll4.com as company/website), email upwork@example.invalid, country
-  Thailand. Upwork verifies identity by ID and video call: operator. Agency "oll4" only when the operator asks.
+- Account: freelancer profile of the operator (oll4.com as company/website), country Thailand. Sign-in only with
+  "Continue with Google" on the pane's Google account (operator rule 2026-10-17): never the email/password form,
+  never upwork@example.invalid; signed out = handoff to the operator, never a login by the copilot. Upwork verifies identity by ID and video call: operator. Agency "oll4" only when the operator asks.
 - Profile: title, overview, hourly rate, skills, Specialized Profiles, portfolio, Project Catalog packages,
   Consultations (texts in PROFILE/PRICING memory).
 - Finding work: saved searches with email alerts to upwork@example.invalid (MAIL items), Best Matches and search at

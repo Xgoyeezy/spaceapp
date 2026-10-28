@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { MemoryGraphNode } from "@space/contracts";
 import { MemoryLabelCache } from "../src/features/memory-workspace/memory-label-cache.js";
 import { MEMORY_LABEL_CANDIDATES, memoryLabelCandidates, memoryLabelsAtZoom } from "../src/features/memory-workspace/memory-webgl-data.js";
+import { OriginalMemoryLabelCache } from "./fixtures/memory-label-cache-reference.js";
 
 const nodes: MemoryGraphNode[] = Array.from({ length: 2000 }, (_, index) => ({
   id: `node:${index}`, type: index < 20 ? "SOURCE" : "MEMORY",
@@ -25,19 +26,25 @@ describe("memory label cache", () => {
     expect(unzoomed[0]).toBe(1000);
   });
 
-  it("measures each cached title once and bounds retention when focus visits many nodes", () => {
+  it("pins lazy candidate measurements through extensive hover churn with one outside slot", () => {
     const cache = new MemoryLabelCache(nodes, candidates);
+    const original = new OriginalMemoryLabelCache(nodes, candidates), oldMeasure = vi.fn((text: string) => text.length * 5);
     const measure = vi.fn((text: string) => text.length * 5);
-    const first = cache.measure(0, measure);
-    expect(first).toEqual({ text: "Node 0", width: 30 });
-    expect(cache.measure(0, measure)).toBe(first);
-    expect(measure).toHaveBeenCalledTimes(1);
-    for (let index = 1; index <= MEMORY_LABEL_CANDIDATES + 1; index++) cache.measure(index, measure);
-    const calls = measure.mock.calls.length;
-    cache.measure(MEMORY_LABEL_CANDIDATES + 1, measure);
-    expect(measure).toHaveBeenCalledTimes(calls);
-    cache.measure(0, measure);
-    expect(measure).toHaveBeenCalledTimes(calls + 1);
+    expect(measure).not.toHaveBeenCalled();
+    for(const index of candidates) {cache.measure(index,measure);original.measure(index,oldMeasure);}
+    const outside=nodes.map((_,i)=>i).filter(i=>!candidates.includes(i)).slice(0,1000);
+    for(const focus of outside) {
+      for(const index of cache.atZoom(2,focus)) expect(cache.measure(index,measure)).toEqual(original.measure(index,oldMeasure));
+      const retained = cache as unknown as {labels:Map<number,unknown>;focusedLabel:unknown};
+      expect(retained.labels.size+Number(Boolean(retained.focusedLabel))).toBeLessThanOrEqual(385);
+    }
+    for(const index of candidates) cache.measure(index,measure);
+    expect(measure).toHaveBeenCalledTimes(MEMORY_LABEL_CANDIDATES+outside.length);
+    expect(oldMeasure.mock.calls.length).toBeGreaterThan(measure.mock.calls.length);
+    console.info(JSON.stringify({test:"1000 outside focuses, 384 candidates",beforeMeasurements:oldMeasure.mock.calls.length,afterMeasurements:measure.mock.calls.length,maxRetained:385}));
+    cache.measure(outside.at(-1)!,measure);expect(measure).toHaveBeenCalledTimes(1384);
+    cache.measure(outside[0]!,measure);expect(measure).toHaveBeenCalledTimes(1385);
+    cache.invalidateMeasurements();cache.measure(candidates[0]!,measure);expect(measure).toHaveBeenCalledTimes(1386);
   });
 
   it("measures the displayed truncated text and starts fresh for a replacement graph", () => {

@@ -186,3 +186,8 @@
 .memory-3d-fallback-notice { position: absolute; bottom: 35px; left: 24%; color: #95aec2; font-size: 11px; }
 .memory-3d-benchmark { position: absolute; bottom: 4px; left: 23%; max-width: 72%; z-index: 10; background: #09111be8; color: #c6dfed; padding: 6px; }
 .memory-3d-benchmark pre { max-height: 165px; overflow: auto; font-size: 10px; margin: 0; }
+/* Review mode (plan clipboard:yAtbVyHE5s4T): maintenance jobs, open issues and change sets in one scrolling column. */
+.memory-review { position: absolute; inset: 0; overflow: auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-content: start; gap: 18px; padding: 22px 28px; color: #e6f1f8; scrollbar-width: thin; }
+.memory-review > .memory-workspace-error, .memory-review > .memory-jobs { grid-column: 1 / -1; }
+.memory-review-issues h3 { margin: 0 0 10px; font-size: 14px; font-weight: 600; color: #a8c7d9; }
+@media (max-width: 1000px) { .memory-review { grid-template-columns: minmax(0, 1fr); padding: 14px; } }

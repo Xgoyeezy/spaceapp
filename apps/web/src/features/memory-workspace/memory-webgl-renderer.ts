@@ -1,10 +1,12 @@
-import type { MemoryCoordinates } from "./memory-coordinates.js";
+import { IndexedMemoryCoordinates, type MemoryCoordinates } from "./memory-coordinates.js";
 import type { MemoryGraphNode } from "@space/contracts";
-import { projectMemoryPoint, type MemoryCamera3D, type MemoryPoint3D } from "./memory-3d.js";
+import { type MemoryCamera3D, type MemoryPoint3D } from "./memory-3d.js";
 import { MEMORY_LABEL_LIMIT, type prepareMemoryGpuData } from "./memory-webgl-data.js";
 import { MemoryLabelCache } from "./memory-label-cache.js";
 
 import { pickMemoryNode, type MemoryPickIndex } from "./memory-picking.js";
+
+import { getMemoryDiagnostics, type MemoryDiagnosticTags } from "./memory-diagnostics.js";
 
 type GraphData = ReturnType<typeof prepareMemoryGpuData>;
 const projection = `
@@ -92,6 +94,8 @@ function program(gl: WebGL2RenderingContext, vertex: string, fragment: string) {
 
 /** Two GPU draws per frame; static geometry is uploaded only when the graph changes. */
 export class MemoryWebGLRenderer {
+  private readonly diagnostics = getMemoryDiagnostics();
+  readonly diagnosticTags: MemoryDiagnosticTags = { renderer: this.diagnostics?.identity(this) };
   private readonly nodeProgram: WebGLProgram;
   private readonly edgeProgram: WebGLProgram;
   private readonly buffers: WebGLBuffer[] = [];
@@ -105,6 +109,10 @@ export class MemoryWebGLRenderer {
   private data: GraphData | null = null;
   private nodes: MemoryGraphNode[] = [];
   private labelCache = new MemoryLabelCache([], []);
+  private readonly labelPoint: MemoryPoint3D = { x: 0, y: 0, z: 0 };
+  private readonly labelBoxes = new Float64Array(MEMORY_LABEL_LIMIT * 3);
+  private labelContext: CanvasRenderingContext2D | null = null;
+  private labelFont = "";
   private coordinates: MemoryCoordinates = new Map<string, MemoryPoint3D>();
   private picking: MemoryPickIndex | null = null;
   private pickStack = new Int32Array(0);
@@ -144,6 +152,8 @@ export class MemoryWebGLRenderer {
   }
 
   setGraph(nodes: MemoryGraphNode[], data: GraphData) {
+    const started = this.diagnostics ? performance.now() : 0;
+    if (this.diagnostics) this.diagnosticTags.graph = this.diagnostics.identity(nodes);
     this.nodes = nodes; this.data = data; this.focus = -1;
     this.labelCache = new MemoryLabelCache(nodes, data.labels);
     const gl = this.gl;
@@ -157,9 +167,13 @@ export class MemoryWebGLRenderer {
     gl.bindBuffer(gl.ARRAY_BUFFER, this.edgeKindBuffer); gl.bufferData(gl.ARRAY_BUFFER, data.edgeKinds, gl.STATIC_DRAW);
     gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, this.focusTexture);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.R8, 256, this.textureRows, 0, gl.RED, gl.UNSIGNED_BYTE, this.flags);
+    this.diagnostics?.count("graph.sync.calls");
+    this.diagnostics?.record("graph.sync", started, performance.now(), this.diagnosticTags, { nodes: nodes.length, staticBytes: data.colors.byteLength + data.endpoints.byteLength + data.edgeKinds.byteLength + this.flags.byteLength });
   }
 
   setPositions(coordinates: MemoryCoordinates, packed?: Float32Array, extent?: number) {
+    const started = this.diagnostics ? performance.now() : 0;
+    if (this.diagnostics) this.diagnosticTags.layout = this.diagnostics.identity(packed ?? coordinates);
     this.coordinates = coordinates; this.extent = 60;
     if (packed) { this.textureData = packed; this.extent = extent ?? 60; }
     else for (let i = 0; i < this.nodes.length; i++) {
@@ -171,21 +185,29 @@ export class MemoryWebGLRenderer {
     }
     const gl = this.gl; gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, this.positionTexture);
     gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 256, this.textureRows, gl.RGBA, gl.FLOAT, this.textureData);
+    this.diagnostics?.count("positions.upload.calls"); this.diagnostics?.count("positions.upload.bytes", this.textureData.byteLength);
+    this.diagnostics?.record("positions.upload", started, performance.now(), this.diagnosticTags, { bytes: this.textureData.byteLength });
   }
 
   setFocus(id: string | null) {
     const next = id ? this.data?.index.get(id) ?? -1 : -1;
     if (next === this.focus) return;
+    const started = this.diagnostics ? performance.now() : 0;
     this.focus = next; this.flags.fill(0);
     if (this.data && next >= 0) for (let i = this.data.offsets[next]!; i < this.data.offsets[next + 1]!; i++) this.flags[this.data.neighbors[i]!] = 255;
     const gl = this.gl; gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, this.focusTexture);
     gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 256, this.textureRows, gl.RED, gl.UNSIGNED_BYTE, this.flags);
+    this.diagnostics?.count("focus.upload.calls"); this.diagnostics?.count("focus.upload.bytes", this.flags.byteLength);
+    this.diagnostics?.record("focus.upload", started, performance.now(), this.diagnosticTags, { bytes: this.flags.byteLength, focus: next });
   }
 
   resize(width: number, height: number, dpr: number) {
     this.width = Math.max(1, width); this.height = Math.max(1, height); this.dpr = dpr;
     const gl = this.gl, w = Math.max(1, Math.round(width * dpr)), h = Math.max(1, Math.round(height * dpr));
-    gl.canvas.width = w; gl.canvas.height = h;
+    let assignments = 0;
+    if (gl.canvas.width !== w) { gl.canvas.width = w; assignments++; }
+    if (gl.canvas.height !== h) { gl.canvas.height = h; assignments++; }
+    this.diagnostics?.count("canvas.backing.assignments", assignments); this.diagnostics?.event("resize", this.diagnosticTags, { width, height, dpr, assignments });
 
   }
 
@@ -221,6 +243,8 @@ export class MemoryWebGLRenderer {
   }
 
   setPicking(picking: MemoryPickIndex | null, ids: string[], index?: Map<string, number>) {
+    if (this.diagnostics) this.diagnosticTags.picking = this.diagnostics.identity(picking);
+    this.diagnostics?.event("picking.publish", this.diagnosticTags);
     this.picking = picking;
     const stackSize = (picking?.tree.length ?? 0) / 4;
     if (this.pickStack.length !== stackSize) this.pickStack = new Int32Array(stackSize);
@@ -236,23 +260,49 @@ export class MemoryWebGLRenderer {
     return this.pickIds[selected] ?? null;
   }
 
+  invalidateLabelMeasurements() { this.labelCache.invalidateMeasurements(); }
+
   labels(context: CanvasRenderingContext2D, camera: MemoryCamera3D, visible: boolean) {
     context.clearRect(0, 0, this.width, this.height);
     if (!visible || !this.data) return;
-    const boxes: Array<{ x: number; y: number; width: number }> = [];
+    const boxes = this.labelBoxes;
+    let boxCount = 0;
     context.font = "11px system-ui, sans-serif";
+    if (this.labelContext !== context || this.labelFont !== context.font) {
+      this.invalidateLabelMeasurements(); this.labelContext = context; this.labelFont = context.font;
+    }
     const scale = Math.min(this.width, this.height) * 0.4 / this.extent;
-    const measureText = (text: string) => context.measureText(text).width;
+    const cy = Math.cos(camera.yaw), sy = Math.sin(camera.yaw), cp = Math.cos(camera.pitch), sp = Math.sin(camera.pitch);
+    const measureText = (text: string) => { this.diagnostics?.count("labels.measureText.calls"); return context.measureText(text).width; };
     for (const index of this.labelCache.atZoom(camera.zoom, this.focus)) {
-      const node = this.nodes[index]!, point = this.coordinates.get(node.id); if (!point) continue;
-      const p = projectMemoryPoint(point, camera, scale, this.width, this.height), x = p.x + 9, y = p.y;
+      const node = this.nodes[index]!;
+      let point: MemoryPoint3D;
+      if (this.coordinates instanceof IndexedMemoryCoordinates) {
+        if (!this.coordinates.readInto(node.id, this.labelPoint)) continue;
+        point = this.labelPoint;
+      } else {
+        const value = this.coordinates.get(node.id); if (!value) continue;
+        point = value;
+      }
+      // Keep projectMemoryPoint's operation order, including its boundary rounding.
+      const rotatedX = point.x * cy + point.z * sy, depth = -point.x * sy + point.z * cy;
+      const rotatedY = point.y * cp - depth * sp, z = point.y * sp + depth * cp;
+      const perspective = 650 / Math.max(120, 650 + z * scale);
+      const x = this.width / 2 + rotatedX * scale * camera.zoom * perspective + 9;
+      const y = this.height / 2 - rotatedY * scale * camera.zoom * perspective;
       if (x < 0 || x > this.width - 25 || y < 14 || y > this.height - 5) continue;
       const { text: label, width } = this.labelCache.measure(index, measureText);
-      if (x + width > this.width || boxes.some(box => Math.abs(box.y - y) < 16 && x < box.x + box.width + 5 && x + width + 5 > box.x)) continue;
-      boxes.push({ x, y, width });
+      if (x + width > this.width) continue;
+      let collision = false;
+      for (let i = 0; i < boxCount * 3; i += 3) {
+        if (Math.abs(boxes[i + 1]! - y) < 16 && x < boxes[i]! + boxes[i + 2]! + 5 && x + width + 5 > boxes[i]!) { collision = true; break; }
+      }
+      if (collision) continue;
+      const at = boxCount++ * 3;
+      boxes[at] = x; boxes[at + 1] = y; boxes[at + 2] = width;
       context.fillStyle = "#09111bea"; context.fillRect(x - 3, y - 11, width + 6, 16);
       context.fillStyle = this.data.radii[index] === 10 ? "#fff0b0" : "#c6dfed"; context.fillText(label, x, y + 1);
-      if (boxes.length === MEMORY_LABEL_LIMIT) break;
+      if (boxCount === MEMORY_LABEL_LIMIT) break;
     }
   }
 

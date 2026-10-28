@@ -2,14 +2,15 @@ import { act, cleanup, fireEvent, render, screen } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MemoryGraph3D } from "../src/features/memory-workspace/MemoryGraph3D.js";
 
-const rendererCalls = vi.hoisted(() => ({ construct: vi.fn(), dispose: vi.fn(), setGraph: vi.fn() }));
+const rendererCalls = vi.hoisted(() => ({ construct: vi.fn(), dispose: vi.fn(), setGraph: vi.fn(), setPositions: vi.fn(), setPicking: vi.fn(), labels: vi.fn(), render: vi.fn(), invalidateLabelMeasurements: vi.fn() }));
 vi.mock("../src/features/memory-workspace/memory-webgl-renderer.js", () => ({
   MemoryWebGLRenderer: class {
     width = 1; height = 1; dpr = 1;
     constructor() { rendererCalls.construct(); }
     resize(width: number, height: number, dpr: number) { this.width = width; this.height = height; this.dpr = dpr; }
-    setGraph() { rendererCalls.setGraph(); } setPositions() {} setPicking() {} setFocus() {} render() {} labels() {}
+    setGraph(...args: unknown[]) { rendererCalls.setGraph(...args); } setPositions(...args: unknown[]) { rendererCalls.setPositions(...args); } setPicking(...args: unknown[]) { rendererCalls.setPicking(...args); } setFocus() {} render(...args: unknown[]) { rendererCalls.render(...args); } labels(...args: unknown[]) { rendererCalls.labels(...args); }
     dispose() { rendererCalls.dispose(); }
+    invalidateLabelMeasurements() { rendererCalls.invalidateLabelMeasurements(); }
     pick() { return null; }
   }
 }));
@@ -52,6 +53,48 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.useRealTimers(); vi.restoreAllMocks(); vi.unstubAllGlobals(); history.replaceState(null, "", "/"); });
 
 describe("memory WebGL startup", () => {
+  it("uses the Canvas fallback when WebGL is unavailable at startup", () => {
+    vi.spyOn(HTMLCanvasElement.prototype,"getContext").mockImplementation(((kind:string)=>kind==="2d"?{setTransform(){}}:null) as HTMLCanvasElement["getContext"]);
+    mount();
+    expect(rendererCalls.construct).not.toHaveBeenCalled();
+    expect(screen.getByText("Canvas view · showing up to 2,000 nodes")).not.toBeNull();
+    expect((screen.getByRole("button",{name:"Measure 600 frames"}) as HTMLButtonElement).disabled).toBe(true);
+  });
+
+  it("invalidates font metrics on font completion and removes the listener on unmount", () => {
+    const descriptor=Object.getOwnPropertyDescriptor(document,"fonts"),fonts=new EventTarget();
+    Object.defineProperty(document,"fonts",{configurable:true,value:fonts});
+    try {
+      const view=mount();act(()=>fonts.dispatchEvent(new Event("loadingdone")));
+      expect(rendererCalls.invalidateLabelMeasurements).toHaveBeenCalledTimes(1);
+      view.unmount();fonts.dispatchEvent(new Event("loadingdone"));
+      expect(rendererCalls.invalidateLabelMeasurements).toHaveBeenCalledTimes(1);
+    } finally { if(descriptor)Object.defineProperty(document,"fonts",descriptor);else Reflect.deleteProperty(document,"fonts"); }
+  });
+  it("uses the latest committed generation during staged initialization and restoration", () => {
+    const graph = (id:string) => ({nodes:[{id,label:id,type:"SOURCE" as const,recordId:null,sourcePath:null}],edges:[],positions:new Map(),coordinates:new Map([[id,{x:0,y:0,z:0}]]),showTitles:true,selectedNodeId:null,onSelectNode:vi.fn(),loading:true,resetToken:0});
+    const first=graph("first"), next=graph("next");
+    const view=render(<MemoryGraph3D {...first}/>);
+    act(()=>{vi.advanceTimersToNextTimer();vi.advanceTimersToNextTimer();});
+    view.rerender(<MemoryGraph3D {...next}/>);
+    expect(rendererCalls.setPositions).not.toHaveBeenCalled();
+    act(()=>vi.runAllTimers());
+    expect(rendererCalls.setGraph).toHaveBeenCalledTimes(1); expect(rendererCalls.setGraph.mock.calls[0]![0]).toBe(next.nodes);
+    expect(rendererCalls.setPositions).toHaveBeenCalledTimes(1); expect(rendererCalls.setPositions.mock.calls[0]![0]).toBe(next.coordinates);
+    view.rerender(<MemoryGraph3D {...next} showTitles={false}/>); tick(10);
+    expect(rendererCalls.setPositions).toHaveBeenCalledTimes(1); expect(rendererCalls.labels.mock.calls.at(-1)![2]).toBe(false);
+    const canvas=screen.getByRole("application");
+    fireEvent.keyDown(canvas,{key:"ArrowRight"}); tick(20);
+    expect(rendererCalls.render.mock.calls.at(-1)![0].yaw).toBeCloseTo(.45);
+    fireEvent.keyDown(canvas,{key:"Enter"}); expect(next.onSelectNode).toHaveBeenCalledWith("next");
+    fireEvent(canvas,new Event("webglcontextlost",{cancelable:true}));
+    expect(screen.getByText("Canvas view · showing up to 2,000 nodes")).not.toBeNull();
+    const restored=graph("restored"); view.rerender(<MemoryGraph3D {...restored}/>);
+    fireEvent(canvas,new Event("webglcontextrestored")); act(()=>vi.runAllTimers());
+    expect(rendererCalls.setPositions).toHaveBeenCalledTimes(2); expect(rendererCalls.setPositions.mock.calls[1]![0]).toBe(restored.coordinates);
+    view.unmount(); act(()=>vi.runAllTimers());
+    expect(rendererCalls.setPositions).toHaveBeenCalledTimes(2);
+  });
   it("yields between context creation, program setup and graph upload, keeping measurement disabled until ready", () => {
     mount(false);
     const button = screen.getByRole("button", { name: "Measure 600 frames" }) as HTMLButtonElement;
@@ -107,6 +150,18 @@ describe("memory WebGL startup", () => {
 });
 
 describe("memory frame benchmark validity", () => {
+  it("leaves unchanged label backing sizes intact, redraws and keeps a same-size run valid",()=>{
+    const widthSetter=vi.spyOn(HTMLCanvasElement.prototype,"width","set"),heightSetter=vi.spyOn(HTMLCanvasElement.prototype,"height","set");
+    mount(); const widths=widthSetter.mock.calls.length,heights=heightSetter.mock.calls.length;
+    fireEvent.click(screen.getByRole("button",{name:"Measure 600 frames"}));tick(100);
+    act(()=>{for(let i=0;i<100;i++)resizeCallback([],{} as ResizeObserver);});
+    expect(widthSetter).toHaveBeenCalledTimes(widths);expect(heightSetter).toHaveBeenCalledTimes(heights);
+    expect(result()).toContain("Measuring");tick(117);expect(rendererCalls.render.mock.calls.length).toBeGreaterThan(1);
+    vi.stubGlobal("devicePixelRatio",2);act(()=>resizeCallback([],{} as ResizeObserver));
+    expect(JSON.parse(result()).reason).toContain("pixel density changed");
+    const labelCanvas=document.querySelector(".memory-3d-labels") as HTMLCanvasElement;
+    expect([labelCanvas.width,labelCanvas.height]).toEqual([1800,1200]);
+  });
   it("waits for a hidden tab, then measures all 600 intervals without filtering slow frames", () => {
     visibility = "hidden";
     mount();
@@ -118,6 +173,10 @@ describe("memory frame benchmark validity", () => {
     let now = 100;
     for (let i = 0; i <= 600; i++) { tick(now); now += i < 540 ? 17 : 100; }
     expect(JSON.parse(result())).toMatchObject({ status: "complete", valid: true, frames: 600, visibility: "visible", frameP50Ms: 17, frameP95Ms: 100, observerSupport: { longTasks: false, longAnimationFrames: false }, maxLoadOrLayoutTaskMs: null, maxPageTaskMs: null, longFrames: null });
+    expect(JSON.parse(result()).rawFrameIntervals).toHaveLength(600);
+    expect(JSON.parse(result()).rawFrameIntervals.filter((value: number) => value === 100)).toHaveLength(60);
+    expect(JSON.parse(result()).authoritative).toBe(true);
+    expect(JSON.parse(result()).diagnostic).toBe(false);
   });
 
   it("invalidates a run hidden midway and requires an explicit fresh start", () => {
@@ -130,7 +189,7 @@ describe("memory frame benchmark validity", () => {
     expect(JSON.parse(result()).status).toBe("invalid");
     fireEvent.click(screen.getByRole("button", { name: "Measure scheduling baseline" }));
     for (let i = 0; i <= 600; i++) tick(21000 + i * 17);
-    expect(JSON.parse(result())).toMatchObject({ status: "complete", valid: true, mode: "scheduler", frames: 600, frameP95Ms: 17 });
+    expect(JSON.parse(result())).toMatchObject({ status: "complete", valid: true, authoritative: false, mode: "scheduler", frames: 600, frameP95Ms: 17 });
   });
 
   it("retains a task failure and its timing while separating earlier page startup", () => {

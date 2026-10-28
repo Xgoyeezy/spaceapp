@@ -46,9 +46,9 @@
       "dependency": 1,
       "status": "confirmed",
       "reproduction": "agent-files.test.ts; files-routes-security.test.ts",
-      "evidence": "agent-files.test.ts; files-routes-security.test.ts",
-      "disposition": "Active raw/generic artifacts now download with sandbox CSP, nosniff, no-store. DOCX sanitized sandbox stays; browser proof remains.",
-      "resolution": "partial"
+      "evidence": "agent-files.test.ts; files-routes-security.test.ts; apps/api/tests/file-response-browser.integration.test.ts (real Chrome, 2026-10-27)",
+      "disposition": "Active raw/generic artifacts now download with sandbox CSP, nosniff, no-store. DOCX sanitized sandbox stays; browser proof remains. 2026-10-27 (goal e803a663, plan clipboard:zJF0KEWRcCje step 4): the browser proof exists: apps/api/tests/file-response-browser.integration.test.ts signs a real headless Chrome (google-chrome 150) in to a real API on 127.0.0.1 and opens /api/artifacts/:id/file and /preview for an uploaded HTML page, an SVG with onload and script, an HTML file uploaded as image/png, a real PNG, and records stored with the active types text/html and image/svg+xml. Result: every page and SVG downloads (net::ERR_ABORTED, the tab never renders it); the disguised file and the real PNG render inline only in an opaque origin (self.origin null, document.cookie throws SecurityError); no script reached the API (no /api/rooms request from the tab). With the policy weakened to inline without sandbox the test fails (the page renders in the app origin). Not in the browser run: the DOCX preview, whose HTML is sanitized and served with the same sandbox and default-src none (agent-files.test.ts).",
+      "resolution": "fixed"
     },
     {
       "id": "FS-003",
@@ -70,9 +70,9 @@
       "dependency": 1,
       "status": "confirmed",
       "reproduction": "file-upload.test.ts; files-routes-security.test.ts",
-      "evidence": "tests/multipart-upload.test.ts; tests/file-upload.test.ts; tests/agent-files.test.ts; docs/quality/verification-results.json; apps/api/tests/files-upload-http.test.ts (0baa613b7f)",
-      "disposition": "All app.ts multipart routes now use shared disk staging/admission, hard per-route and aggregate limits, backpressure and cleanup. Ordinary files persist with streaming hash verification and no-follow ancestors. DOCX, bookmark JSON (2 MiB) and voice-provider input (10 MiB) use bounded buffers under admission. 96 MiB staging RSS regression passes; authenticated localhost HTTP concurrency now verified: four64MiB streams, fifth429, abort cleanup/slot reuse, exact hashes, RSS growth<128MiB. Actual live browser/proxy proof remains. JSON Control media/files publishing now shares bounded staging and admission (282487abe1). Ambiguous record errors preserve complete files and a private reconciliation journal (8658316629).",
-      "resolution": "partial"
+      "evidence": "tests/multipart-upload.test.ts; tests/file-upload.test.ts; tests/agent-files.test.ts; docs/quality/verification-results.json; apps/api/tests/files-upload-http.test.ts (0baa613b7f); PROVE_LARGE_UPLOAD on dev 2026-10-27 (scripts/large-upload-proof.mjs)",
+      "disposition": "All app.ts multipart routes now use shared disk staging/admission, hard per-route and aggregate limits, backpressure and cleanup. Ordinary files persist with streaming hash verification and no-follow ancestors. DOCX, bookmark JSON (2 MiB) and voice-provider input (10 MiB) use bounded buffers under admission. 96 MiB staging RSS regression passes; authenticated localhost HTTP concurrency now verified: four64MiB streams, fifth429, abort cleanup/slot reuse, exact hashes, RSS growth<128MiB. Actual live browser/proxy proof remains. JSON Control media/files publishing now shares bounded staging and admission (282487abe1). Ambiguous record errors preserve complete files and a private reconciliation journal (8658316629). 2026-10-27 (goal e803a663, plan clipboard:zJF0KEWRcCje step 4): the live browser/proxy proof exists, space_authenticated_ui_proof interaction PROVE_LARGE_UPLOAD (scripts/large-upload-proof.mjs; new empty Agent Proof room, full catalog only). The signed-in page builds a 96 MiB random file, hashes it with WebCrypto and uploads it with fetch through nginx (http://127.0.0.1:4911:4940) into the room's Agent Files while the proof samples the API node process's VmRSS every 100 ms; it passes only on 200, the exact byte size, the page's SHA-256 equal to the stored one, RSS growth under 64 MiB (a buffered upload adds at least 96 MiB) and the proof's file deleted again. Three runs on dev from this change's worktree: ok, 1.7-2.0 s per upload, API RSS growth 31, 35 and 0 MiB, no bad responses, proof rooms deleted (reports/20261027T155129Z-space-auth-proof-93d6d8ff-70ba-4e2b-a61d-b1bd65342f33 and the two after it). The proof is in stable's catalog after the next promote.",
+      "resolution": "fixed"
     },
     {
       "id": "FS-004",
@@ -119,7 +119,7 @@
       "status": "partially-fixed",
       "reproduction": "failure-matrix.md",
       "evidence": "failure-matrix.md; apps/worker/tests/worker-hard-kill.integration.test.ts (3/3, two consecutive runs); apps/api/tests/browser-chrome-crash.integration.test.ts (3/3); evidence /var/lib/spaceapp-user/agent-workspace/reports/20261012-worker-kill-chrome-crash/",
-      "disposition": "2026-10-11: all nine failure classes in docs/quality/failure-matrix.md have status, test or evidence citations and a not-guaranteed column. PostgreSQL restart (graceful/crash, inside a transaction and after an unacknowledged COMMIT) is proven with a disposable database (execution-intent-postgres-restart.test.ts 6/6). Live Temporal: 64 graceful worker restarts, 28 executions resumed on a new worker process, 0 failed because of a restart. Four defects fixed (CORE-009..012). 2026-10-12: real SIGKILL/SIGTERM of the unchanged worker against a disposable Temporal+PostgreSQL (Codex turn re-enters the same run and thread, original prompt sent once; single-attempt OpenCode turn settled exactly once as unknown by the API sweep) and a real google-chrome 150 SIGKILL under the unchanged Browser Host (replacement in about 1 s with both tabs reloaded, in-flight CDP call fails within 0.5 s); two browser defects fixed (CORE-014, CORE-015). Still open: authenticated CLI exit/resume, browser WebSocket recovery, Browser Host process crash, a stalled-but-alive Chrome. 2026-10-12 (75ff5fe68f): browser-chrome-crash.integration.test.ts adds a SIGSTOPped (stalled but alive) Chrome: no call hangs past the 30 s client timeout and the same Chrome serves again 37 ms after SIGCONT; and a Browser Host process crash with its whole process group SIGKILLed (as KillMode=control-group does) and a new host on the same socket (fresh PrivateTmp emulated): listening in 1.4 s, restore 655 ms, active /a and background /b reloaded, one Chrome. It found a defect, fixed in the same commit: after Chrome died during a navigation, the next start or getActive reloaded the uncommitted target (a never-answering page hung the restore 30 s). The host code takes effect at its guarded restart. Still open: an authenticated CLI exit/resume run on live (PROVE_CODEX_RESUME passed 2026-10-12) and the browser-to-API WebSocket path under a host restart.",
+      "disposition": "2026-10-11: all nine failure classes in docs/quality/failure-matrix.md have status, test or evidence citations and a not-guaranteed column. PostgreSQL restart (graceful/crash, inside a transaction and after an unacknowledged COMMIT) is proven with a disposable database (execution-intent-postgres-restart.test.ts 6/6). Live Temporal: 64 graceful worker restarts, 28 executions resumed on a new worker process, 0 failed because of a restart. Four defects fixed (CORE-009..012). 2026-10-12: real SIGKILL/SIGTERM of the unchanged worker against a disposable Temporal+PostgreSQL (Codex turn re-enters the same run and thread, original prompt sent once; single-attempt OpenCode turn settled exactly once as unknown by the API sweep) and a real google-chrome 150 SIGKILL under the unchanged Browser Host (replacement in about 1 s with both tabs reloaded, in-flight CDP call fails within 0.5 s); two browser defects fixed (CORE-014, CORE-015). Still open: authenticated CLI exit/resume, browser WebSocket recovery, Browser Host process crash, a stalled-but-alive Chrome. 2026-10-12 (75ff5fe68f): browser-chrome-crash.integration.test.ts adds a SIGSTOPped (stalled but alive) Chrome: no call hangs past the 30 s client timeout and the same Chrome serves again 37 ms after SIGCONT; and a Browser Host process crash with its whole process group SIGKILLed (as KillMode=control-group does) and a new host on the same socket (fresh PrivateTmp emulated): listening in 1.4 s, restore 655 ms, active /a and background /b reloaded, one Chrome. It found a defect, fixed in the same commit: after Chrome died during a navigation, the next start or getActive reloaded the uncommitted target (a never-answering page hung the restore 30 s). The host code takes effect at its guarded restart. Still open: an authenticated CLI exit/resume run on live (PROVE_CODEX_RESUME passed 2026-10-12) and the browser-to-API WebSocket path under a host restart. 2026-10-27 (ticket q-20261027-145234-3afd, goal e803a663): the browser-to-API stream path under a Browser Host restart is closed. Defect found: a frame or audio viewer whose host stream died with the host process kept its WebSocket open with no frame and no end signal (the API host client never ends stream subscriptions when its socket closes). apps/api/src/browser-stream-host-watch.ts reads the host health (pid and start time) every 5 s while any viewer is open; a new host identity or two failed reads close the viewer (1012/1011) and stop its stream, and the page reconnects to the live host. Evidence: browser-realtime-stream.test.ts host-restart case (fails before the fix), browser-stream-host-watch.test.ts 4/4, and the real host-crash case of browser-chrome-crash.integration.test.ts (5/5): viewer ended 381 ms after the process-group SIGKILL, the reconnected stream sent its first frame from the new host after 521 ms. Still open: an authenticated CLI exit and resume on live with matching task, process and database identity (PROVE_CODEX_RESUME only proves the resume picker keeps session and PID), and an authenticated CLI-pane terminal WebSocket recovery with an unchanged native ID and PID.",
       "resolution": "partial"
     },
     {
@@ -191,7 +191,7 @@
       "status": "confirmed",
       "reproduction": "packages/contracts/src/schemas.ts",
       "evidence": "packages/contracts/src/schemas.ts",
-      "disposition": "Shape validation and business validators remain mixed; extract only after behavior tests. First bounded extraction6c68110cff removes247 lines from app.ts into artifact read routes/storage/error helpers with narrow store interfaces;32 scoped checks pass. The60% API/frontend decomposition target remains open.",
+      "disposition": "Shape validation and business validators remain mixed; extract only after behavior tests. First bounded extraction6c68110cff removes247 lines from app.ts into artifact read routes/storage/error helpers with narrow store interfaces;32 scoped checks pass. The60% API/frontend decomposition target remains open. 2026-10-28 (goal e803a663, plan clipboard:zJF0KEWRcCje step 4, ticket q-20261028-002230 batch b-20261028-002230-b8e4): second bounded extraction, behavior pinned first: the rule 'an update must change at least one field' was copied into 18 schemas in schemas.ts; it is now one helper, packages/contracts/src/update-rules.ts atLeastOneField, and packages/contracts/tests/update-rules.test.ts pins the 18 exported schemas and their exact messages (identical before and after the change). Not moved: five similar copies with other wording in gateway.ts (3), dot-home.ts and dots.ts, and the remaining superRefine business validators in schemas.ts (about 80 refine/superRefine calls). Still open: the rest of the validator extraction and the 60% API/frontend decomposition target.",
       "resolution": "open"
     },
     {
@@ -212,11 +212,11 @@
       "owner": "Codex",
       "reviewer": "maintainer (not yet reviewed)",
       "dependency": 3,
-      "status": "needs-runtime-proof",
+      "status": "confirmed",
       "reproduction": "baseline.json",
-      "evidence": "baseline.json",
-      "disposition": "Streaming integrations and bot domains separated from app.ts with11authenticated and4standalone checks. Broader optional-feature disabled boot matrix and lazy loading remain open.",
-      "resolution": "open"
+      "evidence": "baseline.json; apps/api/tests/optional-modules-boot-matrix.test.ts (2026-10-27)",
+      "disposition": "Streaming integrations and bot domains separated from app.ts with11authenticated and4standalone checks. Broader optional-feature disabled boot matrix and lazy loading remain open. 2026-10-27 (goal e803a663, plan clipboard:zJF0KEWRcCje step 4): the API boot matrix exists: apps/api/tests/optional-modules-boot-matrix.test.ts boots the API with no module, with all 14 and with every module but one (16 boots, about 9 s); each time the core workspace answers and exactly the enabled modules have their routes (Channels, which keeps its routes and needs PostgreSQL repositories for its service, is checked off only). It passes today, so no API module depends on another, and it fails when one does (design gated on video too: \"video off: design registered=false\"). Still open: the web side, where copilot panes load lazily only inside the Warm-protected PaneCard and the app reads server-modules for visibility, without a matching disabled-module UI matrix. 2026-10-28: the matrix is on stable (d9030907ab, dev ticket q-20261027-163153-4094, promoted to stable). Status is partial, not fixed: the web-side disabled-module matrix stays open, and any change there touches PaneCard (Warm) and needs the operator's prior approval of the exact change.",
+      "resolution": "partial"
     },
     {
       "id": "ADAPTER-001",
@@ -239,7 +239,7 @@
       "status": "confirmed",
       "reproduction": "runtime-compatibility.md",
       "evidence": "runtime-compatibility.md (2026-10-11, inventory 20261011T161658Z, exact installed versions); apps/api/tests/cli-adapter-runtime-contract.test.ts (99 tests, 16 runtimes x start/send/interrupt/inspect/events/reconnect); scripts/tests/cli-canary.test.mjs (13 tests); sample canary verdict reports/cli-canary/20261011T151758Z-codex-0.162.1.json (23/23 PASS, promotion NOT_PERFORMED)",
-      "disposition": "2026-10-12: contract suite covers all 16 runtimes and checks every declared start/resume/login argv against the wrapper filter and sudoers, plus a strictly validated limitations list that must equal what the facts imply. Task-history resume resolves through the adapter registry (cli-native-task-resume.ts) with no per-runtime branch in app.ts (Codex keeps its thread-claim path). An isolated per-version canary (no network, empty HOME, never promotes) exists; matrix records 15 PASS and Cursor PASS_WITH_UNVERIFIED. Open: no runtime has a live end-to-end proof in this matrix, and the weekly canary timer (deploy/space-cli-canary.timer) is a repository file that an operator must install.",
+      "disposition": "2026-10-12: contract suite covers all 16 runtimes and checks every declared start/resume/login argv against the wrapper filter and sudoers, plus a strictly validated limitations list that must equal what the facts imply. Task-history resume resolves through the adapter registry (cli-native-task-resume.ts) with no per-runtime branch in app.ts (Codex keeps its thread-claim path). An isolated per-version canary (no network, empty HOME, never promotes) exists; matrix records 15 PASS and Cursor PASS_WITH_UNVERIFIED. Open: no runtime has a live end-to-end proof in this matrix, and the weekly canary timer (deploy/space-cli-canary.timer) is a repository file that an operator must install. 2026-10-28 (goal e803a663, plan clipboard:zJF0KEWRcCje step 4), checked against the host and runtime-compatibility.md: both of those two open points were already partly closed. (1) The weekly canary timer is installed (space-cli-canary.timer, next Sun 2026-11-01 04:43 EET) and ran on 2026-10-25 02:41 UTC for 8 candidate versions: codex 0.164.0, claude 2.1.310, gemini 1.4.7, opencode 2.1.4, kimi 2.3.1, grok 1.0.70 and deepseek 2.51.0 PASS, qwen 0.26.1 BLOCKED (PATCH_REBASE_REQUIRED: the reviewed Space patch must be rebased first); promotion NOT_PERFORMED for all; reports in agent-workspace/reports/cli-canary/20261025T0241*. (2) Live end-to-end proofs exist for four runtimes on stable (runtime-compatibility.md, Live runtime proofs 2026-10-16): Codex and Claude Code PROVE_CLI_INPUT (draft, paste, submit, exact model answer, same session and PID across a dwell and a reload), Codex PROVE_CODEX_RESUME, OpenCode through Space Control (prompt answered, stop left INTERRUPTED, next prompt in the same session); a Codex interrupt failure and an OpenCode browser-typed failure were found and fixed after that. Still open: no live end-to-end proof for Gemini, Qwen, Kimi, Grok, Cursor, GitHub Copilot, Autohand, DeepSeek, Hermes and the other runtimes of the matrix (several are disabled in the operator's runtime settings), no host-loss resume proof for any runtime, and the Qwen patch rebase for 0.26.1 (Qwen stays on its current version until it is done).",
       "resolution": "open"
     },
     {
@@ -263,7 +263,7 @@
       "status": "confirmed",
       "reproduction": "apps/api/src/app.ts",
       "evidence": "docs/quality/observability.md; apps/api/tests/trace-correlation.test.ts 8/8; apps/api/tests/observability-fault-injection.test.ts 6/6; apps/worker/tests/activity-observability.test.ts 9/9; packages/contracts/tests/observability.test.ts 31/31; packages/runtime/tests/metrics-registry.test.ts 4/4",
-      "disposition": "2026-10-11: one id (the request id, traceId) now reaches the turn input, a Temporal memo (spaceTraceId, traceparent, w3cTraceId), worker activity records with reasonCode and category, and TURN_FAILED events; GET /api/admin/traces/:traceId returns the causal error with ids, codes and statuses only. Injected faults map to categories (TOOL_UNAVAILABLE, TIMEOUT, PROTOCOL, STATE_MISSING, TEMPORAL_UNAVAILABLE). Local metrics without external telemetry: API /metrics (CPU, event-loop delay, errors by code/category, Temporal backlog and age, workflow starts, retries, CLI disconnect/reconnect), restricted to loopback/private clients and admins; opt-in loopback worker and Temporal SDK metrics; W3C traceparent continued without OpenTelemetry. Open: supervisor child failures carry generic text (needs patched()), mission/task rows lack trace columns, background continuations start new traces, memory workers and CLI/browser hosts have no metrics; span export exists since 2026-10-12 as optional OTLP/HTTP JSON for API request spans (SPACE_OTEL_EXPORTER_OTLP_ENDPOINT, off by default, fd377fdb83), still without worker/host spans. 2026-10-12 (c68d980079): the CLI and Browser Hosts are covered by metrics the API observes (space_host_up, start time, resident memory and CPU from /proc after a command-line check, CLI sessions by status and attachments, browser sessions and live workloads against their limits), so the hosts need no endpoint of their own and no restart. Still open: memory-worker metrics, worker/host spans, trace columns on mission/task rows. 2026-10-12 (8ad3e77858): the memory-maintenance and memory-mutation workers are in /metrics too (space_host_up, start time, resident memory, CPU), found in /proc by command line at most every 15 s, with no worker change or restart.",
+      "disposition": "2026-10-11: one id (the request id, traceId) now reaches the turn input, a Temporal memo (spaceTraceId, traceparent, w3cTraceId), worker activity records with reasonCode and category, and TURN_FAILED events; GET /api/admin/traces/:traceId returns the causal error with ids, codes and statuses only. Injected faults map to categories (TOOL_UNAVAILABLE, TIMEOUT, PROTOCOL, STATE_MISSING, TEMPORAL_UNAVAILABLE). Local metrics without external telemetry: API /metrics (CPU, event-loop delay, errors by code/category, Temporal backlog and age, workflow starts, retries, CLI disconnect/reconnect), restricted to loopback/private clients and admins; opt-in loopback worker and Temporal SDK metrics; W3C traceparent continued without OpenTelemetry. Open: supervisor child failures carry generic text (needs patched()), mission/task rows lack trace columns, background continuations start new traces, memory workers and CLI/browser hosts have no metrics; span export exists since 2026-10-12 as optional OTLP/HTTP JSON for API request spans (SPACE_OTEL_EXPORTER_OTLP_ENDPOINT, off by default, fd377fdb83), still without worker/host spans. 2026-10-12 (c68d980079): the CLI and Browser Hosts are covered by metrics the API observes (space_host_up, start time, resident memory and CPU from /proc after a command-line check, CLI sessions by status and attachments, browser sessions and live workloads against their limits), so the hosts need no endpoint of their own and no restart. Still open: memory-worker metrics, worker/host spans, trace columns on mission/task rows. 2026-10-12 (8ad3e77858): the memory-maintenance and memory-mutation workers are in /metrics too (space_host_up, start time, resident memory, CPU), found in /proc by command line at most every 15 s, with no worker change or restart. 2026-10-27 (goal e803a663, plan clipboard:zJF0KEWRcCje step 4): done since this entry was written: worker and both memory workers export OTLP activity spans under the caller's traceparent (2026-10-16), Room Agent missions and task runs carry trace_id and error_code (migration 0206), and supervisor failures keep their cause as an error code (31e2d2ef23, EXT-G-5). New: a CLI session keeps the request that allocated it (pane_cli_sessions.trace_id, migration 0258) and /api/admin/traces/:traceId returns cliSessions with their cliTaskId and cliTaskRevisionId (cli-terminal-control.test.ts end to end through the route; room-agent-trace-postgres.test.ts on a disposable PostgreSQL). Still open: CLI and Browser Host spans (host code ships only with the guarded host restart), collector scrape of the worker's loopback metrics endpoints, recovery counters beyond plan retries, terminal reconnects and activity retries. 2026-10-28 (goal e803a663, plan clipboard:zJF0KEWRcCje step 9): the three recovery counters this line names already existed: plan retries as space_recovery_events_total{kind=\"plan_model_retry\"} (apps/api/src/api-metrics.ts), terminal reconnects as space_cli_terminal_reconnects_total{source,outcome} with the server's REATTACHED and the client's SCHEDULED/SUCCEEDED/STOPPED/SESSION_RECOVERED (observability-metrics.test.ts), activity retries as space_worker_activity_retries_total (apps/worker/src/worker-metrics.ts). New: kind browser_stream_host counts a Browser Host restart that ends live browser viewers (SCHEDULED, the pages reconnect) and a host that stays unreadable (FAILED), once per host-watch end, not per viewer (browser-stream-host-watch.ts; test: the OBS-001 case in browser-stream-host-watch.test.ts). Still open: CLI and Browser Host spans, collector scrape of the worker's loopback metrics endpoints.",
       "resolution": "partial"
     },
     {
@@ -431,7 +431,7 @@
       "status": "confirmed",
       "reproduction": "failure-matrix.md",
       "evidence": "docs/quality/restore-and-migrations.md; scripts/restore-drill.mjs (+ scripts/tests/restore-drill.test.mjs); scripts/space-db-backup.mjs (+ tests); reports /var/lib/spaceapp-user/agent-workspace/reports/20261011-restore-drill/",
-      "disposition": "Resolved 2026-10-11. Restore drill of live PostgreSQL into a separate container: 148/148 tables with matching counts and checksums, 217 foreign keys with 0 orphans, identical migration history, store opens with 0 pending migrations; temporal and temporal_visibility match. RTO measured 28.1/13.5/18.4 s (median 18.4 s, declared conditions in the doc). RPO was up to 7 days (weekly VM snapshot; 21 days observed after two failed runs). A daily validated logical backup (pg_dump custom format, TOC + full-decompress validation, SHA-256 manifest, 7 daily + 4 weekly) now runs from a user systemd timer, giving RPO <= 1 day for the database; a fresh backup restored into a disposable container matched live (158/158 tables, 155/155 migrations). Limits: both copies live on public-host; the 132-142 GB VM backup restore was never drilled. 2026-10-16: daily dumps copied off public-host to the StorageBox and read back (b4bf5c90ae). A full qmrestore boot needs storage no production guest uses (local-zfs 74% used); it stays an operator step. Also internal review 1.1.5 Codex #8.",
+      "disposition": "Resolved 2026-10-11. Restore drill of live PostgreSQL into a separate container: 148/148 tables with matching counts and checksums, 217 foreign keys with 0 orphans, identical migration history, store opens with 0 pending migrations; temporal and temporal_visibility match. RTO measured 28.1/13.5/18.4 s (median 18.4 s, declared conditions in the doc). RPO was up to 7 days (weekly VM snapshot; 21 days observed after two failed runs). A daily validated logical backup (pg_dump custom format, TOC + full-decompress validation, SHA-256 manifest, 7 daily + 4 weekly) now runs from a user systemd timer, giving RPO <= 1 day for the database; a fresh backup restored into a disposable container matched live (158/158 tables, 155/155 migrations). Limits: both copies live on public-host; the 132-142 GB VM backup restore was never drilled. 2026-10-16: daily dumps copied off public-host to the StorageBox and read back (b4bf5c90ae). A full qmrestore boot needs storage no production guest uses (local-zfs 74% used); it stays an operator step. Also internal review 1.1.5 Codex #8. External review 2026-10-16 #3: the portable backup runs while writers continue and leaves out the Temporal databases; the installer change (pause, Temporal dumps, staged restore) is planned for the next run-spaceapp release. Public overlay 56ceb06 (did not ship in 1.1.6: the 1.1.6 re-cut from f8803d5d96 did not take it; ships in run-spaceapp 1.1.7): spaceapp backup pauses core, CLI, browser and Temporal and also dumps the Temporal databases; restore stages the files and restores each database in its own transaction before swapping them in; run-spaceapp 1.1.7 (rc3) first copies the current databases aside and, when a later database or the file swap fails, puts every database and the files back, or prints the command per database when that fails too (internal review 1.1.7, Codex #2: separate transactions are not one restore). Drill 2026-10-16 with spaceapp-core 1.1.6, PostgreSQL 17 with pgvector and Temporal 1.29: backup and restore exact; a restore that fails in the database leaves database, Temporal and files untouched, where the 1.1.6 restore had already replaced the files. A schemaVersion 2 backup cannot be restored by an older SpaceApp.",
       "resolution": "partial"
     },
     {
@@ -581,7 +581,7 @@
     {
       "id": "PRODUCT-001",
       "reviewerSection": "D/K/Q §scope",
-      "observation": "Single-owner, multi-tenancy, HA and BSL limitations",
+      "observation": "Single-owner, multi-tenancy and HA limitations",
       "observationSource": "Supplied roadmap synthesis; not a freshly retrieved verbatim reviewer quotation",
       "reviewedShas": {
         "D": "89559e0620e065b2d552043a9655d215c1c08f25",
@@ -743,7 +743,7 @@
       "status": "confirmed",
       "reproduction": "tests/terminal-pane-upload.test.ts:1109",
       "evidence": "tests/terminal-pane-upload.test.ts:1109",
-      "disposition": "Operator explicitly approved artifact:hJfmPdrABx-F on 2026-10-03. Implemented in aa61f205a0: ignore unsolicited control_upgraded unless this socket has a pending upgrade. Five scoped regressions and web typecheck pass. Full terminal file still has 32 failures; authenticated warm-retention proof and deployment are pending.",
+      "disposition": "Operator explicitly approved artifact:hJfmPdrABx-F on 2026-10-03. Implemented in aa61f205a0: ignore unsolicited control_upgraded unless this socket has a pending upgrade. Five scoped regressions and web typecheck pass. Full terminal file still has 32 failures; authenticated warm-retention proof and deployment are pending. 2026-10-27 (goal e803a663): aa61f205a0 is on stable and dev, and tests/terminal-pane-upload.test.tsx now passes in full (256/256; the 32 failures are gone). Still pending: the authenticated warm-retention evidence that an unfocused observer never sends control_request after a room switch; the warm proofs already record per-pane control frames (warm-capacity-proof.mjs terminalMetadata), so the next Warm measurement run can show it without any Warm code change.",
       "resolution": "partial"
     },
     {
@@ -823,7 +823,7 @@
       "status": "confirmed",
       "reproduction": "apps/api/tests/cli-runtimes.test.ts",
       "evidence": "apps/api/tests/cli-runtimes.test.ts",
-      "disposition": "Operator explicitly approved the narrow readiness correction. Implemented 95d5736bea: a newer Codex header supersedes the earlier partial marker, while current partial/loading screens remain blocking. Unit and manager fixtures pass; real browser proof pending.",
+      "disposition": "Operator explicitly approved the narrow readiness correction. Implemented 95d5736bea: a newer Codex header supersedes the earlier partial marker, while current partial/loading screens remain blocking. Unit and manager fixtures pass; real browser proof pending. 2026-10-27 (goal e803a663): 95d5736bea is on stable and dev. Still pending: a real-browser case where an earlier partial MCP startup line precedes a newer Codex header (a restored or restarted Codex screen); fresh Codex panes on dev attach and run (PROVE_CLI_CONTROL_FENCE 2026-10-27) but print no such order.",
       "resolution": "partial"
     },
     {
@@ -962,9 +962,9 @@
       "dependency": 2,
       "status": "confirmed",
       "reproduction": "apps/api/tests/cli-terminal-control.test.ts",
-      "evidence": "apps/api/tests/cli-terminal-control.test.ts; docs/quality/verification-results.json",
-      "disposition": "Specific patch artifact:tmIrD-z7_4FN explicitly approved by operator on 2026-10-03 and committed as63fcb33cc4. Active replacement checks the current control lease before preparation and again before interruption. Read-only rejoin preserved.11/11 complete control tests,3/3 reconnect/start checks and API typecheck pass. No live deployment or authenticated acceptance yet.",
-      "resolution": "partial"
+      "evidence": "apps/api/tests/cli-terminal-control.test.ts (incl. the 2026-10-27 forced-restart race case); docs/quality/verification-results.json; PROVE_CLI_CONTROL_FENCE on dev 2026-10-27 (reports/20261027T151511Z-space-auth-proof-20a6aa46-8aa8-46c3-9b9f-058cbb29ef56)",
+      "disposition": "Specific patch artifact:tmIrD-z7_4FN explicitly approved by operator on 2026-10-03 and committed as63fcb33cc4. Active replacement checks the current control lease before preparation and again before interruption. Read-only rejoin preserved.11/11 complete control tests,3/3 reconnect/start checks and API typecheck pass. No live deployment or authenticated acceptance yet. 2026-10-27 (goal e803a663, plan clipboard:zJF0KEWRcCje step 4): deployed long since: the stable and dev checkouts both contain 63fcb33cc4, and both checks now live in apps/api/src/pane-cli-session-routes.ts (the route left app.ts). The second check had no test: cli-terminal-control.test.ts \"re-checks the control lease before a forced restart interrupts the session, so a takeover during preparation wins\" holds a controller's forceRestart between the two checks, lets another tab take control, and expects 409 CLI_CONTROL_REQUIRED with no host terminate and the session still RUNNING, then a 200 restart from the tab that holds the lease (24/24; with the second check removed it fails: 200 instead of 409). Still missing: an authenticated acceptance on the live instance with a real page lease and PTY (a fixed proof interaction that attaches a Codex pane in an Agent Proof room, posts forceRestart without and with the page's lease, and checks the session id and PID; it can run only from stable's proof backend, so after a promote). 2026-10-27 later (goal e803a663): that proof exists, space_authenticated_ui_proof interaction PROVE_CLI_CONTROL_FENCE (new single-pane Agent Proof room, full catalog only). Run from this change's worktree against the dev instance (real browser page holding the lease, real Codex PTY on the dev pane host, broker UI_PROOF session): forceRestart without the page lease answered 409 CLI_CONTROL_REQUIRED, same session id and host PID, terminal still attached, ok true, no bad responses, proof room deleted (evidence /var/lib/spaceapp-user/agent-workspace/reports/20261027T151511Z-space-auth-proof-20a6aa46-8aa8-46c3-9b9f-058cbb29ef56/). Stable runs the same fence (63fcb33cc4 in its checkout); the proof is in stable's catalog after the next promote.",
+      "resolution": "fixed"
     },
     {
       "id": "CONTROL-004",
@@ -1634,9 +1634,9 @@
       "dependency": 3,
       "status": "confirmed",
       "reproduction": "node scripts/domain-boundaries.mjs without the 2026-10-11 baseline entries",
-      "evidence": "docs/quality/domain-boundaries.json notes",
-      "disposition": "Baselined (not fixed) because the feature is under active development by another session; the ratchet still rejects any further cycle. Break by moving shared provider types into a leaf module.",
-      "resolution": "open"
+      "evidence": "docs/quality/domain-boundaries.json notes; node scripts/domain-boundaries.mjs (3 cyclic components, no source-control edges)",
+      "disposition": "Baselined (not fixed) because the feature is under active development by another session; the ratchet still rejects any further cycle. Break by moving shared provider types into a leaf module. Fixed 2026-10-18: the HTTP transport and URL policy moved to the leaf apps/api/src/source-control/provider-transport.ts (providers.ts re-exports it), so the adapters and git-credentials.ts no longer import providers.ts; the 13 edges left the baseline.",
+      "resolution": "fixed"
     },
     {
       "id": "REL-001",
@@ -2070,8 +2070,8 @@
       "dependency": null,
       "status": "confirmed",
       "reproduction": null,
-      "evidence": "packages/run-spaceapp/templates/compose.yml; launcher suite 164/164",
-      "disposition": "Public 813b76b: pgvector, Temporal and codex-lb are pinned by multi-arch index digest (headroom already was); the README and security model now say that SpaceApp images are pulled by exact version tag, which the release workflow publishes once (it fails closed when a tag exists) with SBOM and provenance attestations it verifies. Open: verifying the first-party digest or attestation at install time. Internal review 1.1.5 Codex #9: still open for SpaceApp's own images; planned for 1.1.7.",
+      "evidence": "packages/run-spaceapp/templates/compose.yml; launcher suite 164/164; 1.1.8 branch: packages/run-spaceapp/tests/image-attestations.test.mjs, registry-https.test.mjs, scripts/tests/published-container-verification.test.mjs",
+      "disposition": "Public 813b76b: pgvector, Temporal and codex-lb are pinned by multi-arch index digest (headroom already was); the README and security model now say that SpaceApp images are pulled by exact version tag, which the release workflow publishes once (it fails closed when a tag exists) with SBOM and provenance attestations it verifies. Open: verifying the first-party digest or attestation at install time. Internal review 1.1.5 Codex #9: still open for SpaceApp's own images; planned for 1.1.7. External review 2026-10-16 #8. 2026-10-17: public overlay 219b4c0 (ships in run-spaceapp 1.1.7, with the codex-sessions-init service pinned too): after the images are published and verified, the release writes their digests into the tested npm package (templates/images.lock.json, the only allowed difference) and the launcher pulls name:version@sha256; the devtest probe accepts pinned images. Proven only by the next real publish. 1.1.8 (public overlay branch, task:6sCDD1rdjPyC): before an installation first uses a locked version, the launcher checks its images (packages/run-spaceapp/src/image-attestations.mjs): every platform image in each pinned index needs an SBOM and an SLSA provenance statement about that exact image from oll4com/spaceapp's release.yml on main, all read by digest from the pinned index; it records the run and commit in image-attestations.json and stops before pulling otherwise. The release's verify-published-containers.mjs runs the same check, with this run's commit for a full release. The reads use HTTPS_PROXY / NO_PROXY, or else the Docker client's proxies.default in ~/.docker/config.json; an unreachable registry stops with those settings named, and a failed check stops whatever the proxy settings. Known limitation: SPACEAPP_IMAGE_VERIFY=off skips the check on air-gapped or locked-down hosts; every launcher run then warns, and the version stays recorded as unverified until a run without it verifies it. Checked read-only against the published 1.1.7 images (run 39996418646, f1c4e83), directly and through a CONNECT proxy. 1.1.8 was never published; its changes ship in 1.1.9. Evidence still missing: an install of the published 1.1.9 package.",
       "resolution": "partial"
     },
     {
@@ -2091,7 +2091,7 @@
       "status": "confirmed",
       "reproduction": "apps/api/tests/databases-service.test.ts",
       "evidence": "apps/api/tests/databases-service.test.ts",
-      "disposition": "fd98d0c7f5: HKDF(session secret, 'space:databases:credentials:v2'), no fallback; legacy payloads still read and rewritten on save.",
+      "disposition": "fd98d0c7f5: HKDF(session secret, 'space:databases:credentials:v2'), no fallback; legacy payloads still read and rewritten on save. 713905324f: decryption requires the full 16-byte GCM tag (external review 2026-10-16).",
       "resolution": "fixed"
     },
     {
@@ -2137,7 +2137,7 @@
     {
       "id": "EXT-C-F9",
       "reviewerSection": "Claude Opus 5.5 (claude-opus-5-5)",
-      "observation": "400-day stateless sessions; the token's role stands when no user record exists",
+      "observation": "Stateless sessions (30 days, renewed on use since 2026-10-19; older 400-day cookies move to 30 days on their next request); the token's role stands when no user record exists",
       "observationSource": "Independent review of the v1.1.4 snapshot (public 837e0b0), 2026-10-14",
       "reviewedShas": {
         "public": "837e0b034be977c116444b539f77409cb87642c8"
@@ -2271,7 +2271,7 @@
       "status": "confirmed",
       "reproduction": null,
       "evidence": "scripts/public-test-exclusions.json (public); npm run test:public",
-      "disposition": "Measured 2026-10-14 on the export of 67ec80863a with every test included: 1,215 application and package test files; on the exported tree runtime 204/204, gateway 744/745, web 3,607/3,622, API 3,347/3,690 tests pass. Public bc47400/bc6332703c: every application and package test is exported except 110 files listed with their reason in scripts/public-test-exclusions.json (private deploy files or scripts, host tools, PostgreSQL, maintainers scratch path, export rewrites, Temporal), and test:public runs every workspace suite; the release workflow tests the candidate before it publishes. Open: the first public CI run that shows them green, and fixing excluded tests that could run publicly.",
+      "disposition": "Measured 2026-10-14 on the export of 67ec80863a with every test included: 1,215 application and package test files; on the exported tree runtime 204/204, gateway 744/745, web 3,607/3,622, API 3,347/3,690 tests pass. Public bc47400/bc6332703c: every application and package test is exported except the files listed with their reason in scripts/public-test-exclusions.json (private deploy files or scripts, host tools, PostgreSQL, maintainers scratch path, export rewrites, Temporal), and test:public runs every workspace suite; the release workflow tests the candidate before it publishes. Open: the first public CI run that shows them green, and fixing excluded tests that could run publicly. External review 2026-10-16 #4 counted 117 exclusions, 35 of them failing on the exported tree; they are to be fixed or given a precise reason. 2026-10-16 (external review #4): none of the 34 \"fails on the exported tree\" exclusions was a product defect; they failed on rewritten fixtures, private paths and setups that read the host. 8a156edb3e with public overlay fe203af and 39eca70 brings 30 back into the public suite; four stay excluded with their exact need (real Chrome and Xvfb, Docker, a script the export does not ship, a git checkout). Open: regex literals in TerminalPane.tsx and packages/cli-host session-registry still hide /opt/spaceapp from the export rewrite (Warm and pane host: needs the operator). run-spaceapp 1.1.7: 23 previously excluded tests pass on the exported tree and run in the public suite (external review 2026-10-16 #4); 93 reviewed exclusions remain, each with its reason, three of them new since 1.1.6 because they need host-only files (the merge queue's operator-grant script, the nginx configuration).",
       "resolution": "partial"
     },
     {
@@ -2331,7 +2331,7 @@
       "status": "confirmed",
       "reproduction": null,
       "evidence": null,
-      "disposition": "34c5fcd796 moved the reported values out of the code (trusted proxies, Reasonix home, harness origin, test addresses) and the missing fixture script is exported. Other code still receives path rewrites (/opt/spaceapp -> /opt/spaceapp); the full suite on the exported tree is the remaining gate. The 2026-10-14 test measurement found the remaining rewrite breaks: the CLI upload label (cli-host session registry and web terminal echo match an escaped /opt/spaceapp path the export does not rewrite), the gateway LAN warm-up host, the web sensitive-data mask and three web texts; their tests are excluded with that reason. The cli-host fix ships only with the operator-guarded host restart.",
+      "disposition": "34c5fcd796 moved the reported values out of the code (trusted proxies, Reasonix home, harness origin, test addresses) and the missing fixture script is exported. The full public suite on the exported tree is the gate. In the 1.1.8 public overlay branch every test that was excluded for an export rewrite runs again (a3d980c: browser-evidence, browser-address, source-control-publishing-card, the gateway warm-up and configuration-bundle-store; ecf9150: terminal-hidden-echo after the CLI upload label fix a017bcafa0), and 7f4edd44f1 (2026-10-24) makes event loop profile frames strip the checkout root found from import.meta.url instead of a host path literal the export could not rewrite. Known limitation, moved to 1.1.9 (Nous decision 2026-10-25): the cli-host upload label fix and its test (packages/cli-host/tests/session-registry.test.ts, excluded from the public suite) wait for the operator-guarded pane-host restart (task:7dDeSnRDU_Kf); 1.1.9 ships the web part of that fix only (1.1.8 was never published; 1.1.9 still excludes the test).",
       "resolution": "partial"
     },
     {
@@ -2411,7 +2411,7 @@
       "status": "confirmed",
       "reproduction": "apps/api/src/__tests__/files.test.ts",
       "evidence": "apps/api/src/__tests__/files.test.ts",
-      "disposition": "e851e2f128: system roots, their direct children and the workspace with its parents are refused; every Admin Mode change is audited. Host mode itself stays an operator feature (FS-004). Internal review 1.1.5 Codex #11.",
+      "disposition": "e851e2f128: system roots, their direct children and the workspace with its parents are refused; every Admin Mode change is audited. Host mode itself stays an operator feature (FS-004). Internal review 1.1.5 Codex #11. 713905324f: the guard also compares real paths, so a symlinked ancestor cannot reach a protected directory (external review 2026-10-16).",
       "resolution": "partial"
     },
     {
@@ -2451,7 +2451,7 @@
       "status": "confirmed",
       "reproduction": "scripts/tests/composition-root-size.test.mjs",
       "evidence": "scripts/tests/composition-root-size.test.mjs",
-      "disposition": "b87ab3f03d: size ratchet (composition-root-budget.json); getting back under the 60% target remains open (ARCH-001). Internal review 1.1.5 Codex #2.",
+      "disposition": "b87ab3f03d: size ratchet (composition-root-budget.json); getting back under the 60% target remains open (ARCH-001). Internal review 1.1.5 Codex #2. External review 2026-10-16 #5.",
       "resolution": "open"
     },
     {
@@ -2471,7 +2471,7 @@
       "status": "confirmed",
       "reproduction": null,
       "evidence": null,
-      "disposition": "See OBS-001, OBS-006, OBS-007 and observability.md 'Not covered'. Internal review 1.1.5 Codex #6. 2026-10-16: missions and task runs carry trace_id and error_code (migration 0206, f5007ed3e4); the trace lookup returns them and follows background continuations; worker and memory-worker activities export OTLP spans under the caller's traceparent and the memory workers record activities (38e446c065). Still open per observability.md 'Not covered': supervisor failure codes, CLI task ids, host spans, Temporal-only workflow faults, no collector.",
+      "disposition": "See OBS-001, OBS-006, OBS-007 and observability.md 'Not covered'. Internal review 1.1.5 Codex #6. 2026-10-16: missions and task runs carry trace_id and error_code (migration 0206, f5007ed3e4); the trace lookup returns them and follows background continuations; worker and memory-worker activities export OTLP spans under the caller's traceparent and the memory workers record activities (38e446c065). Still open per observability.md 'Not covered': supervisor failure codes, CLI task ids, host spans, Temporal-only workflow faults, no collector. External review 2026-10-16 #6: 31e2d2ef23 records a failed Room Agent supervisor turn as FAILED with a safe cause code (previously INTERRUPTED/ROOM_AGENT_SUPERSEDED).",
       "resolution": "partial"
     },
     {
@@ -2491,7 +2491,7 @@
       "status": "confirmed",
       "reproduction": null,
       "evidence": null,
-      "disposition": "See ADAPTER-001 and ADAPTER-006; the canary timer needs the operator's install. 2026-10-16: canary timer installed and run (Codex 0.163.0 PASS, Gemini 1.4.0 PASS, Qwen 0.25.2 BLOCKED); live proofs on stable for Codex and Claude (start, send, reattach), Codex resume picker and OpenCode (start, send, interrupt); a failed Codex interrupt was fixed (4e26ebc452). Gemini, the disabled runtimes and host-loss resume remain unproven (runtime-compatibility.md). Also internal review 1.1.5 Codex #3.",
+      "disposition": "See ADAPTER-001 and ADAPTER-006; the canary timer needs the operator's install. 2026-10-16: canary timer installed and run (Codex 0.163.0 PASS, Gemini 1.4.0 PASS, Qwen 0.25.2 BLOCKED); live proofs on stable for Codex and Claude (start, send, reattach), Codex resume picker and OpenCode (start, send, interrupt); a failed Codex interrupt was fixed (4e26ebc452). Gemini, the disabled runtimes and host-loss resume remain unproven (runtime-compatibility.md). Also internal review 1.1.5 Codex #3. External review 2026-10-16 #7: cee2e8d0b1 the Tasks dock says Space does not track whether the CLI finishes a scheduled task.",
       "resolution": "partial"
     },
     {
@@ -2531,7 +2531,7 @@
       "status": "confirmed",
       "reproduction": "apps/api/tests/cors-origin-guard.test.ts",
       "evidence": "apps/api/tests/cors-origin-guard.test.ts",
-      "disposition": "dbb253756e: every /api WebSocket upgrade gets the same-site Origin check. The VNC proxy stays a tunnel by design, limited to private IPv4 targets (assertSafeVncTarget).",
+      "disposition": "dbb253756e: every /api WebSocket upgrade gets the same-site Origin check. The VNC proxy stays a tunnel by design, limited to private IPv4 targets (assertSafeVncTarget). 713905324f: the Harness proxy's raw WebSocket upgrades, which bypass the Fastify hooks, get the same check (external review 2026-10-16).",
       "resolution": "fixed"
     },
     {
@@ -2551,7 +2551,7 @@
       "status": "confirmed",
       "reproduction": null,
       "evidence": null,
-      "disposition": "A public install has one owner and every pane is that owner's; the boundary is the CLI container, not the pane. Per-pane isolation changes the CLI host, which ships only with a guarded host restart; tracked for a later release.",
+      "disposition": "A public install has one owner and every pane is that owner's; the boundary is the CLI container, not the pane. Multi-user installs run one CLI container per user (core f5ad82792d, 3cb67847e9; launcher run-spaceapp 1.1.6, opt-in with user enable); per-pane isolation within one user stays a later release.",
       "resolution": "accepted-tradeoff"
     },
     {
@@ -2691,7 +2691,7 @@
       "status": "confirmed",
       "reproduction": null,
       "evidence": null,
-      "disposition": "Planned for 1.1.7: report every tree file missing from the manifest and list the public-owned ones in it.",
+      "disposition": "Moved to 1.1.8 (operator decision through Nous, 2026-10-19): it changes the export manifest format (the manifest must also list the public repository's own files). Known issue in the 1.1.7 CHANGELOG. Not in 1.1.9 either: 1.1.8 was never published, and the 1.1.9 public tree has the same verifier.",
       "resolution": "open"
     },
     {
@@ -2790,9 +2790,9 @@
       "dependency": null,
       "status": "confirmed",
       "reproduction": null,
-      "evidence": null,
-      "disposition": "Planned for 1.1.7 with first-party digest pinning (EXT-C-F5): Cursor checksum, provider lockfiles without install scripts, Docker apt key fingerprint.",
-      "resolution": "open"
+      "evidence": "packages/run-spaceapp/tests/prerequisites.test.mjs, scripts/tests/provider-install.test.mjs (public repository)",
+      "disposition": "run-spaceapp 1.1.7: Docker's apt and rpm repository keys are trusted only when the downloaded key file holds Docker's published key and no other primary key (internal review 1.1.7, Codex #3 / Claude F1); on Fedora, RHEL and CentOS the launcher writes Docker's repository file itself with gpgcheck=1 and that checked key as its only gpgkey (Docker's .repo file, whose gpgkey= URLs dnf -y would import, is no longer downloaded; verified in a fedora:42 container against Docker's repository); the Cursor agent archive is pinned by sha256 per architecture and refused before unpacking otherwise; first-party images are pulled by digest (EXT-C-F5). Open, planned for 1.1.8: per-provider npm lockfiles for the CLIs installed on first use (known issue in the 1.1.7 CHANGELOG). 1.1.9 (public c315c4f, in the 1.1.9 public tree): the CLIs installed on first use install with npm ci from a lockfile per provider.",
+      "resolution": "fixed"
     },
     {
       "id": "INT5-C-F15",
@@ -2830,9 +2830,9 @@
       "dependency": null,
       "status": "confirmed",
       "reproduction": null,
-      "evidence": null,
-      "disposition": "Overlay wording fix, planned for 1.1.7.",
-      "resolution": "open"
+      "evidence": "scripts/tests/public-package-metadata.test.mjs (public repository)",
+      "disposition": "run-spaceapp 1.1.7: the six .trivyignore entries that no longer matched anything are removed, the one with the wrong boolean trustProxy rationale included; Trivy 0.70.0 with the 2026-10-19 database found only GHSA-2mjx-qc3c-rqvc (rustls in the Temporal bridge, ignored with its reason until 2026-11-10) in the 1.1.6 images and nothing in the source.",
+      "resolution": "fixed"
     },
     {
       "id": "INT5-C-F17",
@@ -2930,9 +2930,9 @@
       "dependency": null,
       "status": "confirmed",
       "reproduction": null,
-      "evidence": null,
-      "disposition": "Containers read them as other uids (PostgreSQL as 999); the launcher creates the 0700 parent. Checking a pre-existing parent's mode is a 1.1.7 candidate.",
-      "resolution": "accepted-tradeoff"
+      "evidence": "packages/run-spaceapp/tests/config.test.mjs (public repository)",
+      "disposition": "Containers read them as other uids (PostgreSQL as 999), so the files stay 0644 behind an owner-only folder. run-spaceapp 1.1.7: install, init and every command that writes the runtime files (update, up, repair) make a secrets folder that already existed 0700 on Linux and macOS.",
+      "resolution": "fixed"
     },
     {
       "id": "INT5-C-F22",
@@ -3033,6 +3033,346 @@
       "evidence": null,
       "disposition": "Non-idempotent provider calls are not replayed blindly; ambiguity is surfaced to the operator (recovery docs).",
       "resolution": "accepted-tradeoff"
+    },
+    {
+      "id": "EXT-1016-F1",
+      "observationSource": "External review of public v1.1.5 (8a3e1f0), 2026-10-16 (model not stated)",
+      "reviewedShas": {
+        "public": "8a3e1f0"
+      },
+      "verifiedSourceSha": null,
+      "owner": "maintainer",
+      "reviewer": "External reviewer (model not stated)",
+      "reviewerSection": "External review 2026-10-16",
+      "dependency": null,
+      "status": "confirmed",
+      "observation": "A logged-out session cookie with an appended segment ('.x') authenticated again: revocation hashed the last segment, verification the second",
+      "affected": "apps/api/src/auth.ts",
+      "severity": "P1",
+      "reproduction": "apps/api/tests/review-2026-10-16-regressions.test.ts",
+      "evidence": "apps/api/tests/review-2026-10-16-regressions.test.ts",
+      "disposition": "713905324f: verifySession and verifyOAuthState refuse tokens without exactly two segments, and revocation keys on the same signature segment; stored revocation hashes stay valid. External review 2026-10-16 #1.",
+      "resolution": "fixed"
+    },
+    {
+      "id": "EXT-1016-F2",
+      "observationSource": "External review of public v1.1.5 (8a3e1f0), 2026-10-16 (model not stated)",
+      "reviewedShas": {
+        "public": "8a3e1f0"
+      },
+      "verifiedSourceSha": null,
+      "owner": "maintainer",
+      "reviewer": "External reviewer (model not stated)",
+      "reviewerSection": "External review 2026-10-16",
+      "dependency": null,
+      "status": "confirmed",
+      "observation": "Logout and logout-all answered 200 when the revocation could not be persisted, and sessions were accepted while persisted revocations had not loaded",
+      "affected": "apps/api/src/auth.ts; apps/api/src/auth-routes.ts; apps/api/src/app.ts; apps/api/src/health-routes.ts",
+      "severity": "P1",
+      "reproduction": "apps/api/tests/review-2026-10-16-regressions.test.ts",
+      "evidence": "apps/api/tests/review-2026-10-16-regressions.test.ts",
+      "disposition": "713905324f: sessions are refused until the persisted revocations load (/readyz sessionRevocations, retry every 5 s); a refused write stays queued and is retried every minute, and the logout routes answer 503 LOGOUT_NOT_SAVED. Open by design: a write still unsaved when the API restarts is lost, which the 503 message says. External review 2026-10-16 #2.",
+      "resolution": "fixed"
+    },
+    {
+      "id": "MU-001",
+      "reviewerSection": "Security review of the multi-user change (space-claude-security)",
+      "observationSource": "Plan clipboard:evAaFYqrgDfd step 6, 2026-10-17",
+      "reviewedShas": {
+        "source": "b042e04c23"
+      },
+      "verifiedSourceSha": null,
+      "affected": null,
+      "owner": "maintainer",
+      "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
+      "dependency": null,
+      "reproduction": null,
+      "evidence": "apps/api/tests/room-shares.test.ts (closed features, flag on and off); apps/api/tests/auth-route-guards.test.ts",
+      "observation": "With SPACE_MULTI_USER_ENABLED off, a USER account (for example a Google sign-in) still reads installation-wide data: /api/admin/audit, /api/audit/entries, /api/activity-log, /api/agent/sessions, /api/cli/tasks, /api/codex/*, /api/tasks and /api/providers",
+      "severity": "P2",
+      "status": "confirmed",
+      "disposition": "A USER reaches only the allowlisted route families, with the multi-user flag on or off (operator decision 2026-10-17); everything else answers 404. Admin routes answer a USER 404 instead of 403.",
+      "resolution": "fixed"
+    },
+    {
+      "id": "MU-002",
+      "reviewerSection": "Security review of the multi-user change (space-claude-security)",
+      "observationSource": "Plan clipboard:evAaFYqrgDfd step 6, 2026-10-17",
+      "reviewedShas": {
+        "source": "b042e04c23"
+      },
+      "verifiedSourceSha": null,
+      "affected": null,
+      "owner": "maintainer",
+      "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
+      "dependency": null,
+      "reproduction": null,
+      "evidence": "apps/api/tests/cli-user-hosts.test.ts, task-title-service.test.ts, room-agent-chat.test.ts (MU-002 cases)",
+      "observation": "Core one-shot CLI runs (task titles, Room Agent, Council, chess) use the owner's model accounts and Space Gateway even for a USER's panes",
+      "severity": "P2",
+      "status": "confirmed",
+      "disposition": "2026-10-18: core model runs that bill the owner's accounts no longer run for a USER: task summaries skip a USER's panes (they keep their local title) and the Room Agent conversation in a USER's room answers ROOM_AGENT_CHAT_UNAVAILABLE (cli-user-hosts ownerModels). Council and games are not reachable by a USER. Running them on the user's own keys needs a one-shot operation on the user's CLI host; not built.",
+      "resolution": "fixed"
+    },
+    {
+      "id": "MU-003",
+      "reviewerSection": "Security review of the multi-user change (space-claude-security)",
+      "observationSource": "Plan clipboard:evAaFYqrgDfd step 6, 2026-10-17",
+      "reviewedShas": {
+        "source": "b042e04c23"
+      },
+      "verifiedSourceSha": null,
+      "affected": null,
+      "owner": "maintainer",
+      "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
+      "dependency": null,
+      "reproduction": null,
+      "evidence": "packages/db/tests/room-shares-postgres.test.ts",
+      "observation": "rooms.owner_user_id is still nullable; a room without an owner belongs to the operator",
+      "severity": "P2",
+      "status": "confirmed",
+      "disposition": "Operator decision 2026-10-17: migration 0219 gives every WORKSPACE room without an owner the first administrator and adds CHECK rooms_workspace_owner_required; Agent Proof and CLI Recovery rooms stay as they are (no proof or Warm change). The Getting Started room re-created for the owner now carries the owner.",
+      "resolution": "fixed"
+    },
+    {
+      "id": "MU-004",
+      "reviewerSection": "Security review of the multi-user change (space-claude-security)",
+      "observationSource": "Plan clipboard:evAaFYqrgDfd step 6, 2026-10-17",
+      "reviewedShas": {
+        "source": "b042e04c23"
+      },
+      "verifiedSourceSha": null,
+      "affected": null,
+      "owner": "maintainer",
+      "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
+      "dependency": null,
+      "reproduction": null,
+      "evidence": "agent-workspace/reports/20261018-lab-recheck/summary.json; launcher tests/multi-user.test.mjs",
+      "observation": "run-spaceapp backup does not include a user's own CLI container volumes (CLI logins and settings, memory, files); keys are never in backups",
+      "severity": "P3",
+      "status": "confirmed",
+      "disposition": "Fixed in the launcher branch feat/multi-user-cli-containers (0fb9462, 8f5542a): a backup keeps each user's CLI settings and Space Memory (never keys or logins); restore puts them back for users that exist and 'user restore <id>' for users added again. Lab-verified on public-host 2026-10-18. Ships in run-spaceapp 1.1.6.",
+      "resolution": "partial"
+    },
+    {
+      "id": "MU-005",
+      "reviewerSection": "Security review of the multi-user change (space-claude-security)",
+      "observationSource": "Plan clipboard:evAaFYqrgDfd step 6, 2026-10-17",
+      "reviewedShas": {
+        "source": "b042e04c23"
+      },
+      "verifiedSourceSha": null,
+      "affected": null,
+      "owner": "maintainer",
+      "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
+      "dependency": null,
+      "reproduction": null,
+      "evidence": null,
+      "observation": "An invite link can be claimed by whoever holds it for 7 days; the invitee's email is not verified",
+      "severity": "P3",
+      "status": "confirmed",
+      "disposition": "The owner sends the link to the person; it works once and can be revoked. Email verification needs outbound mail, which public installs do not have.",
+      "resolution": "accepted-tradeoff"
+    },
+    {
+      "id": "MU-006",
+      "reviewerSection": "Security review of the multi-user change (space-claude-security)",
+      "observationSource": "Plan clipboard:evAaFYqrgDfd step 6, 2026-10-17",
+      "reviewedShas": {
+        "source": "b042e04c23"
+      },
+      "verifiedSourceSha": null,
+      "affected": null,
+      "owner": "maintainer",
+      "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
+      "dependency": null,
+      "reproduction": null,
+      "evidence": null,
+      "observation": "An invite with the OPERATOR role gets owner-level access, including every room and the owner's CLI container",
+      "severity": "P3",
+      "status": "product-decision",
+      "disposition": "The operator's account model (plan step 3): OPERATOR is a trusted co-administrator; invite untrusted members as USER.",
+      "resolution": "product-decision"
+    },
+    {
+      "id": "MU-007",
+      "reviewerSection": "Three-user rehearsal on Linux, Windows 11 and macOS",
+      "observationSource": "Plan clipboard:evAaFYqrgDfd step 6, 2026-10-17",
+      "reviewedShas": {
+        "source": "a883f90eed"
+      },
+      "verifiedSourceSha": null,
+      "affected": null,
+      "owner": "maintainer",
+      "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
+      "dependency": null,
+      "reproduction": null,
+      "evidence": "agent-workspace/reports/20261017-multiuser-isolation/rehearsal-windows.json",
+      "observation": "A user with a VIEW share still sees 'Add panes to <room>' and Create in the shared room",
+      "severity": "P3",
+      "status": "confirmed",
+      "disposition": "Room write controls are hidden for a VIEW share (on dev since 2026-10-17: Add panes, Create, Rename room, pane layout, sticky notes, room settings). The pane cards' own buttons (close, minimize, menu) are HELD (operator decision via Nous 2026-10-18): the approved change 3b92892529 touches the Warm path and needs real-browser room-switch evidence, but the room-switch capture fails on dev after warm hydration (the Debug switch and the App diagnostics action menu are covered). SPACE_MULTI_USER_ENABLED is off, so no user sees this today; the server refuses those writes.",
+      "resolution": "partial"
+    },
+    {
+      "id": "MU-008",
+      "reviewerSection": "MU-002 follow-up",
+      "observationSource": "Plan clipboard:evAaFYqrgDfd step 6, 2026-10-18",
+      "reviewedShas": {
+        "source": "77d9269628"
+      },
+      "verifiedSourceSha": "280707eff2",
+      "affected": "apps/api/src/room-agent.ts (dispatchRequest: /api/rooms/:id/room-agent/messages, /api/rooms/:id/commands)",
+      "owner": "maintainer",
+      "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
+      "dependency": null,
+      "reproduction": "apps/api/tests/room-agent-chat.test.ts (MU-008 case)",
+      "evidence": "apps/api/tests/room-agent-chat.test.ts; room-agent, multi-user and auth-route-guards suites 147/147",
+      "observation": "The Room Agent's tools and its routed commands (mentions, control phrases, quick commands) act with the operator's identity; in a USER's own room they need a review of what that identity allows",
+      "severity": "P2",
+      "status": "confirmed",
+      "disposition": "280707eff2 (2026-10-18): review: the direct paths (mentions, control phrases, quick and typed commands) act as the requesting user, not the operator, but reach Space Control (404 for a USER everywhere else) and room commands, which record no pane owner (a pane a member opens in a shared room would run in the room owner's container) and check no pane ownership; the conversation also ran for a member in a room the operator shares. Missions, stop/control, the monitor and auto-answer switches and event answers were already ADMIN-only. Fix: dispatchRequest refuses an actor whose role is USER with ROOM_AGENT_UNAVAILABLE before any executor or model; the operator's rooms are unchanged. The Room Agent tools are reached only through those paths or by Nous (operator). CLI control tokens are MU-009.",
+      "resolution": "fixed"
+    },
+    {
+      "id": "MU-009",
+      "reviewerSection": "MU-008 follow-up",
+      "observationSource": "Plan clipboard:evAaFYqrgDfd step 6, 2026-10-18",
+      "reviewedShas": {
+        "source": "11786e207a"
+      },
+      "verifiedSourceSha": "80967e68aa",
+      "affected": "apps/api/src/app.ts (/api/cli/control/mcp control-token authentication), apps/api/src/cli-user-hosts.ts (controlActorAllowed)",
+      "owner": "maintainer",
+      "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
+      "dependency": null,
+      "reproduction": "apps/api/tests/space-control-auth.test.ts (MU-009 case)",
+      "evidence": "apps/api/tests/space-control-auth.test.ts, cli-user-hosts.test.ts; control-auth, harness tokens, room shares, multi-user and auth-route-guards suites green",
+      "observation": "The CLI control MCP acts as the room's grant actor (normally the operator) for every eligible CLI pane in the room, including a pane a member opened in a shared room (running in the member's own container) or a USER's pane in a room the operator granted",
+      "severity": "P2",
+      "status": "confirmed",
+      "disposition": "80967e68aa (2026-10-18): /api/cli/control/mcp refuses the token with 403 CONTROL_PANE_NOT_GRANTED unless the pane's opener (its recorded owner, else the room's owner) is unset, the grant actor, or an ADMIN/OPERATOR account. A member's pane in a shared room and a USER's own room no longer get the operator's identity. The operator's rooms (owner user:operator or none) and panes are unchanged.",
+      "resolution": "fixed"
+    },
+    {
+      "id": "IR117-C-F6",
+      "reviewerSection": "Internal review run-spaceapp 1.1.7 (c725562)",
+      "observationSource": "reviews/final-1.1.7-c725562/claude.md, 2026-10-21",
+      "reviewedShas": {
+        "source": "77d00f6895"
+      },
+      "verifiedSourceSha": null,
+      "owner": "maintainer",
+      "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
+      "dependency": null,
+      "severity": "P2",
+      "status": "confirmed",
+      "resolution": "fixed",
+      "affected": "scripts/portable-restore.mjs (public launcher), docs/operations.md (rollback, then restore the pre-update backup)",
+      "reproduction": null,
+      "evidence": "Reasoned from PostgreSQL semantics by the reviewer; not executed",
+      "observation": "Restoring a backup from an older SpaceApp onto a newer, already-migrated database fails when the newer release added tables that reference existing ones: pg_restore --clean cannot drop the referenced tables",
+      "disposition": "Open (1.1.8, task:X9Sc-Jou67Nh). The failed restore changes nothing (1.1.7 rc3 puts every database back), but 'rollback, then restore the pre-update backup' does not work across such releases. 1.1.7 rc3 records the SpaceApp version in each backup; restoring into an emptied schema is planned. 1.1.9 (public 031a219, in the 1.1.9 public tree): each database is restored into an emptied schema, so a backup made by an older SpaceApp restores into a newer installation."
+    },
+    {
+      "id": "IR117-C-F7",
+      "reviewerSection": "Internal review run-spaceapp 1.1.7 (c725562)",
+      "observationSource": "reviews/final-1.1.7-c725562/claude.md, 2026-10-21",
+      "reviewedShas": {
+        "source": "77d00f6895"
+      },
+      "verifiedSourceSha": null,
+      "owner": "maintainer",
+      "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
+      "dependency": null,
+      "severity": "P2",
+      "status": "confirmed",
+      "resolution": "partial",
+      "affected": "scripts/release-evidence.mjs, scripts/embed-image-lock.mjs, scripts/verify-published-containers.mjs (public release workflow)",
+      "reproduction": null,
+      "evidence": "release/acceptance.json limitations; reviewer read of the release workflow; 1.1.8 branch: scripts/tests/shipped-image-evidence.test.mjs",
+      "observation": "The release gate binds the acceptance evidence to the source digest; the published images are rebuilt by the release workflow and pinned by the digests it resolves afterwards, not the image IDs the lab tested, and attestation checks verify predicate types only",
+      "disposition": "1.1.8 (public overlay branch, task:6sCDD1rdjPyC): the tested image bytes stay the source candidate's local build, so the evidence is tied to the shipped bytes after publication: the release verifies that a full release's images were built by its own commit from provenance about each platform image (not predicate types only), every install records the run, commit and digests it verified (image-attestations.json), and scripts/shipped-image-evidence.mjs passes only when the lab's installs of the published next package ran exactly its locked images; the runbook requires it before latest. 1.1.8 was never published; its changes ship in 1.1.9. Evidence still missing: that run for the published 1.1.9."
+    },
+    {
+      "id": "IR117-C-F9",
+      "reviewerSection": "Internal review run-spaceapp 1.1.7 (c725562)",
+      "observationSource": "reviews/final-1.1.7-c725562/claude.md and codex.md (Codex #5), 2026-10-21",
+      "reviewedShas": {
+        "source": "77d00f6895"
+      },
+      "verifiedSourceSha": null,
+      "affected": "apps/api/src/databases/sqlite-adapter.ts (spawns python3 sqlite-worker.py); public Dockerfile core stage (no python3)",
+      "owner": "maintainer",
+      "reviewer": "Claude Opus 5.5 (claude-opus-5-5); Codex",
+      "dependency": null,
+      "reproduction": null,
+      "evidence": "release/acceptance.json limitations (1.1.7); Dockerfile: python3-minimal only in the CLI stage",
+      "observation": "The Databases tool's SQLite worker cannot run in public installations: the core image has no Python, and the worker needs Python 3.12 or newer with its sqlite3 module",
+      "severity": "P3",
+      "status": "confirmed",
+      "disposition": "Open (1.1.8, task:Y6m_ffB1kSsQ): add a Python 3.12+ with sqlite3 to the core image within its size budget, or disable SQLite connections on public installations with a clear message. 1.1.9 (public 7c65223, a73a6b5, in the 1.1.9 public tree): the core image installs python3 with its sqlite3 module (core image budget 1150 MiB), so SQLite connections work in public installations.",
+      "resolution": "fixed"
+    },
+    {
+      "id": "DEP-2026-10-24-ZOD",
+      "reviewerSection": "Dependency advisory after the run-spaceapp 1.1.7 release gates",
+      "observationSource": "GHSA-mrhx-c7xc-m3w5 (npm audit, 2026-10-23); merge-queue test:deploy production audit",
+      "reviewedShas": {
+        "source": "3e4572bc97"
+      },
+      "verifiedSourceSha": null,
+      "owner": "maintainer",
+      "reviewer": "npm audit (GitHub advisory database)",
+      "dependency": "zod",
+      "severity": "P2",
+      "status": "confirmed",
+      "resolution": "partial",
+      "affected": "zod in apps/api, packages/contracts, packages/runtime and packages/gateway (request and configuration validation)",
+      "reproduction": null,
+      "evidence": "npm audit --omit=dev: high 1 (zod <4.6.6) before ecc4cb7082, high 0 after",
+      "observation": "zod 4.4.3 is affected by GHSA-mrhx-c7xc-m3w5 (high, CVSS 7.5): validating an oversized constrained collection can exhaust memory",
+      "disposition": "The advisory was published after the run-spaceapp 1.1.7 release gates passed; 1.1.7 ships zod 4.4.3, as 1.1.6 did (Nous decision 2026-10-24: release 1.1.7 as approved). Fixed for 1.1.8: zod 4.6.7 (ecc4cb7082). 1.1.8 was never published; its changes ship in 1.1.9. Evidence still missing: the published run-spaceapp 1.1.9 release with it."
+    },
+    {
+      "id": "UX-004",
+      "reviewerSection": "run-spaceapp 1.1.8 lab acceptance (candidate c1, Windows)",
+      "observation": "A new pane's CLI starts automatically only while the browser's clock minus the server's pane createdAt is within 60 s, so a server clock that runs behind the browser leaves the Getting Started pane unstarted with no launch control on screen",
+      "observationSource": "1.1.8 c1 vm219 scoped session, 2026-10-25: Docker Desktop's VM clock ran 1 h behind after the daylight-saving change; diagnosis in agent-workspace/active/20261025-1.1.8-devtest/vm219-scoped-root-cause.md",
+      "reviewedShas": {
+        "source": "8d5bf21b32"
+      },
+      "verifiedSourceSha": null,
+      "affected": "apps/web/src/features/terminal-pane/TerminalPane.tsx (paneAgeMs <= NEW_PANE_WINDOW_MS), apps/web/src/features/cli-accounts/cli-account-default.ts",
+      "severity": "P2",
+      "owner": "maintainer",
+      "reviewer": "maintainer (not yet reviewed)",
+      "dependency": null,
+      "status": "confirmed",
+      "resolution": "fixed",
+      "reproduction": "Create a pane on a server whose clock is more than 60 s behind the browser: GET /api/panes/<id>/cli/session answers null and the web never POSTs a start (pane_cli_sessions stays empty).",
+      "evidence": "1.1.8 c1 lab evidence (windows-starter-workspace-1.1.8.json, windows-first-agent-diag.json); same code in 1.1.7",
+      "disposition": "Open (1.1.9, Nous decision 2026-10-25): measure the pane's age with the server's clock (the offset from API responses' Date header) instead of the browser's, with a test where the server runs 1 h behind. Pre-existing since 1.1.7; Docker Desktop VM clock drift (daylight-saving change, sleep) is the known trigger. Not in 1.1.9: the fix is planned for 1.1.10 (Nous decision 2026-10-26). Fixed 2026-10-27 (6115a41fa2 and b4b19939b7, plan clipboard:zJF0KEWRcCje step 7, Nous Warm approval): request() in apps/web/src/live-api.ts learns the server-clock offset (apps/web/src/server-clock.ts, outside the live API for the demo bundle) from each API response's Date header, skipping cached answers (Age header or 304), and TerminalPane's new-pane check uses serverNow() - createdAt; with no Date header seen it is the browser clock as before. Test: apps/web/tests/terminal-pane-server-clock.test.tsx (server 1 h behind: a just-created pane starts, a pane created 2 h ago does not, an Age header leaves the offset unchanged)."
+    },
+    {
+      "id": "MON-001",
+      "reviewerSection": "1.1.9 export (c3 cut, 2026-10-27)",
+      "observation": "The public export rewrites the Monitoring Copilot's collector network (192.0.2.x, the maintainers' private bridge) to the documentation range 192.0.2.x, in the collector URL check and its defaults",
+      "observationSource": "Public export audit and review while cutting run-spaceapp 1.1.9 c3 (2026-10-27)",
+      "reviewedShas": {
+        "source": "b628e7aa93"
+      },
+      "verifiedSourceSha": null,
+      "affected": "packages/contracts/src/monitoring-copilot.ts (monitoringCollectorUrlSchema, MONITORING_COLLECTOR_DEFAULTS), apps/api/src/monitoring-copilot/collector.ts, apps/web/src/features/monitoring-copilot-pane/SetupTab.tsx",
+      "severity": "P3",
+      "owner": "maintainer",
+      "reviewer": "maintainer (not yet reviewed)",
+      "dependency": null,
+      "status": "confirmed",
+      "resolution": "open",
+      "reproduction": "Export the source with the private rules and read monitoringCollectorUrlSchema in the exported contracts: it accepts only http://192.0.2.<host>:<port>.",
+      "evidence": "export audit of b628e7aa93 (2026-10-27)",
+      "disposition": "Open (1.1.10): in public installs the Monitoring Copilot (an optional module, off by default) accepts only collectors in 192.0.2.x, so it cannot reach a real collector. Fix: take the collector network and default URLs from configuration that the maintainers' instance sets, empty in public builds, instead of code. 1.1.9's tests use neutral addresses so the exported suite still checks the same rules."
     }
   ]
 }

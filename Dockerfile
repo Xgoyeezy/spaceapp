@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-FROM node:22.23.0-trixie-slim@sha256:cfd8f2a5bc50526aee08e88970979f92722828e7dcc6d8983607fb8bff4bdb82 AS build
+FROM node:22.23.4-trixie-slim@sha256:8eb619e402eaede1748a3c8173bffab391592812e85136452f781741c7242ddf AS build
 WORKDIR /app
 RUN apt-get update \
     && apt-get install -y --no-install-recommends build-essential liblzma5 python3 pkg-config \
@@ -13,18 +13,18 @@ RUN npm ci --no-audit --no-fund \
     && node scripts/container-runtime-closure.mjs cli /runtime-cli \
     && find node_modules -type f \( -name '*.js.map' -o -name '*.mjs.map' -o -name '*.cjs.map' -o -name '*.css.map' \) -delete
 
-FROM node:22.23.0-trixie-slim@sha256:cfd8f2a5bc50526aee08e88970979f92722828e7dcc6d8983607fb8bff4bdb82 AS runtime-base
+FROM node:22.23.4-trixie-slim@sha256:8eb619e402eaede1748a3c8173bffab391592812e85136452f781741c7242ddf AS runtime-base
 ARG TARGETARCH
 ARG NPM_VERSION=11.18.0
 ENV NODE_ENV=production \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8
 LABEL org.opencontainers.image.source=https://github.com/oll4com/spaceapp
-LABEL org.opencontainers.image.licenses=BUSL-1.1
+LABEL org.opencontainers.image.licenses=MIT
 RUN npm install --global --ignore-scripts --no-audit --no-fund "npm@${NPM_VERSION}" \
     && install -d /tmp/npm-security-patches \
     && npm pack --ignore-scripts --no-audit --no-fund --pack-destination /tmp/npm-security-patches \
-      brace-expansion@5.0.12 tar@7.5.21 ip-address@10.7.1 undici@6.28.1 postcss-selector-parser@7.1.6 \
+      brace-expansion@5.0.12 tar@7.5.21 ip-address@10.7.4 undici@6.29.1 postcss-selector-parser@7.1.6 \
     && rm -rf \
       /usr/local/lib/node_modules/npm/node_modules/brace-expansion \
       /usr/local/lib/node_modules/npm/node_modules/tar \
@@ -41,9 +41,9 @@ RUN npm install --global --ignore-scripts --no-audit --no-fund "npm@${NPM_VERSIO
       -C /usr/local/lib/node_modules/npm/node_modules/brace-expansion --strip-components=1 \
     && tar -xzf /tmp/npm-security-patches/tar-7.5.21.tgz \
       -C /usr/local/lib/node_modules/npm/node_modules/tar --strip-components=1 \
-    && tar -xzf /tmp/npm-security-patches/ip-address-10.7.1.tgz \
+    && tar -xzf /tmp/npm-security-patches/ip-address-10.7.4.tgz \
       -C /usr/local/lib/node_modules/npm/node_modules/ip-address --strip-components=1 \
-    && tar -xzf /tmp/npm-security-patches/undici-6.28.1.tgz \
+    && tar -xzf /tmp/npm-security-patches/undici-6.29.1.tgz \
       -C /usr/local/lib/node_modules/npm/node_modules/undici --strip-components=1 \
     && tar -xzf /tmp/npm-security-patches/postcss-selector-parser-7.1.6.tgz \
       -C /usr/local/lib/node_modules/npm/node_modules/postcss-selector-parser --strip-components=1 \
@@ -57,6 +57,7 @@ RUN npm install --global --ignore-scripts --no-audit --no-fund "npm@${NPM_VERSIO
     && useradd --uid 10001 --gid 10001 --create-home --home-dir /var/lib/spaceapp-cli --shell /bin/bash spaceapp
 WORKDIR /app
 COPY --from=build --chown=spaceapp:spaceapp /app/LICENSE /app/NOTICE /app/THIRD_PARTY_NOTICES.md ./
+COPY --from=build --chown=spaceapp:spaceapp /app/THIRD_PARTY_LICENSES ./THIRD_PARTY_LICENSES
 COPY --chown=spaceapp:spaceapp deploy/docker ./deploy/docker
 RUN chmod 0755 deploy/docker/core-entrypoint.sh deploy/docker/browser-entrypoint.sh deploy/docker/cli-entrypoint.sh \
     && install -m 0755 deploy/docker/public-cli-wrapper.sh /usr/local/bin/spaceapp-cli-wrapper \
@@ -67,6 +68,12 @@ RUN chmod 0755 deploy/docker/core-entrypoint.sh deploy/docker/browser-entrypoint
 FROM runtime-base AS core
 COPY --from=build --chown=spaceapp:spaceapp /runtime-core/ ./
 COPY --chown=spaceapp:spaceapp starter-memory /opt/spaceapp/starter-memory
+# The Databases tool's SQLite worker (apps/api/src/databases/sqlite-worker.py) needs Python 3.12+ with its sqlite3 module;
+# python3-minimal has no sqlite3 (1.1.7 review: SQLite could not run in public installations).
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends python3 \
+    && rm -rf /var/lib/apt/lists/* \
+    && python3 -c 'import sqlite3, sys; assert sys.version_info >= (3, 12)'
 RUN install -d -o spaceapp -g spaceapp -m 0700 \
       /var/lib/spaceapp \
       /var/lib/spaceapp/artifacts \
@@ -96,7 +103,12 @@ COPY --chown=root:root starter-memory/AGENTS.md /etc/AGENTS.md
 COPY --chown=root:root starter-memory/installation-guide.md /etc/spaceapp-installation-guide.md
 RUN chmod 0644 /etc/AGENTS.md
 ARG TARGETARCH
-RUN npm install --global --no-audit --no-fund opencode-ai@1.18.4 \
+# python3-minimal (about 13 MB): agents often check their work with a short python3 script (pilot F18).
+# OpenCode 2 (@opencode/cli): its postinstall picks the native binary for the image's platform.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends python3-minimal \
+    && rm -rf /var/lib/apt/lists/* \
+    && npm install --global --no-audit --no-fund @opencode/cli@2.0.32 \
     && install -d -o spaceapp -g spaceapp -m 0700 /var/lib/spaceapp-cli/vendor \
     && npm cache clean --force \
     && install -d -o spaceapp -g spaceapp -m 0700 \

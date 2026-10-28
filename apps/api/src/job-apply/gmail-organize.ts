@@ -9,6 +9,7 @@ const gmailApi = "https://gmail.googleapis.com/gmail/v1/users/me";
 
 export interface GmailTriageMessage {
   messageId: string;
+  threadId: string;
   from: string;
   subject: string;
   snippet: string;
@@ -27,12 +28,20 @@ export function gmailErrorDetail(body: Record<string, unknown>): { reason: strin
   return { reason: reason ?? null, message: typeof error?.message === "string" ? error.message.slice(0, 200) : null };
 }
 
+/** A per-user rate limit (403 or 429) or a missing grant (403 with a scope reason or none); null for anything else. */
+export function gmailRefusal(status: number, body: Record<string, unknown>): "RATE_LIMIT" | "SCOPE" | null {
+  const { reason } = gmailErrorDetail(body);
+  if (status === 429 || (status === 403 && reason && rateLimitReasons.has(reason))) return "RATE_LIMIT";
+  return status === 403 && (!reason || scopeReasons.has(reason)) ? "SCOPE" : null;
+}
+
 export function gmailErrorMessage(status: number, body: Record<string, unknown>): string {
   const { reason, message } = gmailErrorDetail(body);
   const detail = [reason, message].filter(Boolean).join(": ");
+  const refusal = gmailRefusal(status, body);
   if (status === 401) return "Google access to Gmail expired.";
-  if (status === 429 || (status === 403 && reason && rateLimitReasons.has(reason))) return `Gmail rate limit reached (${detail}); try again in a minute.`;
-  if (status === 403 && (!reason || scopeReasons.has(reason))) {
+  if (refusal === "RATE_LIMIT") return `Gmail rate limit reached (${detail}); try again in a minute.`;
+  if (refusal === "SCOPE") {
     return `Gmail refused the request: organizing mail needs the gmail.modify permission (Allow Gmail & Calendar again)${detail ? ` [${detail}]` : ""}.`;
   }
   return `Gmail request failed (${status})${detail ? `: ${detail}` : ""}.`;
@@ -51,9 +60,8 @@ function client(accessToken: string, fetchImpl: typeof fetch = fetch, retryDelay
       let body: Record<string, unknown> = {};
       try { body = (text ? JSON.parse(text) : {}) as Record<string, unknown>; } catch { body = {}; }
       if (response.ok) return body;
-      const { reason } = gmailErrorDetail(body);
       // One retry for a per-user rate limit: these clear within seconds (a triage pass just before can trip them).
-      if (attempt === 0 && (response.status === 429 || (response.status === 403 && reason && rateLimitReasons.has(reason)))) {
+      if (attempt === 0 && gmailRefusal(response.status, body) === "RATE_LIMIT") {
         await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
         continue;
       }
@@ -82,7 +90,8 @@ export async function ensureJobApplyLabels(input: { accessToken: string; fetchIm
     }
     ids.set(name, id);
   }
-  return { CONFIRMATION: ids.get(JOB_APPLY_MAIL_LABELS.CONFIRMATION)!, REJECTION: ids.get(JOB_APPLY_MAIL_LABELS.REJECTION)!, ACTION_NEEDED: ids.get(JOB_APPLY_MAIL_LABELS.ACTION_NEEDED)! };
+  return { CONFIRMATION: ids.get(JOB_APPLY_MAIL_LABELS.CONFIRMATION)!, REJECTION: ids.get(JOB_APPLY_MAIL_LABELS.REJECTION)!, ACTION_NEEDED: ids.get(JOB_APPLY_MAIL_LABELS.ACTION_NEEDED)!,
+    OTHER: ids.get(JOB_APPLY_MAIL_LABELS.OTHER)! };
 }
 
 /**
@@ -105,16 +114,21 @@ export async function unlabelGmailMessages(input: { accessToken: string; fetchIm
 }
 
 /** Inbox messages matching a Gmail search, newest first, with their labels (at most `max`). */
-export async function listGmailTriageMessages(input: { accessToken: string; fetchImpl?: typeof fetch; query: string; max: number }): Promise<GmailTriageMessage[]> {
+/** Messages matching the search (or any of several searches, each message once), with their metadata; at most `max`. */
+export async function listGmailTriageMessages(input: { accessToken: string; fetchImpl?: typeof fetch; query: string | readonly string[]; max: number; labelId?: string }): Promise<GmailTriageMessage[]> {
   const call = client(input.accessToken, input.fetchImpl);
-  const list = await call(`/messages?${new URLSearchParams({ q: input.query, maxResults: String(Math.min(100, input.max)) })}`);
-  const ids = ((list.messages as Array<{ id?: unknown }> | undefined) ?? []).map((message) => message.id).filter((id): id is string => typeof id === "string").slice(0, input.max);
+  const found = new Set<string>();
+  for (const query of typeof input.query === "string" ? [input.query] : input.query) {
+    const list = await call(`/messages?${new URLSearchParams({ q: query, maxResults: String(Math.min(100, input.max)), ...(input.labelId ? { labelIds: input.labelId } : {}) })}`);
+    for (const message of (list.messages as Array<{ id?: unknown }> | undefined) ?? []) if (typeof message.id === "string") found.add(message.id);
+  }
+  const ids = [...found].slice(0, input.max);
   const messages: GmailTriageMessage[] = [];
   for (const id of ids) {
     const message = await call(`/messages/${encodeURIComponent(id)}?format=metadata&metadataHeaders=From&metadataHeaders=Subject`);
     const headers = (message.payload as { headers?: unknown } | undefined)?.headers;
     const received = Number(message.internalDate);
-    messages.push({ messageId: id, from: header(headers, "from"), subject: header(headers, "subject"),
+    messages.push({ messageId: id, threadId: typeof message.threadId === "string" && message.threadId ? message.threadId : id, from: header(headers, "from"), subject: header(headers, "subject"),
       snippet: typeof message.snippet === "string" ? message.snippet : "",
       receivedAt: Number.isFinite(received) && received > 0 ? new Date(received).toISOString() : null,
       labelIds: Array.isArray(message.labelIds) ? message.labelIds.filter((label): label is string => typeof label === "string") : [] });

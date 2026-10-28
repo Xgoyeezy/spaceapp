@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
+  browserSelectStateSchema,
+  spaceAgentBrowserActionRequestSchema,
   artifactSchema,
   agentPaneBindingSchema,
   agentPaneGoalSchema,
@@ -683,7 +685,7 @@ describe("Space contracts", () => {
         mode: "CHAT",
         terminalRuntimeId: "cli:root"
       })
-    ).toThrow("Terminal runtime selection requires TERMINAL, JOB_APPLY, MAIL_COPILOT, MARKETING_COPILOT or FREELANCE_COPILOT mode");
+    ).toThrow("Terminal runtime selection requires TERMINAL, JOB_APPLY, MAIL_COPILOT, MARKETING_COPILOT, FREELANCE_COPILOT, DESIGN, APP_STUDIO, VIDEO, SECURITY_COPILOT or MONITORING_COPILOT mode");
     expect(updatePaneInputSchema.parse({ terminalRuntimeId: "cli:root" })).toEqual({
       terminalRuntimeId: "cli:root"
     });
@@ -1509,6 +1511,14 @@ describe("Space contracts", () => {
       }).content
     ).toHaveLength(32 * 1024);
     expect(redactPersistedTranscriptContent("before\0after")).toBe("beforeafter");
+    // Space Control tokens (space-control-token.ts) are self-identifying; redact them even when a CLI (Codex, Claude
+    // Code, Oh My Pi) echoes the SPACE_CONTROL_TOKEN= env name — "_TOKEN=" has no \b, so the labeled pattern misses it.
+    const controlTokenValue = "spacecontrol.v1.eyJyIjoicm9vbSJ9.ZmFrZV9zaWduYXR1cmVfdmFsdWVfbm90X3JlYWw";
+    expect(redactPersistedTranscriptContent(`SPACE_CONTROL_TOKEN=${controlTokenValue}`)).toBe("SPACE_CONTROL_TOKEN=[REDACTED]");
+    expect(redactPersistedTranscriptContent(`the token is ${controlTokenValue} ok`)).toBe("the token is [REDACTED] ok");
+    expect(redactPersistedTranscriptContent(controlTokenValue)).not.toContain(controlTokenValue.split(".")[2]);
+    // The bare version marker in prose is not a token and stays.
+    expect(redactPersistedTranscriptContent("see spacecontrol.v1 docs")).toBe("see spacecontrol.v1 docs");
     const websocket = paneCliWebSocketTokenSchema.parse({
       paneId: session.paneId,
       sessionId: session.sessionId,
@@ -1869,12 +1879,12 @@ describe("Space contracts", () => {
       profileId: "profile:room-browser-1:pane-browser-1",
       profilePath: "/opt/spaceapp/var/artifacts/browser-profiles/room_browser_1/pane_browser_1/browser_session_test",
       viewport: "desktop",
-      targetUrl: "https://www.example.invalid/"
+      targetUrl: "https://www.google.com/"
     });
     const session = paneBrowserSessionSchema.parse({
       sessionId: "browser_session:test-1",
       ...createInput,
-      currentUrl: "https://www.example.invalid/",
+      currentUrl: "https://www.google.com/",
       title: "Olla",
       status: "READY",
       statusReason: "Page ready.",
@@ -1890,7 +1900,7 @@ describe("Space contracts", () => {
       roomId: session.roomId,
       status: "READY",
       viewport: "desktop",
-      currentUrl: "https://www.example.invalid/",
+      currentUrl: "https://www.google.com/",
       title: "Olla",
       screenshotDataUrl: "data:image/png;base64,aGVsbG8=",
       capturedAt: timestamp
@@ -1904,7 +1914,7 @@ describe("Space contracts", () => {
     const response = paneBrowserSessionResponseSchema.parse({ session, frame, websocket });
     const startRequest = createPaneBrowserSessionRequestSchema.parse({
       viewport: "mobile",
-      targetUrl: "https://www.example.invalid/"
+      targetUrl: "https://www.google.com/"
     });
     const click = browserToolActionInputSchema.parse({ type: "click", x: 10, y: 20 });
     const diagnostics = browserToolActionInputSchema.parse({ type: "diagnostics" });
@@ -1930,8 +1940,17 @@ describe("Space contracts", () => {
     expect(diagnostics).toMatchObject({ type: "diagnostics", includeNetwork: true, limit: 100 });
     expect(recording).toMatchObject({ type: "record", durationMs: 500, intervalMs: 250, format: "both" });
     expect(extract.text).toContain("Observed");
-    expect(streamMessage.frame.currentUrl).toBe("https://www.example.invalid/");
+    expect(streamMessage.frame.currentUrl).toBe("https://www.google.com/");
     expect(() => browserToolActionInputSchema.parse({ type: "click", x: -1, y: 20 })).toThrow();
+    // Clearing a field and picking a native dropdown option take keys (plan clipboard:gHaiX_8yanVA); a shortcut list stays closed.
+    for (const key of ["Control+A", "Backspace", "ArrowDown", "Escape", "Space"]) expect(browserToolActionInputSchema.parse({ type: "press", key })).toMatchObject({ key });
+    for (const key of ["Control+C", "a", "F12"]) expect(() => browserToolActionInputSchema.parse({ type: "press", key })).toThrow();
+    // The live view's own dropdown list (option D): the operator route takes both types, no agent tool id does.
+    expect(browserToolActionInputSchema.parse({ type: "select_choose", index: 3 })).toMatchObject({ index: 3 });
+    expect(() => browserToolActionInputSchema.parse({ type: "select_choose", index: -1 })).toThrow();
+    const agentSelect = spaceAgentBrowserActionRequestSchema.safeParse({ toolId: "browser:click", targetPaneId: "pane:browser-proof", action: { type: "select_state" } });
+    expect(agentSelect.success ? null : agentSelect.error.issues[0]?.message).toBe("Browser action type select_state belongs to the operator's live view.");
+    expect(browserSelectStateSchema.safeParse({ selectedIndex: 0, box: { x: 1, y: 2, width: 3, height: 4 }, labels: ["Greece"], disabled: [], truncated: false }).success).toBe(true);
     expect(() => paneBrowserSessionSchema.parse({ ...session, viewport: "invalid-viewport" })).toThrow();
     expect(JSON.stringify(response)).not.toMatch(new RegExp("api[_-]?key|sec" + "ret\\s*[:=]|pass" + "word\\s*[:=]|sk-", "i"));
   });
@@ -2122,7 +2141,7 @@ describe("Space contracts", () => {
         {
           toolId: "browser:navigate",
           targetPaneId: "pane:browser-1",
-          action: { type: "navigate", url: "https://www.example.invalid/" }
+          action: { type: "navigate", url: "https://www.google.com/" }
         },
         {
           toolId: "browser:extract_text",
@@ -2156,7 +2175,7 @@ describe("Space contracts", () => {
             roomId: "room:browser-1",
             actionType: "extract_text",
             viewport: "desktop",
-            currentUrl: "https://www.example.invalid/",
+            currentUrl: "https://www.google.com/",
             title: "Olla",
             text: "Observed page text",
             capturedAt: "2026-07-05T00:00:00.000Z"
@@ -2207,14 +2226,14 @@ describe("Space contracts", () => {
           agentNumber: 1,
           viewport: "desktop",
           status: "READY",
-          currentUrl: "https://www.example.invalid/",
+          currentUrl: "https://www.google.com/",
           title: "Olla",
           lastFrameAt: "2026-07-05T00:00:00.000Z"
         }
       ]
     });
     const startRequest = spaceCliBrowserSessionStartRequestSchema.parse({
-      targetUrl: "https://www.example.invalid/"
+      targetUrl: "https://www.google.com/"
     });
     const startResponse = spaceCliBrowserSessionStartResponseSchema.parse({
       session: context.browserSessions[0]
@@ -2240,7 +2259,7 @@ describe("Space contracts", () => {
             roomId: "room:browser-1",
             actionType: "extract_text",
             viewport: "desktop",
-            currentUrl: "https://www.example.invalid/",
+            currentUrl: "https://www.google.com/",
             title: "Olla",
             text: "Observed page text",
             capturedAt: "2026-07-05T00:00:00.000Z"
@@ -3496,6 +3515,7 @@ describe("Space contracts", () => {
     ).toMatchObject({ status: "QUEUED", prompt: null, artifactIds: [] });
     expect(imageArtifactMimeTypeSchema.parse("image/png")).toBe("image/png");
     expect(userUploadArtifactSourceSchema.parse("CLIPBOARD")).toBe("CLIPBOARD");
+    expect(userUploadArtifactSourceSchema.parse("LIVE_RECORDING")).toBe("LIVE_RECORDING");
     expect(imageArtifactMaxBytes).toBe(10 * 1024 * 1024);
     const reviewInput = createReviewDecisionInputSchema.parse({
       roomId: "room:test-1",
@@ -4298,5 +4318,17 @@ describe("Space contracts", () => {
       ...payload,
       filters: { ...payload.filters, month: "2026-7" }
     })).toThrow();
+  });
+});
+
+describe('fixed mixed diagnostic fixture contracts', () => {
+  it('accepts only the fixed C/B/P/M counts and no overrides', () => {
+    for (const [variant,count] of [['C',4],['B',5],['P',5],['M',6]] as const) {
+      const input = {profile:`WARM_MIXED_${variant}`,paneCount:count};
+      expect(createProofRoomInputSchema.safeParse(input).success).toBe(true);
+      for (const extra of [{paneCount:16},{runtimeId:'cli:codex'},{renderRuntime:'CODEX'},{roomLabel:'custom'},{url:'https://example.test'},{modes:['TERMINAL']}]) expect(createProofRoomInputSchema.safeParse({...input,...extra}).success).toBe(false);
+    }
+    expect(createProofRoomInputSchema.safeParse({profile:'WARM_CAPACITY',paneCount:4}).success).toBe(false);
+    expect(createProofRoomInputSchema.safeParse({profile:'CLI_RENDER',paneCount:4}).success).toBe(false);
   });
 });

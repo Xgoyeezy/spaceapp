@@ -5,7 +5,7 @@
     "noEmit": true
   },
   "include": [
-    "tests/temporal-workflows.test.ts",
+    "tests/temporal-*.test.ts",
     "tests/support/temporal-*.ts"
   ]
 }

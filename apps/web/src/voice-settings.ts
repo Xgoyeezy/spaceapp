@@ -39,6 +39,9 @@ export interface VoiceComposerSettings {
   terminalVariablesButton: boolean;
   terminalPlansButton: boolean;
   terminalContextMenu?: boolean;
+  terminalAccountPicker?: boolean;
+  terminalLocalDraftButton?: boolean;
+  terminalLocalDraft?: boolean;
   terminalHiddenShortcuts: string[];
 }
 
@@ -64,6 +67,9 @@ export const defaultVoiceComposerSettings: VoiceComposerSettings = {
   terminalVariablesButton: true,
   terminalPlansButton: true,
   terminalContextMenu: true,
+  terminalAccountPicker: true,
+  terminalLocalDraftButton: true,
+  terminalLocalDraft: false,
   terminalHiddenShortcuts: []
 };
 
@@ -114,6 +120,9 @@ export function readVoiceComposerSettings(options?: { strict?: boolean }): Voice
       terminalVariablesButton: booleanSetting(parsed.terminalVariablesButton, defaultVoiceComposerSettings.terminalVariablesButton),
       terminalPlansButton: booleanSetting(parsed.terminalPlansButton, defaultVoiceComposerSettings.terminalPlansButton),
       terminalContextMenu: booleanSetting(parsed.terminalContextMenu, defaultVoiceComposerSettings.terminalContextMenu ?? true),
+      terminalAccountPicker: booleanSetting(parsed.terminalAccountPicker, true),
+      terminalLocalDraftButton: booleanSetting(parsed.terminalLocalDraftButton, true),
+      terminalLocalDraft: booleanSetting(parsed.terminalLocalDraft, false),
       terminalHiddenShortcuts: normalizeHiddenCliShortcuts(parsed.terminalHiddenShortcuts)
     };
   } catch (error) {
@@ -157,6 +166,9 @@ export function writeVoiceComposerSettings(settings: VoiceComposerSettings) {
     terminalVariablesButton: settings.terminalVariablesButton,
     terminalPlansButton: settings.terminalPlansButton,
     terminalContextMenu: booleanSetting(settings.terminalContextMenu, defaultVoiceComposerSettings.terminalContextMenu ?? true),
+    terminalAccountPicker: booleanSetting(settings.terminalAccountPicker, true),
+    terminalLocalDraftButton: booleanSetting(settings.terminalLocalDraftButton, true),
+    terminalLocalDraft: booleanSetting(settings.terminalLocalDraft, false),
     terminalHiddenShortcuts: normalizeHiddenCliShortcuts(settings.terminalHiddenShortcuts)
   };
   getSpaceRuntime().platform.localStorage.setItem(VOICE_SETTINGS_STORAGE_KEY, JSON.stringify({ ...persisted, terminalControlsVersion: 2 }));

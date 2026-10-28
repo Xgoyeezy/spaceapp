@@ -54,7 +54,12 @@ export async function waitFor<T>(read: () => Promise<T>, accept: (value: T) => b
 }
 
 export class TemporalHarness {
-  env!: TestWorkflowEnvironment;
+  private environment?: TestWorkflowEnvironment;
+  private closing?: Promise<void>;
+  get env(): TestWorkflowEnvironment {
+    if (!this.environment) throw new Error("Temporal test environment is not running");
+    return this.environment;
+  }
   workers: Worker[] = [];
   runs: Promise<void>[] = [];
   handles: StartedHandle[] = [];
@@ -87,7 +92,8 @@ export class TemporalHarness {
   async start() {
     // Time-skipping state is global to a server. Give every test its own server,
     // especially after terminating an indefinitely running continued workflow.
-    this.env = await TestWorkflowEnvironment.createTimeSkipping({ client: { identity: "spaceapp-synthetic-client" } });
+    this.closing = undefined;
+    this.environment = await TestWorkflowEnvironment.createTimeSkipping({ client: { identity: "spaceapp-synthetic-client" } });
     this.workerFailure = undefined;
     const activities = Object.fromEntries(activityNames.map(name => [name, async (...args: any[]) => {
       const info = Context.current().info;
@@ -168,14 +174,23 @@ export class TemporalHarness {
     if (this.workerFailure) throw this.workerFailure;
   }
 
-  async close() {
+  close(): Promise<void> {
+    return this.closing ??= this.teardown();
+  }
+
+  private async teardown() {
     try { await this.cleanup(); }
     finally {
-      for (const worker of this.workers) if (worker.getState() === "RUNNING") worker.shutdown();
-      await Promise.all(this.runs);
-      await this.env?.teardown();
-      this.workers = [];
-      this.runs = [];
+      const workers = this.workers.splice(0);
+      const runs = this.runs.splice(0);
+      const environment = this.environment;
+      this.environment = undefined;
+      try {
+        for (const worker of workers) if (worker.getState() === "RUNNING") worker.shutdown();
+        await Promise.all(runs);
+      } finally {
+        await environment?.teardown();
+      }
     }
   }
 }

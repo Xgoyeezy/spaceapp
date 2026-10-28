@@ -1,14 +1,20 @@
-import { chmod, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { chmod, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { InMemorySpaceStore } from "@space/runtime";
 import { createApp } from "../src/app.js";
 import { cliBrowserBridgeTokenHeader, issueCliBrowserBridgeToken } from "../src/cli-browser-bridge.js";
 import { getApiConfig } from "../src/config.js";
+import { localArtifactFilePath } from "../src/artifact-storage.js";
+import { cvPdf, sampleJpeg } from "./fixtures/cv-photo-pdf.js";
 import { buildCliAgentBootstrapMarkdown, buildJobCopilotPersonaMarkdown } from "../src/agent-bootstrap.js";
 import type { MailboxFactory } from "../src/job-apply/mailbox.js";
 import { matchAnswerMemory, type JobApplyGoogleAccess } from "../src/job-apply/service.js";
+import { fetchPublicUrl } from "../src/public-url-fetch.js";
+
+// Salary research reads public pages through fetchPublicUrl; here it answers trimmed copies of them, never the network.
+vi.mock("../src/public-url-fetch.js", async (importOriginal) => ({ ...await importOriginal<typeof import("../src/public-url-fetch.js")>(), fetchPublicUrl: vi.fn() }));
 
 vi.setConfig({ testTimeout: 30_000 });
 const temporaryRoots: string[] = [];
@@ -36,8 +42,9 @@ async function fixture(extra: { jobApplyGoogle?: JobApplyGoogleAccess } = {}) {
   const config = getApiConfig({
     SPACE_CLI_ENABLED: "true", SPACE_CLI_COMMAND_PATH: root, SPACE_CLI_HOST_SOCKET: join(root, "pane-host.sock"), SPACE_CLI_CODEX_CREDENTIAL_SMOKE: "true",
     SPACE_CLI_WORKSPACE_ROOT: join(root, "workspaces"), SPACE_BROWSER_TOOL_BRIDGE_ENABLED: "true", SPACE_INTERNAL_API_TOKEN: "internal-token-for-job-apply-tests",
-    SPACE_ARTIFACT_ROOT: root
+    SPACE_ARTIFACT_ROOT: root, SPACE_CONNECTOR_KEY_FILE: join(root, "connector.key")
   });
+  await writeFile(join(root, "connector.key"), "synthetic-connector-key-with-enough-length-0123456789\n");
   const store = new InMemorySpaceStore();
   const app = await createApp({ store, config: { ...config, jobApplyRoot: join(root, "job-apply") }, jobApplyMailboxes: mailboxes, ...extra,
     auth: { sessionSecret: "test-secret-with-enough-length", devLogin: true, secureCookies: false } });
@@ -52,19 +59,19 @@ async function fixture(extra: { jobApplyGoogle?: JobApplyGoogleAccess } = {}) {
   const cliSession = store.createPaneCliSession({ paneId: pane.id, roomId: room.id, runtimeId: "cli:codex", providerId: "codex", agentId: "codex", status: "RUNNING", purpose: "NORMAL" });
   const token = issueCliBrowserBridgeToken(config, { roomId: room.id, paneId: pane.id, cliSessionId: cliSession.sessionId })!;
   const agent = { [cliBrowserBridgeTokenHeader]: token, "content-type": "application/json" };
-  return { app, store, room, pane, headers, agent };
+  return { app, store, room, pane, headers, agent, root };
 }
 
 describe("job copilot persona", () => {
   it("writes the run loop, memory discipline, truthfulness and handoff rules into AGENTS.md and CLAUDE.md", () => {
     const agents = buildCliAgentBootstrapMarkdown({ roomId: "room:jobs0001", paneId: "pane:jobs0001", cliSessionId: "cli_session:1", runtimeId: "cli:claude", paneMode: "JOB_APPLY" });
     expect(agents).toContain("Job Copilot pane:");
-    for (const rule of ["job_next", "job_report", "memory_recall before asking", "fields_record on every step", "Never solve or bypass a CAPTCHA", "VERIFIED only with evidence"]) expect(agents).toContain(rule);
+    for (const rule of ["job_next", "job_report", "memory_recall before asking", "fields_record on every step", "never solve other CAPTCHAs", "VERIFIED only with evidence"]) expect(agents).toContain(rule);
     expect(buildCliAgentBootstrapMarkdown({ paneMode: "TERMINAL" })).not.toContain("Job Copilot pane:");
     const persona = buildJobCopilotPersonaMarkdown({ roomId: "room:jobs0001", paneId: "pane:jobs0001", runtimeId: "cli:claude" });
     expect(persona.startsWith("# Job Copilot")).toBe(true);
     for (const rule of ["space_job_next", "space_job_report", "space_job_memory_recall", "space_job_memory_remember", "space_job_question_ask", "space_job_fields_record",
-      "space_browser_request_handoff", "space_job_review_request", "not eligible", "never solve, bypass or retry"]) {
+      "space_browser_request_handoff", "space_job_review_request", "not eligible", "never solve, bypass or retry", "space_job_salary_research"]) {
       expect(persona).toContain(rule);
     }
     expect(persona).toContain("pane:jobs0001");
@@ -165,6 +172,39 @@ describe("job copilot first-run setup through the bridge", () => {
   });
 });
 
+describe("job copilot CV photo (operator rule 2026-10-17)", () => {
+  it("copies the CV's photo into the copilot's own files, hands its path to the agent and records the standing rule", async () => {
+    const { app, store, headers, agent, root } = await fixture();
+    try {
+      expect((await app.inject({ method: "POST", url: "/api/job-apply/profile/photo-from-cv", headers })).statusCode).toBe(409);
+      const photo = sampleJpeg(48, 0x44);
+      const pdf = cvPdf([{ width: 940, height: 1329, filter: "/FlateDecode", data: Buffer.alloc(60) }, { width: 600, height: 600, filter: "/DCTDecode", data: photo }]);
+      const created = await store.createArtifact({ roomId: null, paneId: null, kind: "EXPORT", mimeType: "application/pdf",
+        storageUri: "space-artifact://agent-files/room_x/pane_y/session_z/2026-10-17/cv.pdf", sha256: "0".repeat(64), byteSize: pdf.length, metadata: { originalFilename: "cv.pdf" } });
+      const artifact = "artifact" in created ? created.artifact : created;
+      const cvPath = localArtifactFilePath({ artifactRoot: root, artifact });
+      await mkdir(dirname(cvPath), { recursive: true });
+      await writeFile(cvPath, pdf);
+      expect((await app.inject({ method: "PATCH", url: "/api/job-apply/profile", headers, payload: { cvArtifactId: artifact.id } })).statusCode).toBe(200);
+      expect((await app.inject({ method: "GET", url: "/api/cli/job-apply/profile", headers: agent })).json().photo).toBeNull();
+
+      const saved = await app.inject({ method: "POST", url: "/api/job-apply/profile/photo-from-cv", headers });
+      expect(saved.statusCode).toBe(200);
+      expect(saved.json().photo).toMatchObject({ width: 600, height: 600, bytes: photo.length });
+      expect(saved.json().photo.path).toBeUndefined();
+      const profile = (await app.inject({ method: "GET", url: "/api/cli/job-apply/profile", headers: agent })).json();
+      expect(profile.photo).toMatchObject({ width: 600, height: 600 });
+      expect(profile.photo.path.startsWith(join(root, "job-apply"))).toBe(true);
+      expect((await readFile(profile.photo.path)).equals(photo)).toBe(true);
+      const memories = (await app.inject({ method: "GET", url: "/api/job-apply/memory?kinds=FACT", headers })).json().memories;
+      expect(memories).toEqual(expect.arrayContaining([expect.objectContaining({ kind: "FACT", key: "photo", pinned: true, text: expect.stringContaining("photo.path") })]));
+      expect((await store.listAuditEvents()).some((event) => event.action === "job_apply.profile.photo_from_cv")).toBe(true);
+    } finally {
+      await app.close();
+    }
+  });
+});
+
 describe("job apply agent routes", () => {
   it("queues for the agent's own Job Copilot pane, and for every Job Copilot pane when the agent works from another CLI pane", async () => {
     const { app, store, room, pane, headers, agent } = await fixture();
@@ -182,6 +222,9 @@ describe("job apply agent routes", () => {
         payload: { company: "PlanetScale", role: "Software Engineer - Postgres", ats: "greenhouse", url: "https://job-boards.greenhouse.io/planetscale/jobs/4251150009" } });
       expect(shared.statusCode).toBe(200);
       expect(shared.json().application).toMatchObject({ status: "QUEUED", paneId: null });
+      // Only queueing is open to other panes; the operator's tracker, profile and mail stay with the Job Copilot pane's agent.
+      expect((await app.inject({ method: "GET", url: "/api/cli/job-apply/applications", headers: foreign })).statusCode).toBe(409);
+      expect((await app.inject({ method: "GET", url: "/api/cli/job-apply/profile", headers: foreign })).statusCode).toBe(409);
 
       // The Job Copilot pane's queue lists its own row and the shared one, in queue order.
       const queue = await app.inject({ method: "GET", url: `/api/panes/${encodeURIComponent(pane.id)}/job-apply/queue`, headers });
@@ -292,6 +335,50 @@ describe("job apply agent routes", () => {
       store.createBrowserControlLease({ sessionId: session.sessionId, paneId: pane.id, roomId: pane.roomId, holderType: "OPERATOR", holderId: "user:operator", reason: "captcha", ttlSeconds: 30 });
       const held = await app.inject({ method: "GET", url: "/api/cli/job-apply/handoff/status", headers: agent });
       expect(held.json()).toMatchObject({ browserRunning: true, held: true, lease: { holderType: "OPERATOR" } });
+    } finally {
+      await app.close();
+    }
+  });
+});
+
+describe("job copilot salary research (operator rule 2026-10-25)", () => {
+  it("answers the owner's percentage below the market and records why in the application's Activity", async () => {
+    const pages: Record<string, string> = {
+      "https://www.payscale.com/research/GR/Job=Senior_Software_Engineer/Salary": "payscale-gr-senior-software-engineer.html",
+      "https://www.paylab.com/gr/salaryinfo/information-technology?lang=en&global_salary_period=monthly": "paylab-gr-information-technology.html",
+      "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml": "ecb-eurofxref-daily.xml"
+    };
+    const requested: string[] = [];
+    vi.mocked(fetchPublicUrl).mockImplementation(async (url) => {
+      requested.push(url);
+      const name = pages[url];
+      const text = name ? await readFile(join(import.meta.dirname, "fixtures", "job-salary", name), "utf8") : "";
+      return { url, status: name ? 200 : 404, ok: Boolean(name), headers: {}, text };
+    });
+    const { app, headers, agent } = await fixture();
+    try {
+      await app.inject({ method: "PATCH", url: "/api/cli/job-apply/profile/candidate", headers: agent, payload: { candidate: { fullName: "Candidate", salaryBelowMarketPercent: 20 } } });
+      const posting = "https://job-boards.greenhouse.io/optasia/jobs/7012345";
+      const application = (await app.inject({ method: "POST", url: "/api/cli/job-apply/applications", headers: agent,
+        payload: { company: "Optasia", role: "Senior Software Engineer", ats: "greenhouse", url: posting } })).json().application as { id: string };
+
+      const research = await app.inject({ method: "POST", url: "/api/cli/job-apply/salary-research", headers: agent,
+        payload: { title: "Software Engineer", seniority: "Senior", city: "Athens", country: "Greece", applicationId: application.id } });
+      expect(research.statusCode).toBe(200);
+      const result = research.json();
+      expect(result.recommended).toEqual({ yearly: 31_000, monthly: 2_200, currency: "EUR", belowPercent: 20, rule: "20% below the market median (EUR 38,932 a year), rounded down" });
+      expect(result).toMatchObject({ confidence: "medium", askOperator: false, postingRange: null, market: { currency: "EUR", paymentsPerYear: 14, yearly: { median: 38_932 } } });
+      // The application's own posting is read first; Greenhouse has no such job here, so it is skipped, not guessed.
+      expect(requested).toContain("https://boards-api.greenhouse.io/v1/boards/optasia/jobs/7012345?pay_transparency=true");
+      expect(result.skipped).toContainEqual({ source: "posting", url: "https://boards-api.greenhouse.io/v1/boards/optasia/jobs/7012345?pay_transparency=true", reason: "no page for this query" });
+
+      const events = (await app.inject({ method: "GET", url: `/api/job-apply/events?applicationId=${encodeURIComponent(application.id)}&limit=20`, headers })).json().events as Array<{ type: string; message: string; payload: Record<string, any> }>;
+      const note = events.find((event) => event.type === "NOTE" && event.message.startsWith("Salary research"));
+      expect(note?.message).toContain("answer EUR 31,000 a year / EUR 2,200 a month x14");
+      expect(note?.payload.salaryResearch.market.sources.map((row: { source: string }) => row.source)).toEqual(["payscale", "paylab"]);
+
+      expect((await app.inject({ method: "POST", url: "/api/cli/job-apply/salary-research", headers: agent, payload: { title: "Engineer", city: "Atlantis", country: "Atlantis" } })).statusCode).toBe(409);
+      expect((await app.inject({ method: "POST", url: "/api/cli/job-apply/salary-research", headers: agent, payload: { title: "Engineer", country: "GR" } })).statusCode).toBe(422);
     } finally {
       await app.close();
     }

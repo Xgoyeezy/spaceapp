@@ -10,6 +10,7 @@ const vitestCli = join(dirname(require.resolve("vitest/package.json")), "vitest.
 const temporary = await mkdtemp(join(tmpdir(), "spaceapp-synthetic-histories-"));
 try {
   const result = spawnSync(process.execPath, [vitestCli, "run", "tests/temporal-workflows.test.ts"], {
+    cwd: fileURLToPath(new URL("../../", import.meta.url)),
     stdio: "inherit", env: { ...process.env, SPACE_TEMPORAL_RECORD_HISTORIES: "1", SPACE_TEMPORAL_HISTORY_DIR: temporary }
   });
   if (result.error) throw result.error;
